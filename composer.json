@@ -1,0 +1,27 @@
+{
+  "name": "morozov/diff-sniffer-core",
+  "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
+  "authors": [
+    {
+      "name": "Sergei Morozov",
+      "email": "morozov@tut.by"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "pear",
+      "url": "http://pear.php.net",
+      "vendor-alias": "pear"
+    }
+  ],
+  "require": {
+    "pear/PHP_CodeSniffer": "1.4.*",
+    "symfony/process": "dev-master"
+  },
+  "autoload": {
+    "psr-0": {
+      "DiffSniffer": "src/"
+    },
+    "files": ["src/bootstrap.php"]
+  }
+}
