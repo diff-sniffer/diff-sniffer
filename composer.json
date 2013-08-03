@@ -1,0 +1,19 @@
+{
+  "name": "morozov/diff-sniffer-pre-commit",
+  "description": "Git pre-commit hook for Diff Sniffer",
+  "authors": [
+    {
+      "name": "Sergei Morozov",
+      "email": "morozov@tut.by"
+    }
+  ],
+  "require": {
+    "morozov/diff-sniffer-core" : "dev-master"
+  },
+  "autoload": {
+    "psr-0": {
+      "DiffSniffer": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}
