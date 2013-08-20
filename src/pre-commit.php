@@ -14,15 +14,10 @@
  */
 require __DIR__ . '/../vendor/autoload.php';
 
-$cwd = getcwd();
-
-$changeset = new \DiffSniffer\Changeset\Staged($cwd);
-$projectRoot = dirname(__DIR__);
-
 $arguments = $_SERVER['argv'];
 array_shift($arguments);
 
-$runner = new \DiffSniffer\Runner();
-$return_var = $runner->run($changeset, $arguments);
+$runner = new \DiffSniffer\Runner\Staged();
+$return_var = $runner->run(getcwd(), $arguments);
 
 exit($return_var);
