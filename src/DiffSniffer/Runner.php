@@ -61,7 +61,7 @@ class Runner
         global $DIFF_SNIFFER_CORE_ROOT;
         global $DIFF_SNIFFER_APP_ROOT;
 
-        $phpCsBin = $DIFF_SNIFFER_APP_ROOT . '/vendor/bin/phpcs';
+        $phpCsBin = $DIFF_SNIFFER_APP_ROOT . '/vendor/squizlabs/php_codesniffer/scripts/phpcs';
         if (!is_file($phpCsBin)) {
             throw new \RuntimeException('Path to CodeSniffer is not a file');
         }

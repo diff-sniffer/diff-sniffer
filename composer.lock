@@ -3,34 +3,78 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "d101785aa9fbfa0b0ebf3a8913d93169",
+    "hash": "495ff3f88f592e5366276ad29cdab68e",
     "packages": [
         {
-            "name": "pear-pear.php.net/PHP_CodeSniffer",
+            "name": "squizlabs/php_codesniffer",
             "version": "1.4.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "1.4.6"
+            },
             "dist": {
-                "type": "file",
-                "url": "http://pear.php.net/get/PHP_CodeSniffer-1.4.6.tgz",
-                "reference": null,
-                "shasum": null
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/1.4.6",
+                "reference": "1.4.6",
+                "shasum": ""
             },
             "require": {
-                "php": ">=5.1.2.0"
+                "ext-tokenizer": "*",
+                "php": ">=5.1.2"
             },
-            "replace": {
-                "pear-pear/php_codesniffer": "== 1.4.6.0",
-                "pear/php_codesniffer": "== 1.4.6.0"
+            "suggest": {
+                "phpunit/php-timer": "dev-master"
             },
-            "type": "pear-library",
+            "bin": [
+                "scripts/phpcs"
+            ],
+            "type": "library",
             "autoload": {
                 "classmap": [
-                    ""
+                    "CodeSniffer.php",
+                    "CodeSniffer/CLI.php",
+                    "CodeSniffer/Exception.php",
+                    "CodeSniffer/File.php",
+                    "CodeSniffer/MultiFileSniff.php",
+                    "CodeSniffer/Report.php",
+                    "CodeSniffer/Reporting.php",
+                    "CodeSniffer/Sniff.php",
+                    "CodeSniffer/Tokens.php",
+                    "CodeSniffer/Reports/",
+                    "CodeSniffer/CommentParser/",
+                    "CodeSniffer/Tokenizers/",
+                    "CodeSniffer/DocGenerators/",
+                    "CodeSniffer/Standards/AbstractPatternSniff.php",
+                    "CodeSniffer/Standards/AbstractScopeSniff.php",
+                    "CodeSniffer/Standards/AbstractVariableSniff.php",
+                    "CodeSniffer/Standards/IncorrectPatternException.php",
+                    "CodeSniffer/Standards/Generic/Sniffs/",
+                    "CodeSniffer/Standards/MySource/Sniffs/",
+                    "CodeSniffer/Standards/PEAR/Sniffs/",
+                    "CodeSniffer/Standards/PSR1/Sniffs/",
+                    "CodeSniffer/Standards/PSR2/Sniffs/",
+                    "CodeSniffer/Standards/Squiz/Sniffs/",
+                    "CodeSniffer/Standards/Zend/Sniffs/"
                 ]
             },
-            "include-path": [
-                "/"
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
             ],
-            "description": "PHP_CodeSniffer is a PHP5 script that tokenises PHP, JavaScript and CSS files to detect violations of a defined coding standard. It is an essential development tool that ensures your code remains clean and consistent. It can also help prevent some common semantic errors made by developers."
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "http://www.squizlabs.com/php-codesniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "time": "2013-07-25 03:49:02"
         },
         {
             "name": "symfony/process",
@@ -39,12 +83,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "723fe405fcc878ae75469babcb9507d292797ece"
+                "reference": "a5f3e6456af26ca5406ab970afe4155648443c8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/723fe405fcc878ae75469babcb9507d292797ece",
-                "reference": "723fe405fcc878ae75469babcb9507d292797ece",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/a5f3e6456af26ca5406ab970afe4155648443c8b",
+                "reference": "a5f3e6456af26ca5406ab970afe4155648443c8b",
                 "shasum": ""
             },
             "require": {
@@ -77,7 +121,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2013-08-09 07:03:52"
+            "time": "2013-08-15 17:09:02"
         }
     ],
     "packages-dev": [
