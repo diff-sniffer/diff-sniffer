@@ -15,7 +15,7 @@
 /**
  * @see PHP_CodeSniffer_Report
  */
-require_once 'PHP/CodeSniffer/Report.php';
+require_once 'CodeSniffer/Report.php';
 
 /**
  * Wrapper report for PHP_CodeSniffer.
@@ -49,9 +49,19 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
         $width = 80,
         $toScreen = true
     ) {
+        if (!isset($_SERVER['PHPCS_DIFF_PATH'])) {
+            throw new PHP_CodeSniffer_Exception(
+                'PHPCS_DIFF_PATH environment variable is not set'
+            );
+        }
         $diffPath = $_SERVER['PHPCS_DIFF_PATH'];
         $diff = file_get_contents($diffPath);
 
+        if (!isset($_SERVER['PHPCS_DIFF_PATH'])) {
+            throw new PHP_CodeSniffer_Exception(
+                'PHPCS_DIFF_PATH environment variable is not set'
+            );
+        }
         $baseDir = $_SERVER['PHPCS_BASE_DIR'];
 
         $report = $this->filter($report, $baseDir, $diff);
@@ -75,7 +85,8 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
 
         $files = array();
         foreach ($changes as $relPath => $lines) {
-            $absPath = $baseDir . DIRECTORY_SEPARATOR . $relPath;
+            $absPath = $baseDir . DIRECTORY_SEPARATOR
+                . str_replace('/', DIRECTORY_SEPARATOR, $relPath);
 
             if (isset($report['files'][$absPath])) {
                 $files[$relPath]['messages'] = array_intersect_key(

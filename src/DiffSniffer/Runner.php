@@ -77,7 +77,7 @@ class Runner
 
     /**
      * Runs CodeSniffer against specified changeset
-     * 
+     *
      * @param Changeset $changeset Changeset instance
      * @param array     $arguments PHP_CodeSniffer command line arguments
      *
@@ -98,7 +98,7 @@ class Runner
 
     /**
      * Create temporary directory
-     * 
+     *
      * @return string Directory path
      */
     protected function createTempDir()
@@ -187,10 +187,10 @@ class Runner
 
         return $file;
     }
-    
+
     /**
      * Runs CodeSniffer
-     * 
+     *
      * @param string $dir       Base directory path
      * @param string $diffPath  Diff file path
      * @param array  $arguments PHP_CodeSniffer command line arguments
@@ -203,30 +203,22 @@ class Runner
 
         $cmd = $this->getCommand($autoPrependFile, $dir, $arguments);
 
-        $process = new Process(
+        $pipes = array();
+        $process = proc_open(
             $cmd,
+            array(
+                1 => array('file', 'php://stdout', 'w'),
+                2 => array('file', 'php://stderr', 'w'),
+            ),
+            $pipes,
             null,
             array(
                 'PHPCS_DIFF_PATH' => $diffPath,
                 'PHPCS_BASE_DIR' => $dir,
-            ),
-            null
+            )
         );
 
-        $return_value = $process->run(
-            function ($type, $buffer) {
-                switch ($type) {
-                    case Process::OUT:
-                        fwrite(STDOUT, $buffer);
-                        break;
-                    case Process::ERR:
-                        fwrite(STDERR, $buffer);
-                        break;
-                }
-            }
-        );
-
-        return $return_value;
+        return proc_close($process);
     }
 
     /**
@@ -241,11 +233,6 @@ class Runner
      */
     protected function getCommand($autoPrependFile, $dir, $arguments)
     {
-        $finder = new PhpExecutableFinder();
-        if (false === $php = $finder->find()) {
-            throw new \RuntimeException('Unable to find the PHP executable');
-        }
-
         $arguments = array_filter(
             $arguments,
             function ($argument) {
@@ -253,26 +240,28 @@ class Runner
             }
         );
 
+        $isWindows = defined('PHP_WINDOWS_VERSION_BUILD');
+        if (!$isWindows) {
+            $phpBin = 'vendor/bin/composer-php';
+        } else {
+            $phpBin = 'vendor\bin\composer-php.bat';
+        }
+
         $arguments = array_merge(
             array(
-                $php,
+                $phpBin,
                 '-d',
-                'include_path=' . ini_get('include_path')
-                    . PATH_SEPARATOR . $this->includePath,
-                '-d',
-                'auto_prepend_file=' . $autoPrependFile,
-            ),
-            array(
-                $this->phpCsBin,
+                'auto_prepend_file=' . escapeshellarg($autoPrependFile),
+                '-f',
+                escapeshellarg($this->phpCsBin),
+                '--',
             ),
             $arguments,
             array(
                 '--report=xml',
-                $dir
+                escapeshellarg($dir),
             )
         );
-
-        $arguments = array_map('escapeshellarg', $arguments);
 
         $cmd = implode(' ', $arguments);
 
