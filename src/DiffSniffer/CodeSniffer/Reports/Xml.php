@@ -13,11 +13,6 @@
  */
 
 /**
- * @see PHP_CodeSniffer_Report
- */
-require_once 'CodeSniffer/Report.php';
-
-/**
  * Wrapper report for PHP_CodeSniffer.
  *
  * PHP version 5

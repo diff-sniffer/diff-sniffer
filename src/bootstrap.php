@@ -26,6 +26,3 @@ set_exception_handler(
         exit(1);
     }
 );
-
-$GLOBALS['DIFF_SNIFFER_CORE_ROOT'] = dirname(__DIR__);
-$GLOBALS['DIFF_SNIFFER_APP_ROOT'] = dirname(dirname($_SERVER['SCRIPT_FILENAME']));

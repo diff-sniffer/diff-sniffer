@@ -14,10 +14,9 @@
  */
 namespace DiffSniffer;
 
+use DiffSniffer\CodeSniffer\Cli;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\PhpExecutableFinder;
 
 /**
  * CodeSniffer runner
@@ -33,48 +32,6 @@ use Symfony\Component\Process\PhpExecutableFinder;
  */
 class Runner
 {
-    /**
-     * Path to CodeSniffer executable
-     *
-     * @var string
-     */
-    protected $phpCsBin;
-
-    /**
-     * Additional include_path for PEAR class loading
-     *
-     * @var string
-     */
-    protected $includePath;
-
-    /**
-     * Constructor
-     *
-     * @global string $phpBin      Path to PHP interpreter
-     * @global string $phpCsBin    Path to CodeSniffer executable
-     * @global string $includePath Additional include_path for PEAR class loading
-     *
-     * @throws \RuntimeException
-     */
-    public function __construct()
-    {
-        global $DIFF_SNIFFER_CORE_ROOT;
-        global $DIFF_SNIFFER_APP_ROOT;
-
-        $phpCsBin = $DIFF_SNIFFER_APP_ROOT . '/vendor/squizlabs/php_codesniffer/scripts/phpcs';
-        if (!is_file($phpCsBin)) {
-            throw new \RuntimeException('Path to CodeSniffer is not a file');
-        }
-
-        $includePath = $DIFF_SNIFFER_CORE_ROOT . '/src';
-        if (!is_dir($includePath)) {
-            throw new \RuntimeException('include_path is not a directory');
-        }
-
-        $this->phpCsBin = $phpCsBin;
-        $this->includePath = $includePath;
-    }
-
     /**
      * Runs CodeSniffer against specified changeset
      *
@@ -191,80 +148,33 @@ class Runner
     /**
      * Runs CodeSniffer
      *
-     * @param string $dir       Base directory path
-     * @param string $diffPath  Diff file path
-     * @param array  $arguments PHP_CodeSniffer command line arguments
+     * @param string $dir      Base directory path
+     * @param string $diffPath Diff file path
+     * @param array  $options  Additional PHP_CodeSniffer options
      *
      * @return int
      */
-    protected function runCodeSniffer($dir, $diffPath, array $arguments)
+    protected function runCodeSniffer($dir, $diffPath, array $options = array())
     {
-        $autoPrependFile = $this->includePath . '/PHP/CodeSniffer/Reports/Xml.php';
+        include_once __DIR__ . '/CodeSniffer/Reports/Xml.php';
 
-        $cmd = $this->getCommand($autoPrependFile, $dir, $arguments);
+        $_SERVER['PHPCS_DIFF_PATH'] = $diffPath;
+        $_SERVER['PHPCS_BASE_DIR'] = $dir;
 
-        $pipes = array();
-        $process = proc_open(
-            $cmd,
+        $cli = new Cli();
+        $cli->checkRequirements();
+
+        $options = array_merge(
+            $cli->getDefaults(),
+            $options,
             array(
-                1 => array('file', 'php://stdout', 'w'),
-                2 => array('file', 'php://stderr', 'w'),
-            ),
-            $pipes,
-            null,
-            array(
-                'PHPCS_DIFF_PATH' => $diffPath,
-                'PHPCS_BASE_DIR' => $dir,
+                'report_format' => 'xml',
+                'files' => array($dir),
             )
         );
 
-        return proc_close($process);
-    }
+        $numErrors = $cli->process($options);
 
-    /**
-     * Prepare command for running PHP_CodeShiffer
-     *
-     * @param string $autoPrependFile Path to prepended file
-     * @param string $dir             Directory to be scanned
-     * @param array  $arguments       PHP_CodeSniffer command line arguments
-     *
-     * @return string
-     * @throws \RuntimeException
-     */
-    protected function getCommand($autoPrependFile, $dir, $arguments)
-    {
-        $arguments = array_filter(
-            $arguments,
-            function ($argument) {
-                return strpos($argument, '--report') === false;
-            }
-        );
-
-        $isWindows = defined('PHP_WINDOWS_VERSION_BUILD');
-        if (!$isWindows) {
-            $phpBin = 'vendor/bin/composer-php';
-        } else {
-            $phpBin = 'vendor\bin\composer-php.bat';
-        }
-
-        $arguments = array_merge(
-            array(
-                $phpBin,
-                '-d',
-                'auto_prepend_file=' . escapeshellarg($autoPrependFile),
-                '-f',
-                escapeshellarg($this->phpCsBin),
-                '--',
-            ),
-            $arguments,
-            array(
-                '--report=xml',
-                escapeshellarg($dir),
-            )
-        );
-
-        $cmd = implode(' ', $arguments);
-
-        return $cmd;
+        return $numErrors === 0 ? 0 : 1;
     }
 }
