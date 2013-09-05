@@ -7,6 +7,7 @@
       "email": "morozov@tut.by"
     }
   ],
+  "license": "MIT",
  "require": {
     "squizlabs/php_codesniffer": "1.4.*"
   },
