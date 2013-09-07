@@ -14,7 +14,7 @@
  */
 namespace DiffSniffer;
 
-use DiffSniffer\CodeSniffer\Cli;
+use PHP_CodeSniffer_CLI;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 
@@ -150,7 +150,7 @@ class Runner
      *
      * @param string $dir      Base directory path
      * @param string $diffPath Diff file path
-     * @param array  $options  Additional PHP_CodeSniffer options
+     * @param array  $options  PHP_CodeSniffer command line options
      *
      * @return int
      */
@@ -158,22 +158,33 @@ class Runner
     {
         include_once __DIR__ . '/CodeSniffer/Reports/Xml.php';
 
+        // remove report-related options since we use custom report as a hack-filter
+        $options = array_filter(
+            $options,
+            function ($options) {
+                return strpos($options, '--report') === false;
+            }
+        );
+
+        $_SERVER['argv'] = array_merge(
+            array(
+                $_SERVER['argv'][0],
+            ),
+            $options,
+            array(
+                '--report=xml',
+                $dir,
+            )
+        );
+        $_SERVER['argc'] = count($_SERVER['argv']);
+
         $_SERVER['PHPCS_DIFF_PATH'] = $diffPath;
         $_SERVER['PHPCS_BASE_DIR'] = $dir;
 
-        $cli = new Cli();
+        $cli = new PHP_CodeSniffer_CLI();
         $cli->checkRequirements();
 
-        $options = array_merge(
-            $cli->getDefaults(),
-            $options,
-            array(
-                'report_format' => 'xml',
-                'files' => array($dir),
-            )
-        );
-
-        $numErrors = $cli->process($options);
+        $numErrors = $cli->process();
 
         return $numErrors === 0 ? 0 : 1;
     }
