@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/morozov/diff-sniffer-core.git",
-                "reference": "45847605058b113882c756b8d9712df16b5adac8"
+                "reference": "1c3c26af2a6ce47e2868ca7fae892f9bd71573d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/45847605058b113882c756b8d9712df16b5adac8",
-                "reference": "45847605058b113882c756b8d9712df16b5adac8",
+                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/1c3c26af2a6ce47e2868ca7fae892f9bd71573d6",
+                "reference": "1c3c26af2a6ce47e2868ca7fae892f9bd71573d6",
                 "shasum": ""
             },
             "require": {
@@ -42,20 +42,20 @@
                 }
             ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2013-09-07 06:58:51"
+            "time": "2013-09-21 12:52:47"
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "1.4.6",
+            "version": "1.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "a99caa52ed173ee83d6721ba012614f38c1dcbb6"
+                "reference": "df764a1604607ea61c4eeea5410666e27cb37a8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/a99caa52ed173ee83d6721ba012614f38c1dcbb6",
-                "reference": "a99caa52ed173ee83d6721ba012614f38c1dcbb6",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/df764a1604607ea61c4eeea5410666e27cb37a8b",
+                "reference": "df764a1604607ea61c4eeea5410666e27cb37a8b",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +113,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2013-07-25 03:49:02"
+            "time": "2013-09-26 00:08:21"
         }
     ],
     "packages-dev": [
