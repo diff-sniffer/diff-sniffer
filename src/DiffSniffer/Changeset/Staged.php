@@ -57,7 +57,7 @@ class Staged implements Changeset
      */
     public function getDiff()
     {
-        $cmd = 'git diff --staged --diff-filter=ACM';
+        $cmd = 'git diff --staged --diff-filter=ACM --no-color';
         return $this->exec($cmd, $this->gitDir);
     }
 
