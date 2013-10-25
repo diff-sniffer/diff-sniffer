@@ -27,6 +27,11 @@ require $autoload;
 $arguments = $_SERVER['argv'];
 array_shift($arguments);
 
+$config = __DIR__ . '/../config.php';
+if (file_exists($config)) {
+    $arguments = array_merge($arguments, include $config);
+}
+
 $runner = new \DiffSniffer\Runner\Staged();
 $return_var = $runner->run(getcwd(), $arguments);
 
