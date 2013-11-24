@@ -6,27 +6,24 @@
     "hash": "e101a64bbdd8aacbb8546a40c5e3b62f",
     "packages": [
         {
-            "name": "morozov/diff-sniffer-core",
-            "version": "dev-master",
+            "name": "morozov/bootstrap",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/morozov/diff-sniffer-core.git",
-                "reference": "1c3c26af2a6ce47e2868ca7fae892f9bd71573d6"
+                "url": "https://github.com/morozov/bootstrap.git",
+                "reference": "3e21cbe6b5436c09817a892a5abac37fa6091953"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/1c3c26af2a6ce47e2868ca7fae892f9bd71573d6",
-                "reference": "1c3c26af2a6ce47e2868ca7fae892f9bd71573d6",
+                "url": "https://api.github.com/repos/morozov/bootstrap/zipball/3e21cbe6b5436c09817a892a5abac37fa6091953",
+                "reference": "3e21cbe6b5436c09817a892a5abac37fa6091953",
                 "shasum": ""
             },
             "require": {
-                "squizlabs/php_codesniffer": "1.4.*"
+                "php": ">=5.3.0"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "DiffSniffer": "src/"
-                },
                 "files": [
                     "src/bootstrap.php"
                 ]
@@ -41,8 +38,45 @@
                     "email": "morozov@tut.by"
                 }
             ],
+            "description": "Command line application bootstrap component",
+            "time": "2013-11-13 08:30:17"
+        },
+        {
+            "name": "morozov/diff-sniffer-core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/morozov/diff-sniffer-core.git",
+                "reference": "e35b0e02b51a12e62c7bd3cb0b5ec1de3dfb4fcd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/e35b0e02b51a12e62c7bd3cb0b5ec1de3dfb4fcd",
+                "reference": "e35b0e02b51a12e62c7bd3cb0b5ec1de3dfb4fcd",
+                "shasum": ""
+            },
+            "require": {
+                "morozov/bootstrap": "1.0.*",
+                "squizlabs/php_codesniffer": "1.4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "DiffSniffer": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergei Morozov",
+                    "email": "morozov@tut.by"
+                }
+            ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2013-09-21 12:52:47"
+            "time": "2013-11-24 08:23:46"
         },
         {
             "name": "squizlabs/php_codesniffer",
