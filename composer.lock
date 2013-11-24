@@ -3,20 +3,56 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "495ff3f88f592e5366276ad29cdab68e",
+    "hash": "7a210bde22f33d982c391c64966cac77",
     "packages": [
         {
-            "name": "squizlabs/php_codesniffer",
-            "version": "1.4.6",
+            "name": "morozov/bootstrap",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "1.4.6"
+                "url": "https://github.com/morozov/bootstrap.git",
+                "reference": "3e21cbe6b5436c09817a892a5abac37fa6091953"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/1.4.6",
-                "reference": "1.4.6",
+                "url": "https://api.github.com/repos/morozov/bootstrap/zipball/3e21cbe6b5436c09817a892a5abac37fa6091953",
+                "reference": "3e21cbe6b5436c09817a892a5abac37fa6091953",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergei Morozov",
+                    "email": "morozov@tut.by"
+                }
+            ],
+            "description": "Command line application bootstrap component",
+            "time": "2013-11-13 08:30:17"
+        },
+        {
+            "name": "squizlabs/php_codesniffer",
+            "version": "1.4.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "df764a1604607ea61c4eeea5410666e27cb37a8b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/df764a1604607ea61c4eeea5410666e27cb37a8b",
+                "reference": "df764a1604607ea61c4eeea5410666e27cb37a8b",
                 "shasum": ""
             },
             "require": {
@@ -74,54 +110,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2013-07-25 03:49:02"
-        },
-        {
-            "name": "symfony/process",
-            "version": "dev-master",
-            "target-dir": "Symfony/Component/Process",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/Process.git",
-                "reference": "a5f3e6456af26ca5406ab970afe4155648443c8b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/a5f3e6456af26ca5406ab970afe4155648443c8b",
-                "reference": "a5f3e6456af26ca5406ab970afe4155648443c8b",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\Process\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Process Component",
-            "homepage": "http://symfony.com",
-            "time": "2013-08-15 17:09:02"
+            "time": "2013-09-26 00:08:21"
         }
     ],
     "packages-dev": [
@@ -131,9 +120,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "symfony/process": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": [
 
     ],
