@@ -24,13 +24,10 @@ if (!file_exists($autoload)) {
 
 require $autoload;
 
-$arguments = $_SERVER['argv'];
-array_shift($arguments);
-
-$config = __DIR__ . '/../config.php';
-if (file_exists($config)) {
-    $arguments = array_merge($arguments, include $config);
-}
+$arguments = DiffSniffer\getCodeSnifferArguments(
+    $_SERVER['argv'],
+    __DIR__ . '/../config.php'
+);
 
 $runner = new \DiffSniffer\Runner\Staged();
 $return_var = $runner->run(getcwd(), $arguments);

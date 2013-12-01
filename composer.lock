@@ -47,12 +47,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/morozov/diff-sniffer-core.git",
-                "reference": "e35b0e02b51a12e62c7bd3cb0b5ec1de3dfb4fcd"
+                "reference": "4556719790581c858ab21b8e99ea7acf78f38185"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/e35b0e02b51a12e62c7bd3cb0b5ec1de3dfb4fcd",
-                "reference": "e35b0e02b51a12e62c7bd3cb0b5ec1de3dfb4fcd",
+                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/4556719790581c858ab21b8e99ea7acf78f38185",
+                "reference": "4556719790581c858ab21b8e99ea7acf78f38185",
                 "shasum": ""
             },
             "require": {
@@ -61,6 +61,9 @@
             },
             "type": "library",
             "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
                 "psr-0": {
                     "DiffSniffer": "src/"
                 }
@@ -76,20 +79,20 @@
                 }
             ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2013-11-24 08:23:46"
+            "time": "2013-12-01 02:49:59"
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "1.4.7",
+            "version": "1.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "df764a1604607ea61c4eeea5410666e27cb37a8b"
+                "reference": "d26daa8096ad2c8758677f0352597f8cda4722e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/df764a1604607ea61c4eeea5410666e27cb37a8b",
-                "reference": "df764a1604607ea61c4eeea5410666e27cb37a8b",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d26daa8096ad2c8758677f0352597f8cda4722e0",
+                "reference": "d26daa8096ad2c8758677f0352597f8cda4722e0",
                 "shasum": ""
             },
             "require": {
@@ -147,7 +150,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2013-09-26 00:08:21"
+            "time": "2013-11-25 22:07:04"
         }
     ],
     "packages-dev": [
