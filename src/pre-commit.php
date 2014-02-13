@@ -29,6 +29,11 @@ $arguments = DiffSniffer\getCodeSnifferArguments(
     __DIR__ . '/../config.php'
 );
 
+if ($arguments && $arguments[0] == '--version') {
+    echo 'Diff Sniffer Pre-Commit Hook version 1.0.0' . PHP_EOL;
+    exit;
+}
+
 $runner = new \DiffSniffer\Runner\Staged();
 $return_var = $runner->run(getcwd(), $arguments);
 
