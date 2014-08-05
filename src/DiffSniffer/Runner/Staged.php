@@ -8,9 +8,9 @@
  * @category  DiffSniffer
  * @package   DiffSniffer\Runner
  * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2013 Sergei Morozov
+ * @copyright 2014 Sergei Morozov
  * @license   http://mit-license.org/ MIT Licence
- * @link      http://github.com/morozov/diff-sniffer
+ * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
 namespace DiffSniffer\Runner;
 
@@ -25,9 +25,9 @@ use \DiffSniffer\Changeset\Staged as Changeset;
  * @category  DiffSniffer
  * @package   DiffSniffer\Runner
  * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2013 Sergei Morozov
+ * @copyright 2014 Sergei Morozov
  * @license   http://mit-license.org/ MIT Licence
- * @link      http://github.com/morozov/diff-sniffer
+ * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
 class Staged
 {
