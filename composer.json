@@ -8,7 +8,7 @@
     }
   ],
   "require": {
-    "morozov/diff-sniffer-core" : "dev-master"
+    "morozov/diff-sniffer-core" : "dev-phpcs-15"
   },
   "autoload": {
     "psr-0": {

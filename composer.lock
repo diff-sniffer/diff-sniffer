@@ -1,9 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "e101a64bbdd8aacbb8546a40c5e3b62f",
+    "hash": "a41f33111972ce016feda3f9be187c88",
     "packages": [
         {
             "name": "morozov/bootstrap",
@@ -43,21 +44,21 @@
         },
         {
             "name": "morozov/diff-sniffer-core",
-            "version": "dev-master",
+            "version": "dev-phpcs-15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/morozov/diff-sniffer-core.git",
-                "reference": "4556719790581c858ab21b8e99ea7acf78f38185"
+                "reference": "3ffda526e1fd12181d58bca9585268769eaeedb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/4556719790581c858ab21b8e99ea7acf78f38185",
-                "reference": "4556719790581c858ab21b8e99ea7acf78f38185",
+                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/3ffda526e1fd12181d58bca9585268769eaeedb4",
+                "reference": "3ffda526e1fd12181d58bca9585268769eaeedb4",
                 "shasum": ""
             },
             "require": {
                 "morozov/bootstrap": "1.0.*",
-                "squizlabs/php_codesniffer": "1.4.*"
+                "squizlabs/php_codesniffer": "1.5.*"
             },
             "type": "library",
             "autoload": {
@@ -79,20 +80,20 @@
                 }
             ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2013-12-01 02:49:59"
+            "time": "2014-08-05 20:32:55"
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "1.4.8",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "d26daa8096ad2c8758677f0352597f8cda4722e0"
+                "reference": "396178ada8499ec492363587f037125bf7b07fcc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d26daa8096ad2c8758677f0352597f8cda4722e0",
-                "reference": "d26daa8096ad2c8758677f0352597f8cda4722e0",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/396178ada8499ec492363587f037125bf7b07fcc",
+                "reference": "396178ada8499ec492363587f037125bf7b07fcc",
                 "shasum": ""
             },
             "require": {
@@ -106,13 +107,17 @@
                 "scripts/phpcs"
             ],
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-phpcs-fixer": "2.0.x-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
                     "CodeSniffer.php",
                     "CodeSniffer/CLI.php",
                     "CodeSniffer/Exception.php",
                     "CodeSniffer/File.php",
-                    "CodeSniffer/MultiFileSniff.php",
                     "CodeSniffer/Report.php",
                     "CodeSniffer/Reporting.php",
                     "CodeSniffer/Sniff.php",
@@ -150,7 +155,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2013-11-25 22:07:04"
+            "time": "2014-05-01 03:07:07"
         }
     ],
     "packages-dev": [
@@ -163,6 +168,7 @@
     "stability-flags": {
         "morozov/diff-sniffer-core": 20
     },
+    "prefer-stable": false,
     "platform": [
 
     ],
