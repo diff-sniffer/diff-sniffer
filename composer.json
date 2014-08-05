@@ -10,7 +10,7 @@
   "license": "MIT",
   "require": {
     "morozov/bootstrap": "1.0.*",
-    "squizlabs/php_codesniffer": "1.4.*"
+    "squizlabs/php_codesniffer": "1.5.*"
   },
   "autoload": {
     "files": ["src/functions.php"],

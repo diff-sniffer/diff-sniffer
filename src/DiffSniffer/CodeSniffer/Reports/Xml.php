@@ -7,9 +7,9 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2013 Sergei Morozov
+ * @copyright 2014 Sergei Morozov
  * @license   http://mit-license.org/ MIT Licence
- * @link      http://github.com/morozov/diff-sniffer
+ * @link      http://github.com/morozov/diff-sniffer-core
  */
 
 /**
@@ -20,121 +20,146 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2013 Sergei Morozov
+ * @copyright 2014 Sergei Morozov
  * @license   http://mit-license.org/ MIT Licence
- * @link      http://github.com/morozov/diff-sniffer
+ * @link      http://github.com/morozov/diff-sniffer-core
  */
 class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
 {
     /**
-     * Prints errors and warnings found only in lines modified in commit.
+     * Temporary diff file path.
      *
-     * Errors and warnings are displayed together, grouped by file.
+     * @var string
+     */
+    protected $diffPath;
+
+    /**
+     * The directory where the files to be checked reside.
      *
-     * @param array   $report      Prepared report.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed lne width.
-     * @param boolean $toScreen    Is the report being printed to screen?
+     * @var string
+     */
+    protected $baseDir;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $diffPath = $this->getPath('PHPCS_DIFF_PATH');
+        if (!is_file($diffPath)) {
+            throw new PHP_CodeSniffer_Exception(
+                $diffPath . ' is not a file'
+            );
+        }
+        $this->diffPath = $diffPath;
+
+        $baseDir = $this->getPath('PHPCS_BASE_DIR');
+        if (!is_dir($baseDir)) {
+            throw new PHP_CodeSniffer_Exception(
+                $diffPath . ' is not a directory'
+            );
+        }
+        $this->baseDir = $baseDir;
+    }
+
+    /**
+     * Retrieves the path specified by environment variable.
+     *
+     * @param string $varName Environment variable name
      *
      * @return string
+     * @throws PHP_CodeSniffer_Exception
      */
-    public function generate(
-        $report,
-        $showSources = false,
-        $width = 80,
-        $toScreen = true
-    ) {
-        if (!isset($_SERVER['PHPCS_DIFF_PATH'])) {
+    protected function getPath($varName)
+    {
+        if (!isset($_SERVER[$varName])) {
             throw new PHP_CodeSniffer_Exception(
-                'PHPCS_DIFF_PATH environment variable is not set'
+                $varName . ' environment variable is not set'
             );
         }
-        $diffPath = $_SERVER['PHPCS_DIFF_PATH'];
-        $diff = file_get_contents($diffPath);
 
-        if (!isset($_SERVER['PHPCS_DIFF_PATH'])) {
+        $path = realpath($_SERVER[$varName]);
+
+        if (false === $path) {
             throw new PHP_CodeSniffer_Exception(
-                'PHPCS_DIFF_PATH environment variable is not set'
+                $_SERVER[$varName] . ' path does not exist'
             );
         }
-        $baseDir = $_SERVER['PHPCS_BASE_DIR'];
 
-        $report = $this->filter($report, $baseDir, $diff);
-
-        $full = new PHP_CodeSniffer_Reports_Full();
-        return $full->generate($report, $showSources, $width, $toScreen);
+        return $path;
     }
 
     /**
-     * Filters report producing another one containing only changed lines
+     * Generate a partial report for a single processed file.
      *
-     * @param array  $report  Original report
-     * @param string $baseDir The directory where the files are located
-     * @param string $diff    Diff that should be used for filtering
+     * Function should return TRUE if it printed or stored data about the file
+     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
+     * its data should be counted in the grand totals.
      *
-     * @return array
+     * @param array   $report      Prepared report data.
+     * @param boolean $showSources Show sources?
+     * @param int     $width       Maximum allowed line width.
+     *
+     * @return boolean
      */
-    protected function filter(array $report, $baseDir, $diff)
-    {
+    public function generateFileReport(
+        $report,
+        $showSources=false,
+        $width=80
+    ) {
+        $diff = $this->getStagedDiff();
         $changes = $this->getChanges($diff);
 
-        $files = array();
-        foreach ($changes as $relPath => $lines) {
-            $absPath = $baseDir . DIRECTORY_SEPARATOR
-                . str_replace('/', DIRECTORY_SEPARATOR, $relPath);
+        $report = $this->filterReport($report, $changes);
 
-            if (isset($report['files'][$absPath])) {
-                $files[$relPath]['messages'] = array_intersect_key(
-                    $report['files'][$absPath]['messages'],
-                    array_flip($lines)
-                );
-            }
-        }
-
-        return $this->getReport($files);
+        $full = new PHP_CodeSniffer_Reports_Full();
+        return $full->generateFileReport($report, $showSources, $width);
     }
 
     /**
-     * Generates report from file data
+     * Prints all errors and warnings for each file processed.
      *
-     * @param array $files File data
+     * @param string  $cachedData    Any partial report data that was returned from
+     *                               generateFileReport during the run.
+     * @param int     $totalFiles    Total number of files processed during the run.
+     * @param int     $totalErrors   Total number of errors found during the run.
+     * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param boolean $showSources   Show sources?
+     * @param int     $width         Maximum allowed line width.
+     * @param boolean $toScreen      Is the report being printed to screen?
      *
-     * @return array
+     * @return void
      */
-    protected function getReport(array $files)
-    {
-        $totals = array(
-            'warnings' => 0,
-            'errors'   => 0,
-        );
+    public function generate(
+        $cachedData,
+        $totalFiles,
+        $totalErrors,
+        $totalWarnings,
+        $showSources=false,
+        $width=80,
+        $toScreen=true
+    ) {
+        echo $cachedData;
 
-        foreach ($files as $path => $file) {
-            $files[$path] = array_merge($file, $totals);
-            foreach ($file['messages'] as $columns) {
-                foreach ($columns as $messages) {
-                    foreach ($messages as $message) {
-                        switch ($message['type']) {
-                            case 'ERROR':
-                                $key = 'errors';
-                                break;
-                            case 'WARNING':
-                                $key = 'warnings';
-                                break;
-                            default:
-                                $key = null;
-                                continue;
-                        }
-                        $files[$path][$key]++;
-                        $totals[$key]++;
-                    }
-                }
-            }
+        if ($toScreen === true
+            && PHP_CODESNIFFER_INTERACTIVE === false
+            && class_exists('PHP_Timer', false) === true
+        ) {
+            echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
         }
+    }
 
-        return array(
-            'totals' => $totals,
-            'files'  => $files,
-        );
+    /**
+     * Returns diff contents
+     *
+     * @return string
+     * @throws PHP_CodeSniffer_Exception
+     */
+    protected function getStagedDiff()
+    {
+        $contents = file_get_contents($this->diffPath);
+
+        return $contents;
     }
 
     /**
@@ -167,5 +192,66 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
             }
         }
         return $changes;
+    }
+
+    /**
+     * Filters report producing another one containing only changed lines
+     *
+     * @param array $report  Original report
+     * @param array $changes Staged changes
+     *
+     * @return array
+     */
+    protected function filterReport(array $report, array $changes)
+    {
+        $filename = $report['filename'];
+        if (strpos($filename, $this->baseDir . DIRECTORY_SEPARATOR) === 0) {
+            $relative = substr($filename, strlen($this->baseDir) + 1);
+            if (isset($changes[$relative])) {
+                $report['filename'] = $relative;
+                $report['messages'] = array_intersect_key(
+                    $report['messages'],
+                    array_flip($changes[$relative])
+                );
+            }
+        }
+
+        return $this->repairReport($report);
+    }
+
+    /**
+     * Generates report from file data
+     *
+     * @param array $report File data
+     *
+     * @return array
+     */
+    protected function repairReport(array $report)
+    {
+        $repaired = array_merge($report, array(
+            'errors'   => 0,
+            'warnings' => 0,
+        ));
+
+        foreach ($report['messages'] as $columns) {
+            foreach ($columns as $messages) {
+                foreach ($messages as $message) {
+                    switch($message['type']) {
+                        case 'ERROR';
+                            $key = 'errors';
+                            break;
+                        case 'WARNING';
+                            $key = 'warnings';
+                            break;
+                        default;
+                            $key = null;
+                            continue;
+                    }
+                    $repaired[$key]++;
+                }
+            }
+        }
+
+        return $repaired;
     }
 }
