@@ -31,6 +31,8 @@ $arguments = DiffSniffer\getCodeSnifferArguments(
 
 if ($arguments && $arguments[0] == '--version') {
     echo 'Diff Sniffer Pre-Commit Hook version 1.0.0' . PHP_EOL;
+    $cli = new PHP_CodeSniffer_CLI();
+    $cli->processLongArgument('version', null, null);
     exit;
 }
 
