@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a41f33111972ce016feda3f9be187c88",
+    "hash": "908f4253bbca27809f6f7f69d7db96ab",
     "packages": [
         {
             "name": "morozov/bootstrap",
@@ -44,7 +44,7 @@
         },
         {
             "name": "morozov/diff-sniffer-core",
-            "version": "dev-phpcs-15",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/morozov/diff-sniffer-core.git",
@@ -84,16 +84,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "1.5.3",
+            "version": "1.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "396178ada8499ec492363587f037125bf7b07fcc"
+                "reference": "4097e2c106e4a32bc234ae880e5585a19137e435"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/396178ada8499ec492363587f037125bf7b07fcc",
-                "reference": "396178ada8499ec492363587f037125bf7b07fcc",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/4097e2c106e4a32bc234ae880e5585a19137e435",
+                "reference": "4097e2c106e4a32bc234ae880e5585a19137e435",
                 "shasum": ""
             },
             "require": {
@@ -155,7 +155,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2014-05-01 03:07:07"
+            "time": "2014-08-05 23:54:05"
         }
     ],
     "packages-dev": [
@@ -165,9 +165,9 @@
 
     ],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "morozov/diff-sniffer-core": 20
-    },
+    "stability-flags": [
+
+    ],
     "prefer-stable": false,
     "platform": [
 
