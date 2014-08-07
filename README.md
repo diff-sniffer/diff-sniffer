@@ -8,12 +8,10 @@ Installation
 
 Diff Sniffer is already built as PHAR-package with a few predefined configurations. All you need is download it and install as a pre-commit hook.
 ```
-$ wget https://www.dropbox.com/s/cukhmq8wrsge5zr/pre-commit-psr2.phar
-$ chmod +x pre-commit-psr2.phar
-$ mv pre-commit-psr2.phar /path/to/repo/.git/hooks/pre-commit
+$ wget https://github.com/morozov/diff-sniffer-pre-commit/releases/download/1.5.0/pre-commit.phar
+$ chmod +x pre-commit.phar
+$ mv pre-commit.phar /path/to/repo/.git/hooks/pre-commit
 ```
-
-Additionally there are builds [without predefined standard](https://www.dropbox.com/s/dbj05cecvdued49/pre-commit.phar) (PHP_CodeSniffer uses PEAD by default) and with [SugarCRM](https://www.dropbox.com/s/01e8cchopv70fcw/pull-request-sugarcrm.phar) coding standard.
 
 You can also install and configure Diff Sniffer manually.
 
@@ -26,12 +24,12 @@ $ ln -s /path/to/diff-sniffer-pre-commit/bin/pre-commit /path/to/repo/.git/hooks
 Configuration
 -------------
 
-The coding standard used by default may be defined in config.php (doesn't exist by default). Similarly to PHP_CodeSniffer, both embedded and custom standards may be used.
+The coding standard used by default may be defined in config.php (the release package is pre-configured with PSR2). Similarly to PHP_CodeSniffer, both embedded and custom standards may be used.
 ```php
 <?php
 
 return array(
-    '--standard=PSR-2',
+    '--standard=Zend',
 );
 ```
 
@@ -49,5 +47,5 @@ If you want to reuse the same installation of Diff Sniffer with different standa
 ```bash
 #!/bin/bash
 
-/path/to/diff-sniffer-pre-commit/bin/pre-commit --standard=PSR-2
+/path/to/diff-sniffer-pre-commit/bin/pre-commit --standard=PEAR
 ```
