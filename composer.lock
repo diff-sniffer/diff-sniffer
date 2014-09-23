@@ -44,16 +44,16 @@
         },
         {
             "name": "morozov/diff-sniffer-core",
-            "version": "1.5.0",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/morozov/diff-sniffer-core.git",
-                "reference": "3ffda526e1fd12181d58bca9585268769eaeedb4"
+                "reference": "7b9084aad060f2d75aae51faea440fa763f38e02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/3ffda526e1fd12181d58bca9585268769eaeedb4",
-                "reference": "3ffda526e1fd12181d58bca9585268769eaeedb4",
+                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/7b9084aad060f2d75aae51faea440fa763f38e02",
+                "reference": "7b9084aad060f2d75aae51faea440fa763f38e02",
                 "shasum": ""
             },
             "require": {
@@ -80,7 +80,7 @@
                 }
             ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2014-08-05 20:32:55"
+            "time": "2014-09-18 14:18:57"
         },
         {
             "name": "squizlabs/php_codesniffer",
