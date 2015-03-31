@@ -156,15 +156,15 @@ class Runner
      */
     protected function runCodeSniffer($dir, $diffPath, array $options = array())
     {
-        include_once __DIR__ . '/CodeSniffer/Reports/Xml.php';
+        include_once __DIR__ . '/CodeSniffer/Reports/DiffSniffer.php';
 
-        // remove report-related options since we use custom report as a hack-filter
-        $options = array_filter(
-            $options,
-            function ($options) {
-                return strpos($options, '--report') === false;
+        $reportType = 'full';
+        foreach ($options as $i => $value) {
+            if (strpos($value, '--report=') !== false) {
+                $reportType = substr($value, 9);
+                unset($options[$i]);
             }
-        );
+        }
 
         $_SERVER['argv'] = array_merge(
             array(
@@ -172,7 +172,7 @@ class Runner
             ),
             $options,
             array(
-                '--report=xml',
+                '--report=diffSniffer',
                 $dir,
             )
         );
@@ -180,6 +180,7 @@ class Runner
 
         $_SERVER['PHPCS_DIFF_PATH'] = $diffPath;
         $_SERVER['PHPCS_BASE_DIR'] = $dir;
+        $_SERVER['PHPCS_REPORT_TYPE'] = $reportType;
 
         $cli = new PHP_CodeSniffer_CLI();
         $cli->checkRequirements();

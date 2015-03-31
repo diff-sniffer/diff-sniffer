@@ -24,7 +24,7 @@
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer-core
  */
-class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
+class PHP_CodeSniffer_Reports_DiffSniffer implements PHP_CodeSniffer_Report
 {
     /**
      * Temporary diff file path.
@@ -39,6 +39,13 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
      * @var string
      */
     protected $baseDir;
+
+    /**
+     * Requested report type
+     *
+     * @var string
+     */
+    protected $reportType;
 
     /**
      * Constructor.
@@ -60,6 +67,27 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
             );
         }
         $this->baseDir = $baseDir;
+
+        $this->reportType = $this->getEnv('PHPCS_REPORT_TYPE');
+    }
+
+    /**
+     * Retrieves the value of environment variable.
+     *
+     * @param string $varName Environment variable name
+     *
+     * @return string
+     * @throws PHP_CodeSniffer_Exception
+     */
+    protected function getEnv($varName)
+    {
+        if (!isset($_SERVER[$varName])) {
+            throw new PHP_CodeSniffer_Exception(
+                $varName . ' environment variable is not set'
+            );
+        }
+
+        return $_SERVER[$varName];
     }
 
     /**
@@ -72,72 +100,45 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
      */
     protected function getPath($varName)
     {
-        if (!isset($_SERVER[$varName])) {
-            throw new PHP_CodeSniffer_Exception(
-                $varName . ' environment variable is not set'
-            );
-        }
-
-        $path = realpath($_SERVER[$varName]);
+        $value = $this->getEnv($varName);
+        $path = realpath($value);
 
         if (false === $path) {
             throw new PHP_CodeSniffer_Exception(
-                $_SERVER[$varName] . ' path does not exist'
+                $value . ' path does not exist'
             );
         }
 
         return $path;
     }
 
-    /**
-     * Generate a partial report for a single processed file.
-     *
-     * Function should return TRUE if it printed or stored data about the file
-     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
-     * its data should be counted in the grand totals.
-     *
-     * @param array   $report      Prepared report data.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed line width.
-     *
-     * @return boolean
-     */
+    /** {@inheritDoc} */
     public function generateFileReport(
         $report,
-        $showSources=false,
-        $width=80
+        PHP_CodeSniffer_File $phpcsFile,
+        $showSources = false,
+        $width = 80
     ) {
         $diff = $this->getStagedDiff();
         $changes = $this->getChanges($diff);
 
         $report = $this->filterReport($report, $changes);
 
-        $full = new PHP_CodeSniffer_Reports_Full();
-        return $full->generateFileReport($report, $showSources, $width);
+        $reporting = new PHP_CodeSniffer_Reporting();
+        $actual = $reporting->factory($this->reportType);
+        return $actual->generateFileReport($report, $phpcsFile, $showSources, $width);
     }
 
-    /**
-     * Prints all errors and warnings for each file processed.
-     *
-     * @param string  $cachedData    Any partial report data that was returned from
-     *                               generateFileReport during the run.
-     * @param int     $totalFiles    Total number of files processed during the run.
-     * @param int     $totalErrors   Total number of errors found during the run.
-     * @param int     $totalWarnings Total number of warnings found during the run.
-     * @param boolean $showSources   Show sources?
-     * @param int     $width         Maximum allowed line width.
-     * @param boolean $toScreen      Is the report being printed to screen?
-     *
-     * @return void
-     */
+    /** {@inheritDoc} */
     public function generate(
         $cachedData,
         $totalFiles,
         $totalErrors,
         $totalWarnings,
-        $showSources=false,
-        $width=80,
-        $toScreen=true
+        $totalFixable,
+        $showSources = false,
+        $width = 80,
+        $toScreen = true
     ) {
         echo $cachedData;
 
@@ -233,23 +234,28 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
         $repaired = array_merge($report, array(
             'errors'   => 0,
             'warnings' => 0,
+            'fixable' => 0,
         ));
 
         foreach ($report['messages'] as $columns) {
             foreach ($columns as $messages) {
                 foreach ($messages as $message) {
                     switch($message['type']) {
-                        case 'ERROR';
+                        case 'ERROR':
                             $key = 'errors';
                             break;
-                        case 'WARNING';
+                        case 'WARNING':
                             $key = 'warnings';
                             break;
-                        default;
+                        default:
                             $key = null;
                             continue;
                     }
                     $repaired[$key]++;
+
+                    if ($message['fixable']) {
+                        $repaired['fixable']++;
+                    }
                 }
             }
         }
