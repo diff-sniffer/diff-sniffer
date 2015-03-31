@@ -8,12 +8,11 @@
     }
   ],
   "require": {
-    "morozov/diff-sniffer-core" : "1.5.*"
+    "morozov/diff-sniffer-core" : "~2"
   },
   "autoload": {
     "psr-0": {
       "DiffSniffer": "src/"
     }
-  },
-  "minimum-stability": "dev"
+  }
 }
