@@ -13,7 +13,6 @@
     "squizlabs/php_codesniffer": "2.*"
   },
   "autoload": {
-    "files": ["src/functions.php"],
     "psr-0": {
       "DiffSniffer": "src/"
     }
