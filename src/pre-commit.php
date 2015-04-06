@@ -24,13 +24,11 @@ if (!file_exists($autoload)) {
 
 require $autoload;
 
-$arguments = DiffSniffer\getCodeSnifferArguments(
-    $_SERVER['argv'],
-    __DIR__ . '/../config.php'
-);
+$arguments = $_SERVER['argv'];
+array_shift($arguments);
 
 if ($arguments && $arguments[0] == '--version') {
-    echo 'Diff Sniffer Pre-Commit Hook version 2.3.0' . PHP_EOL;
+    echo 'Diff Sniffer Pre-Commit Hook version 2.3.0.1' . PHP_EOL;
     $cli = new PHP_CodeSniffer_CLI();
     $cli->processLongArgument('version', null, null);
     exit;
