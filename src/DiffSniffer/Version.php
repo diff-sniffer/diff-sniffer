@@ -38,7 +38,7 @@ class Version
     public static function getVersion()
     {
         if (self::$version === null) {
-            $version = new \SebastianBergmann\Version('2.3', dirname(dirname(__DIR__)));
+            $version = new \SebastianBergmann\Version('3.0', dirname(dirname(__DIR__)));
             self::$version = $version->getVersion();
         }
 
