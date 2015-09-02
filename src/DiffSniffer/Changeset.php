@@ -7,7 +7,7 @@
  * @category  DiffSniffer
  * @package   DiffSniffer
  * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2013 Sergei Morozov
+ * @copyright 2017 Sergei Morozov
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer
  */
@@ -21,7 +21,7 @@ namespace DiffSniffer;
  * @category  DiffSniffer
  * @package   DiffSniffer
  * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2013 Sergei Morozov
+ * @copyright 2017 Sergei Morozov
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer
  */
@@ -32,14 +32,13 @@ interface Changeset
      *
      * @return string
      */
-    public function getDiff();
+    public function getDiff() : string;
 
     /**
-     * Exports the changed files into specified directory
+     * Returns contents of the given file
      *
-     * @param string $dir Target directory
-     *
-     * @return void
+     * @param string $path
+     * @return string
      */
-    public function export($dir);
+    public function getContents(string $path) : string;
 }

@@ -8,15 +8,15 @@
  * @category  DiffSniffer
  * @package   DiffSniffer
  * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2013 Sergei Morozov
+ * @copyright 2017 Sergei Morozov
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer
  */
 namespace DiffSniffer;
 
-use PHP_CodeSniffer_CLI;
-use RecursiveIteratorIterator;
-use RecursiveDirectoryIterator;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Runner as BaseRunner;
 
 /**
  * CodeSniffer runner
@@ -26,7 +26,7 @@ use RecursiveDirectoryIterator;
  * @category  DiffSniffer
  * @package   DiffSniffer
  * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2013 Sergei Morozov
+ * @copyright 2017 Sergei Morozov
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer
  */
@@ -36,157 +36,31 @@ class Runner
      * Runs CodeSniffer against specified changeset
      *
      * @param Changeset $changeset Changeset instance
-     * @param array     $arguments PHP_CodeSniffer command line arguments
      *
      * @return int
      */
-    public function run(Changeset $changeset, array $arguments = array())
+    public function run(Changeset $changeset)
     {
-        $dir = $this->createTempDir();
-        $this->scheduleDirectoryRemoval($dir);
-        $changeset->export($dir);
-        $diff = $changeset->getDiff();
-        $diffPath = $this->storeDiff($diff);
-        $this->scheduleFileRemoval($diffPath);
-        $return_var = $this->runCodeSniffer($dir, $diffPath, $arguments);
+        define('PHP_CODESNIFFER_CBF', false);
 
-        return $return_var;
-    }
+        $config = new Config();
+        $diff = new Diff($changeset->getDiff());
+        $reporter = new Reporter($diff, $config);
 
-    /**
-     * Create temporary directory
-     *
-     * @return string Directory path
-     */
-    protected function createTempDir()
-    {
-        $file = $this->createTempFile();
-        unlink($file);
-        mkdir($file);
+        $runner = new BaseRunner();
+        $runner->config = $config;
+        $runner->reporter = $reporter;
+        $runner->init();
 
-        return $file;
-    }
+        $it = new Iterator($diff, $changeset, $runner->ruleset, $config);
 
-    /**
-     * Schedule file removal
-     *
-     * @param string $path File path
-     *
-     * @return void
-     */
-    protected function scheduleFileRemoval($path)
-    {
-        register_shutdown_function(
-            function () use ($path) {
-                unlink($path);
-            }
-        );
-    }
-
-    /**
-     * Schedule directory removal
-     *
-     * @param string $directory Directory path
-     *
-     * @return void
-     */
-    protected function scheduleDirectoryRemoval($directory)
-    {
-        register_shutdown_function(
-            function () use ($directory) {
-                $it = new RecursiveDirectoryIterator(
-                    $directory,
-                    RecursiveDirectoryIterator::SKIP_DOTS
-                );
-                $ri = new RecursiveIteratorIterator(
-                    $it,
-                    RecursiveIteratorIterator::CHILD_FIRST
-                );
-
-                /** @var \SplFileInfo $file */
-                foreach ($ri as $file) {
-                    if ($file->isDir()) {
-                        rmdir($file->getPathname());
-                    } else {
-                        unlink($file->getPathname());
-                    }
-                }
-
-                rmdir($directory);
-            }
-        );
-    }
-
-    /**
-     * Stores diff contents in a temporary file
-     *
-     * @param string $diff Diff contents
-     *
-     * @return string File path
-     */
-    protected function storeDiff($diff)
-    {
-        $file = $this->createTempFile();
-        file_put_contents($file, $diff);
-
-        return $file;
-    }
-
-    /**
-     * Creates temporary file
-     *
-     * @return string File path
-     */
-    protected function createTempFile()
-    {
-        $dir = sys_get_temp_dir();
-        $file = tempnam($dir, 'snf');
-
-        return $file;
-    }
-
-    /**
-     * Runs CodeSniffer
-     *
-     * @param string $dir      Base directory path
-     * @param string $diffPath Diff file path
-     * @param array  $options  PHP_CodeSniffer command line options
-     *
-     * @return int
-     */
-    protected function runCodeSniffer($dir, $diffPath, array $options = array())
-    {
-        include_once __DIR__ . '/CodeSniffer/Reports/DiffSniffer.php';
-
-        $reportType = 'full';
-        foreach ($options as $i => $value) {
-            if (strpos($value, '--report=') !== false) {
-                $reportType = substr($value, 9);
-                unset($options[$i]);
-            }
+        /** @var File $file */
+        foreach ($it as $file) {
+            $runner->processFile($file);
         }
 
-        $_SERVER['argv'] = array_merge(
-            array(
-                $_SERVER['argv'][0],
-            ),
-            $options,
-            array(
-                '--report=diffSniffer',
-                $dir,
-            )
-        );
-        $_SERVER['argc'] = count($_SERVER['argv']);
+        $reporter->printReports();
 
-        $_SERVER['PHPCS_DIFF_PATH'] = $diffPath;
-        $_SERVER['PHPCS_BASE_DIR'] = $dir;
-        $_SERVER['PHPCS_REPORT_TYPE'] = $reportType;
-
-        $cli = new PHP_CodeSniffer_CLI();
-        $cli->checkRequirements();
-
-        $numErrors = $cli->process();
-
-        return $numErrors === 0 ? 0 : 1;
+        return (int) ($reporter->totalErrors || $reporter->totalWarnings);
     }
 }

@@ -4,32 +4,34 @@ namespace DiffSniffer\Tests;
 
 use DiffSniffer\Changeset;
 use DiffSniffer\Runner;
+use PHPUnit\Framework\TestCase;
 
-class SniffTest extends \PHPUnit_Framework_TestCase
+class SniffTest extends TestCase
 {
     public function testSniff()
     {
+        $_SERVER['argv'] = array();
+
         /** @var Changeset|\PHPUnit_Framework_MockObject_MockObject $changeSet */
         $changeSet = $this->getMockForAbstractClass(Changeset::class);
-        $changeSet->expects($this->once())
-            ->method('export');
         $changeSet->expects($this->once())
             ->method('getDiff')
             ->willReturn(file_get_contents(__DIR__ . '/fixtures/workspace.diff'));
 
+        $changeSet->expects($this->once())
+            ->method('getContents')
+            ->with('main.php')
+            ->willReturn(
+                file_get_contents(__DIR__ . '/fixtures/workspace/main.php')
+            );
+
         /** @var Runner|\PHPUnit_Framework_MockObject_MockObject $runner */
-        $runner = $this->getMock(Runner::class, array(
-            'createTempDir',
-            'scheduleDirectoryRemoval',
-            'scheduleFileRemoval',
-        ));
-        $runner->expects($this->once())
-            ->method('createTempDir')
-            ->willReturn(__DIR__ . '/fixtures/workspace');
+        $runner = $this->createPartialMock(Runner::class, array());
 
-        $this->expectOutputRegex('/FOUND 1 ERROR AFFECTING 1 LINE/');
+        $this->expectOutputString(
+            file_get_contents(__DIR__ . '/fixtures/output.txt')
+        );
 
-        $exitCode = $runner->run($changeSet);
-        $this->assertEquals(1, $exitCode);
+        $this->assertEquals(1, $runner->run($changeSet));
     }
 }
