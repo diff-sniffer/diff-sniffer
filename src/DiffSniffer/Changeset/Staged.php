@@ -57,7 +57,7 @@ class Staged implements Changeset
      */
     public function getDiff()
     {
-        $cmd = 'git diff --staged --diff-filter=ACM --no-color';
+        $cmd = $this->getFilesCommand() . ' | xargs git diff --staged --';
         return $this->exec($cmd, $this->gitDir);
     }
 
@@ -71,9 +71,19 @@ class Staged implements Changeset
      */
     public function export($dir)
     {
-        $cmd = 'git diff --staged --diff-filter=ACM --name-only'
-            . ' | xargs -I% git checkout-index --prefix="' . $dir . '/" -- %';
+        $cmd = $this->getFilesCommand() . ' | xargs git checkout-index --prefix="' . $dir . '/" --';
         $this->exec($cmd, $this->gitDir);
+    }
+
+    /**
+     * Returns the sub-command which generates the list of files to be checked
+     *
+     * @return string
+     */
+    private function getFilesCommand()
+    {
+        // produce the list of files which have added linens in the staging area
+        return 'git diff --staged --numstat | grep -vP "^0\\t" | cut -f3';
     }
 
     /**
