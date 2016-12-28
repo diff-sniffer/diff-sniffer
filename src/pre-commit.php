@@ -12,6 +12,13 @@
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
+
+// not all git commands which do commit internally accept the --no-verify flag,
+// so this will be a bulletproof way to disable verification when needed
+if (!empty($_SERVER['DIFF_SNIFFER_NO_VERIFY'])) {
+    exit();
+}
+
 $autoload = __DIR__ . '/../vendor/autoload.php';
 
 if (!file_exists($autoload)) {
