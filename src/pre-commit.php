@@ -8,7 +8,7 @@
  * @category  DiffSniffer
  * @package   DiffSniffer
  * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2014 Sergei Morozov
+ * @copyright 2017 Sergei Morozov
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
@@ -19,29 +19,16 @@ if (!empty($_SERVER['DIFF_SNIFFER_NO_VERIFY'])) {
     exit();
 }
 
-$autoload = __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/bootstrap.php';
 
-if (!file_exists($autoload)) {
-    echo 'You must set up the project dependencies, run the following commands:'
-        . PHP_EOL . 'curl -sS https://getcomposer.org/installer | php'
-        . PHP_EOL . 'php composer.phar install'
-        . PHP_EOL;
-    exit(2);
-}
-
-require $autoload;
-
-$arguments = $_SERVER['argv'];
-array_shift($arguments);
-
-if ($arguments && $arguments[0] == '--version') {
-    echo 'Diff Sniffer Pre-Commit Hook version 2.3.0.1' . PHP_EOL;
-    $cli = new PHP_CodeSniffer_CLI();
-    $cli->processLongArgument('version', null, null);
+if ($_SERVER['argc'] > 1 && $_SERVER['argv'][1] == '--version') {
+    printf(
+        'Diff Sniffer Pre-Commit Hook version %s' . PHP_EOL,
+        (new \SebastianBergmann\Version('3.0', dirname(__DIR__)))->getVersion()
+    );
     exit;
 }
 
-$runner = new \DiffSniffer\Runner\Staged();
-$return_var = $runner->run(getcwd(), $arguments);
-
-exit($return_var);
+return (new DiffSniffer\Runner())->run(
+    new DiffSniffer\Changeset\Staged(getcwd())
+);

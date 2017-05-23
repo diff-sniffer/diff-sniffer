@@ -15,6 +15,7 @@
 namespace DiffSniffer\Changeset;
 
 use DiffSniffer\Changeset;
+use DiffSniffer\Exception;
 
 /**
  * Changeset that represents Git staged area
@@ -24,7 +25,7 @@ use DiffSniffer\Changeset;
  * @category  DiffSniffer
  * @package   DiffSniffer
  * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2014 Sergei Morozov
+ * @copyright 2017 Sergei Morozov
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
@@ -35,68 +36,61 @@ class Staged implements Changeset
      *
      * @var string
      */
-    protected $gitDir;
+    private $dir;
 
     /**
      * Constructor
      *
      * @param string $cwd Current directory
      */
-    public function __construct($cwd)
+    public function __construct(string $cwd)
     {
-        $cmd = 'git rev-parse --show-toplevel';
-        $gitDir = $this->exec($cmd, $cwd);
-        $this->gitDir = rtrim($gitDir);
+        $dir = $this->exec(
+            $this->cmd('git', 'rev-parse', '--show-toplevel'),
+            $cwd
+        );
+
+        $this->dir = rtrim($dir);
     }
 
     /**
-     * Returns diff of the changeset
-     *
-     * @return string
-     * @throws Exception
+     * {@inheritDoc}
      */
-    public function getDiff()
+    public function getDiff() : string
     {
-        $cmd = $this->getFilesCommand() . ' | xargs git diff --staged --';
-        return $this->exec($cmd, $this->gitDir);
+        return $this->exec(
+            implode(' | ', [
+                $this->cmd('git', 'diff', '--staged', '--numstat'),
+                $this->cmd('grep', '-vP', '^0\\t'),
+                $this->cmd('cut', '-f3'),
+                $this->cmd('xargs', 'git', 'diff', '--staged', '--'),
+            ]),
+            $this->dir
+        );
     }
 
     /**
-     * Exports the changed files into specified directory
-     *
-     * @param string $dir Target directory
-     *
-     * @return void
-     * @throws Exception
+     * {@inheritDoc}
      */
-    public function export($dir)
+    public function getContents(string $path) : string
     {
-        $cmd = $this->getFilesCommand() . ' | xargs git checkout-index --prefix="' . $dir . '/" --';
-        $this->exec($cmd, $this->gitDir);
-    }
-
-    /**
-     * Returns the sub-command which generates the list of files to be checked
-     *
-     * @return string
-     */
-    private function getFilesCommand()
-    {
-        // produce the list of files which have added linens in the staging area
-        return 'git diff --staged --numstat | grep -vP "^0\\t" | cut -f3';
+        return $this->exec(
+            $this->cmd('git', 'show', ':' . $path),
+            $this->dir
+        );
     }
 
     /**
      * Executes specified command and returns its output or throws exception
      * containing error
-     * 
-     * @param string      $cmd Command to execute
-     * @param string|null $cwd Current directory
+     *
+     * @param string $cmd Command
+     * @param string $cwd Current directory
      *
      * @return string
      * @throws Exception
      */
-    protected function exec($cmd, $cwd = null)
+    private function exec(string $cmd, $cwd)
     {
         $process = proc_open(
             $cmd,
@@ -121,5 +115,12 @@ class Staged implements Changeset
         }
 
         return $out;
+    }
+
+    private function cmd(string $cmd, string ...$args) : string
+    {
+        return implode(' ', array_merge([
+            escapeshellcmd($cmd),
+        ], array_map('escapeshellarg', $args)));
     }
 }
