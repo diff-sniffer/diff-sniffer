@@ -11,7 +11,7 @@
   "require": {
     "morozov/bootstrap": "^1.1",
     "squizlabs/php_codesniffer": "^3.0",
-    "sebastian/version": "^2.0",
+    "ocramius/package-versions": "^1.1",
     "php": "^7.0"
   },
   "require-dev": {

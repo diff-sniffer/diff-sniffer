@@ -33,6 +33,16 @@ use PHP_CodeSniffer\Runner as BaseRunner;
 class Runner
 {
     /**
+     * @var Config
+     */
+    private $config;
+
+    public function __construct(Config $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
      * Runs CodeSniffer against specified changeset
      *
      * @param Changeset $changeset Changeset instance
@@ -41,18 +51,15 @@ class Runner
      */
     public function run(Changeset $changeset)
     {
-        define('PHP_CODESNIFFER_CBF', false);
-
-        $config = new Config();
         $diff = new Diff($changeset->getDiff());
-        $reporter = new Reporter($diff, $config);
+        $reporter = new Reporter($diff, $this->config);
 
         $runner = new BaseRunner();
-        $runner->config = $config;
+        $runner->config = $this->config;
         $runner->reporter = $reporter;
         $runner->init();
 
-        $it = new Iterator($diff, $changeset, $runner->ruleset, $config);
+        $it = new Iterator($diff, $changeset, $runner->ruleset, $this->config);
 
         /** @var File $file */
         foreach ($it as $file) {

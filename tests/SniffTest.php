@@ -4,6 +4,7 @@ namespace DiffSniffer\Tests;
 
 use DiffSniffer\Changeset;
 use DiffSniffer\Runner;
+use PHP_CodeSniffer\Config;
 use PHPUnit\Framework\TestCase;
 
 class SniffTest extends TestCase
@@ -25,8 +26,8 @@ class SniffTest extends TestCase
                 file_get_contents(__DIR__ . '/fixtures/workspace/main.php')
             );
 
-        /** @var Runner|\PHPUnit_Framework_MockObject_MockObject $runner */
-        $runner = $this->createPartialMock(Runner::class, array());
+        $config = new Config();
+        $runner = new Runner($config);
 
         $this->expectOutputString(
             file_get_contents(__DIR__ . '/fixtures/output.txt')
