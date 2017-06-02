@@ -13,6 +13,9 @@
  * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
 
+use DiffSniffer\Application;
+use DiffSniffer\Command\PreCommit;
+
 // not all git commands which do commit internally accept the --no-verify flag,
 // so this will be a bulletproof way to disable verification when needed
 if (!empty($_SERVER['DIFF_SNIFFER_NO_VERIFY'])) {
@@ -21,14 +24,4 @@ if (!empty($_SERVER['DIFF_SNIFFER_NO_VERIFY'])) {
 
 require __DIR__ . '/bootstrap.php';
 
-if ($_SERVER['argc'] > 1 && $_SERVER['argv'][1] == '--version') {
-    printf(
-        'Diff Sniffer Pre-Commit Hook version %s' . PHP_EOL,
-        (new \SebastianBergmann\Version('3.0', dirname(__DIR__)))->getVersion()
-    );
-    exit;
-}
-
-return (new DiffSniffer\Runner())->run(
-    new DiffSniffer\Changeset\Staged(getcwd())
-);
+return (new Application())->run(new PreCommit(), $_SERVER['argv']);

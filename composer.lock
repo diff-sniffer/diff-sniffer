@@ -48,18 +48,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/morozov/diff-sniffer-core.git",
-                "reference": "1d1c41193592e085c4a546d7889059eb7219f477"
+                "reference": "ba2183be46091a783b66c00d541dd650f57b4089"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/1d1c41193592e085c4a546d7889059eb7219f477",
-                "reference": "1d1c41193592e085c4a546d7889059eb7219f477",
+                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/ba2183be46091a783b66c00d541dd650f57b4089",
+                "reference": "ba2183be46091a783b66c00d541dd650f57b4089",
                 "shasum": ""
             },
             "require": {
                 "morozov/bootstrap": "^1.1",
+                "ocramius/package-versions": "^1.1",
                 "php": "^7.0",
-                "sebastian/version": "^2.0",
                 "squizlabs/php_codesniffer": "^3.0"
             },
             "require-dev": {
@@ -82,50 +82,55 @@
                 }
             ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2017-05-28 02:08:28"
+            "time": "2017-06-05 15:15:51"
         },
         {
-            "name": "sebastian/version",
-            "version": "2.0.1",
+            "name": "ocramius/package-versions",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sebastianbergmann/version.git",
-                "reference": "99732be0ddb3361e16ad77b68ba41efc8e979019"
+                "url": "https://github.com/Ocramius/PackageVersions.git",
+                "reference": "51e867c70f0799790b3e82276875414ce13daaca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/version/zipball/99732be0ddb3361e16ad77b68ba41efc8e979019",
-                "reference": "99732be0ddb3361e16ad77b68ba41efc8e979019",
+                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/51e867c70f0799790b3e82276875414ce13daaca",
+                "reference": "51e867c70f0799790b3e82276875414ce13daaca",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6"
+                "composer-plugin-api": "^1.0",
+                "php": "~7.0"
             },
-            "type": "library",
+            "require-dev": {
+                "composer/composer": "^1.3",
+                "ext-zip": "*",
+                "phpunit/phpunit": "^5.4.7"
+            },
+            "type": "composer-plugin",
             "extra": {
+                "class": "PackageVersions\\Installer",
                 "branch-alias": {
                     "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
-                "classmap": [
-                    "src/"
-                ]
+                "psr-4": {
+                    "PackageVersions\\": "src/PackageVersions"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com"
                 }
             ],
-            "description": "Library that helps with managing the version number of Git-hosted PHP projects",
-            "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2016-10-03T07:35:21+00:00"
+            "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
+            "time": "2016-12-30T09:49:15+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
