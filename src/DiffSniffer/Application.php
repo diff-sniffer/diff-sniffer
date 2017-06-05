@@ -3,6 +3,7 @@
 namespace DiffSniffer;
 
 use function basename;
+use function count;
 use DiffSniffer\Command\BadUsage;
 use PackageVersions\Versions;
 use PHP_CodeSniffer\Config;
@@ -52,6 +53,12 @@ final class Application
         }
 
         define('PHP_CODESNIFFER_CBF', false);
+
+        // workaround for an issue in Config: when $args are empty,
+        // it takes values from the environment
+        if (!count($args)) {
+            $args = ['-d', 'error_reporting=' . error_reporting()];
+        }
 
         $config = new Config($args);
         $runner = new Runner($config);
