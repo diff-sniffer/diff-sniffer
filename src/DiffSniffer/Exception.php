@@ -26,6 +26,6 @@ namespace DiffSniffer;
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer
  */
-class Exception extends \Exception
+interface Exception
 {
 }
