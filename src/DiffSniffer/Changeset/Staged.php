@@ -15,7 +15,6 @@
 namespace DiffSniffer\Changeset;
 
 use DiffSniffer\Changeset;
-use DiffSniffer\Exception;
 
 /**
  * Changeset that represents Git staged area
@@ -42,6 +41,7 @@ class Staged implements Changeset
      * Constructor
      *
      * @param string $cwd Current directory
+     * @throws Exception
      */
     public function __construct(string $cwd)
     {

@@ -48,12 +48,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/morozov/diff-sniffer-core.git",
-                "reference": "ba2183be46091a783b66c00d541dd650f57b4089"
+                "reference": "f76be34266777b733c305e74806a4910f4736a0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/ba2183be46091a783b66c00d541dd650f57b4089",
-                "reference": "ba2183be46091a783b66c00d541dd650f57b4089",
+                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/f76be34266777b733c305e74806a4910f4736a0f",
+                "reference": "f76be34266777b733c305e74806a4910f4736a0f",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2017-06-05 15:15:51"
+            "time": "2017-10-01T19:09:16+00:00"
         },
         {
             "name": "ocramius/package-versions",
