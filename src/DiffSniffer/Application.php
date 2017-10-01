@@ -4,7 +4,7 @@ namespace DiffSniffer;
 
 use function basename;
 use function count;
-use DiffSniffer\Command\BadUsage;
+use DiffSniffer\Command\Exception\BadUsage;
 use PackageVersions\Versions;
 use PHP_CodeSniffer\Config;
 

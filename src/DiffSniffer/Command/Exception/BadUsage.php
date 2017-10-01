@@ -12,8 +12,9 @@
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer
  */
-namespace DiffSniffer\Command;
+namespace DiffSniffer\Command\Exception;
 
+use BadMethodCallException;
 use DiffSniffer\Exception;
 
 /**
@@ -28,6 +29,6 @@ use DiffSniffer\Exception;
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer
  */
-class BadUsage extends \BadMethodCallException implements Exception
+class BadUsage extends BadMethodCallException implements Exception
 {
 }
