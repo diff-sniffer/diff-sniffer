@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "morozov/bootstrap",
-            "version": "1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/morozov/bootstrap.git",
-                "reference": "da4791fb99b9e9a9db57332d95735f04e066518c"
+                "reference": "f8c583a3220a38c0d6cb5f97238baa8d2be7c390"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morozov/bootstrap/zipball/da4791fb99b9e9a9db57332d95735f04e066518c",
-                "reference": "da4791fb99b9e9a9db57332d95735f04e066518c",
+                "url": "https://api.github.com/repos/morozov/bootstrap/zipball/f8c583a3220a38c0d6cb5f97238baa8d2be7c390",
+                "reference": "f8c583a3220a38c0d6cb5f97238baa8d2be7c390",
                 "shasum": ""
             },
             "require": {
@@ -40,7 +40,7 @@
                 }
             ],
             "description": "Command line application bootstrap component",
-            "time": "2017-05-24T05:27:25+00:00"
+            "time": "2017-10-02T19:03:22+00:00"
         },
         {
             "name": "morozov/diff-sniffer-core",

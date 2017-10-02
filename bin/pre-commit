@@ -16,6 +16,7 @@
 
 use DiffSniffer\Application;
 use DiffSniffer\Command\PreCommit;
+use DiffSniffer\Exception;
 
 // not all git commands which do commit internally accept the --no-verify flag,
 // so this will be a bulletproof way to disable verification when needed
@@ -25,6 +26,11 @@ if (!empty($_SERVER['DIFF_SNIFFER_NO_VERIFY'])) {
 
 require __DIR__ . '/../src/bootstrap.php';
 
-exit(
-    (new Application())->run(new PreCommit(), $_SERVER['argv'])
-);
+try {
+    exit(
+        (new Application())->run(new PreCommit(), $_SERVER['argv'])
+    );
+} catch (Exception $e) {
+    fwrite(STDERR, $e->getMessage() . PHP_EOL);
+    exit(1);
+}
