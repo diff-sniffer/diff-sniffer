@@ -15,6 +15,8 @@
 namespace DiffSniffer\Changeset;
 
 use DiffSniffer\Changeset;
+use DiffSniffer\Cli;
+use RuntimeException;
 
 /**
  * Changeset that represents Git staged area
@@ -31,6 +33,13 @@ use DiffSniffer\Changeset;
 class Staged implements Changeset
 {
     /**
+     * CLI utilities
+     *
+     * @var Cli
+     */
+    private $cli;
+
+    /**
      * Git working directory
      *
      * @var string
@@ -40,13 +49,16 @@ class Staged implements Changeset
     /**
      * Constructor
      *
+     * @param Cli $cli CLI utilities
      * @param string $cwd Current directory
-     * @throws Exception
+     * @throws RuntimeException
      */
-    public function __construct(string $cwd)
+    public function __construct(Cli $cli, string $cwd)
     {
-        $dir = $this->exec(
-            $this->cmd('git', 'rev-parse', '--show-toplevel'),
+        $this->cli = $cli;
+
+        $dir = $this->cli->exec(
+            $this->cli->cmd('git', 'rev-parse', '--show-toplevel'),
             $cwd
         );
 
@@ -58,13 +70,13 @@ class Staged implements Changeset
      */
     public function getDiff() : string
     {
-        return $this->exec(
-            implode(' | ', [
-                $this->cmd('git', 'diff', '--staged', '--numstat'),
-                $this->cmd('grep', '-vP', '^0\\t'),
-                $this->cmd('cut', '-f3'),
-                $this->cmd('xargs', 'git', 'diff', '--staged', '--'),
-            ]),
+        return $this->cli->exec(
+            $this->cli->pipe(
+                $this->cli->cmd('git', 'diff', '--staged', '--numstat'),
+                $this->cli->cmd('grep', '-vP', '^0\\t'),
+                $this->cli->cmd('cut', '-f3'),
+                $this->cli->cmd('xargs', 'git', 'diff', '--staged', '--')
+            ),
             $this->dir
         );
     }
@@ -74,53 +86,9 @@ class Staged implements Changeset
      */
     public function getContents(string $path) : string
     {
-        return $this->exec(
-            $this->cmd('git', 'show', ':' . $path),
+        return $this->cli->exec(
+            $this->cli->cmd('git', 'show', ':' . $path),
             $this->dir
         );
-    }
-
-    /**
-     * Executes specified command and returns its output or throws exception
-     * containing error
-     *
-     * @param string $cmd Command
-     * @param string $cwd Current directory
-     *
-     * @return string
-     * @throws Exception
-     */
-    private function exec(string $cmd, $cwd)
-    {
-        $process = proc_open(
-            $cmd,
-            array(
-                1 => array('pipe', 'w'),
-                2 => array('pipe', 'w'),
-            ),
-            $pipes,
-            $cwd
-        );
-
-        if (!$process) {
-            throw new Exception('Unable to start process "' . $cmd . '"');
-        }
-
-        $out = stream_get_contents($pipes[1]);
-        $err = stream_get_contents($pipes[2]);
-
-        $ret = proc_close($process);
-        if ($ret != 0) {
-            throw new Exception($err, $ret);
-        }
-
-        return $out;
-    }
-
-    private function cmd(string $cmd, string ...$args) : string
-    {
-        return implode(' ', array_merge([
-            escapeshellcmd($cmd),
-        ], array_map('escapeshellarg', $args)));
     }
 }

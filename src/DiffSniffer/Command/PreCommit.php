@@ -16,6 +16,7 @@ namespace DiffSniffer\Command;
 
 use DiffSniffer\Changeset;
 use DiffSniffer\Changeset\Staged;
+use DiffSniffer\Cli;
 use DiffSniffer\Command;
 
 /**
@@ -65,6 +66,6 @@ USG;
      */
     public function createChangeSet(array &$args) : Changeset
     {
-        return new Staged(getcwd());
+        return new Staged(new Cli(), getcwd());
     }
 }
