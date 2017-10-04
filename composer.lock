@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f10405d3f439bba6802f21a84c3b1ec",
+    "content-hash": "55234edbb69c11450282ead1677f614e",
     "packages": [
         {
             "name": "morozov/bootstrap",
@@ -1642,6 +1642,8 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.1"
+    },
     "platform-dev": []
 }
