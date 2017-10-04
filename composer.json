@@ -15,8 +15,8 @@
     "phpunit/phpunit": "^6.3"
   },
   "autoload": {
-    "psr-0": {
-      "DiffSniffer": "src/"
+    "psr-4": {
+      "DiffSniffer\\PreCommit\\": "src/"
     }
   }
 }
