@@ -29,10 +29,9 @@ class PreCommitTest extends TestCase
         $this->cli = new Cli();
         $this->dir = $dir;
 
-        $this->cli->exec(
-            $this->cli->cmd('git', 'init'),
-            $this->dir
-        );
+        $this->cli->exec('git init', $this->dir);
+        $this->cli->exec('git config user.name phpunit', $this->dir);
+        $this->cli->exec('git config user.email phpunit@example.com', $this->dir);
     }
 
     protected function tearDown()
