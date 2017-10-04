@@ -3,6 +3,7 @@
 namespace DiffSniffer;
 
 use DiffSniffer\Exception\RuntimeException;
+use DiffSniffer\PreCommit\Cli;
 use PHPUnit\Framework\TestCase;
 
 class CliTest extends TestCase

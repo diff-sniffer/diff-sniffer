@@ -12,7 +12,7 @@
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
-namespace DiffSniffer;
+namespace DiffSniffer\PreCommit;
 
 use DiffSniffer\Exception\RuntimeException;
 

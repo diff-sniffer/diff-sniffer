@@ -12,12 +12,10 @@
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
-namespace DiffSniffer\Command;
+namespace DiffSniffer\PreCommit;
 
-use DiffSniffer\Changeset;
-use DiffSniffer\Changeset\Staged;
-use DiffSniffer\Cli;
-use DiffSniffer\Command;
+use DiffSniffer\Changeset as ChangesetInterface;
+use DiffSniffer\Command as CommandInterface;
 
 /**
  * Git pre-commit hook
@@ -31,7 +29,7 @@ use DiffSniffer\Command;
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
-class PreCommit implements Command
+final class Command implements CommandInterface
 {
     /**
      * {@inheritDoc}
@@ -64,8 +62,8 @@ USG;
     /**
      * {@inheritDoc}
      */
-    public function createChangeSet(array &$args) : Changeset
+    public function createChangeSet(array &$args) : ChangesetInterface
     {
-        return new Staged(new Cli(), getcwd());
+        return new Changeset(new Cli(), getcwd());
     }
 }

@@ -12,11 +12,10 @@
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
-namespace DiffSniffer\Changeset;
+namespace DiffSniffer\PreCommit;
 
-use DiffSniffer\Changeset;
-use DiffSniffer\Cli;
-use RuntimeException;
+use DiffSniffer\Changeset as ChangesetInterface;
+use DiffSniffer\Exception\RuntimeException;
 
 /**
  * Changeset that represents Git staged area
@@ -30,7 +29,7 @@ use RuntimeException;
  * @license   http://mit-license.org/ MIT Licence
  * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
-class Staged implements Changeset
+final class Changeset implements ChangesetInterface
 {
     /**
      * CLI utilities
