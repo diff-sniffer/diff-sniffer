@@ -18,8 +18,8 @@
     "phpunit/phpunit": "^6.1"
   },
   "autoload": {
-    "psr-0": {
-      "DiffSniffer": "src/"
+    "psr-4": {
+      "DiffSniffer\\": "src/"
     }
   }
 }
