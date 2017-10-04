@@ -24,7 +24,7 @@ if (!empty($_SERVER['DIFF_SNIFFER_NO_VERIFY'])) {
     exit();
 }
 
-require __DIR__ . '/../src/bootstrap.php';
+require __DIR__ . '/../include/bootstrap.php';
 
 try {
     exit(
