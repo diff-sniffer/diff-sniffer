@@ -15,7 +15,7 @@ use Traversable;
 /**
  * Changeset iterator
  */
-class Iterator implements \IteratorAggregate
+final class Iterator implements \IteratorAggregate
 {
     /**
      * @var Changeset

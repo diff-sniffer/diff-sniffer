@@ -9,7 +9,7 @@ use ReflectionMethod;
 /**
  * File filter
  */
-class Filter extends FilterIterator
+final class Filter extends FilterIterator
 {
     /**
      * @var \Closure
