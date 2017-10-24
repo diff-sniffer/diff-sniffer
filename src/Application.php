@@ -2,23 +2,12 @@
 
 namespace DiffSniffer;
 
-use function basename;
-use function count;
 use DiffSniffer\Command\Exception\BadUsage;
 use PackageVersions\Versions;
 use PHP_CodeSniffer\Config;
 
 /**
  * CLI application
- *
- * PHP version 5
- *
- * @category  DiffSniffer
- * @package   DiffSniffer
- * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2017 Sergei Morozov
- * @license   http://mit-license.org/ MIT Licence
- * @link      http://github.com/morozov/diff-sniffer
  */
 final class Application
 {

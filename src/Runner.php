@@ -1,17 +1,5 @@
 <?php
 
-/**
- * CodeSniffer runner
- *
- * PHP version 5
- *
- * @category  DiffSniffer
- * @package   DiffSniffer
- * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2017 Sergei Morozov
- * @license   http://mit-license.org/ MIT Licence
- * @link      http://github.com/morozov/diff-sniffer
- */
 namespace DiffSniffer;
 
 use PHP_CodeSniffer\Files\File;
@@ -20,15 +8,6 @@ use PHP_CodeSniffer\Runner as BaseRunner;
 
 /**
  * CodeSniffer runner
- *
- * PHP version 5
- *
- * @category  DiffSniffer
- * @package   DiffSniffer
- * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2017 Sergei Morozov
- * @license   http://mit-license.org/ MIT Licence
- * @link      http://github.com/morozov/diff-sniffer
  */
 class Runner
 {
