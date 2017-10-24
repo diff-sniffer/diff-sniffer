@@ -1,17 +1,5 @@
 <?php
 
-/**
- * Changeset that represents Git staged area
- *
- * PHP version 5
- *
- * @category  DiffSniffer
- * @package   DiffSniffer
- * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2014 Sergei Morozov
- * @license   http://mit-license.org/ MIT Licence
- * @link      http://github.com/morozov/diff-sniffer-pre-commit
- */
 namespace DiffSniffer\PreCommit;
 
 use DiffSniffer\Changeset as ChangesetInterface;
@@ -19,15 +7,6 @@ use DiffSniffer\Exception\RuntimeException;
 
 /**
  * Changeset that represents Git staged area
- *
- * PHP version 5
- *
- * @category  DiffSniffer
- * @package   DiffSniffer
- * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2017 Sergei Morozov
- * @license   http://mit-license.org/ MIT Licence
- * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
 final class Changeset implements ChangesetInterface
 {

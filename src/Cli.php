@@ -1,32 +1,11 @@
 <?php
 
-/**
- * CLI utility class
- *
- * PHP version 5
- *
- * @category  DiffSniffer
- * @package   DiffSniffer
- * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2014 Sergei Morozov
- * @license   http://mit-license.org/ MIT Licence
- * @link      http://github.com/morozov/diff-sniffer-pre-commit
- */
 namespace DiffSniffer\PreCommit;
 
 use DiffSniffer\Exception\RuntimeException;
 
 /**
  * CLI utility class
- *
- * PHP version 5
- *
- * @category  DiffSniffer
- * @package   DiffSniffer
- * @author    Sergei Morozov <morozov@tut.by>
- * @copyright 2017 Sergei Morozov
- * @license   http://mit-license.org/ MIT Licence
- * @link      http://github.com/morozov/diff-sniffer-pre-commit
  */
 final class Cli
 {
