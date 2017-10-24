@@ -1,6 +1,10 @@
 Diff Sniffer Pre-Commit Hook
 ============================
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/morozov/diff-sniffer-pre-commit/badges/quality-score.png)](https://scrutinizer-ci.com/g/morozov/diff-sniffer-pre-commit/)
+[![Code Coverage](https://scrutinizer-ci.com/g/morozov/diff-sniffer-pre-commit/badges/coverage.png)](https://scrutinizer-ci.com/g/morozov/diff-sniffer-pre-commit/)
+[![Build Status](https://travis-ci.org/morozov/diff-sniffer-pre-commit.png)](https://travis-ci.org/morozov/diff-sniffer-pre-commit)
+
 This tool allows you using [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) as a pre-commit hook. The main difference from [existing solutions](https://github.com/s0enke/git-hooks/blob/master/phpcs-pre-commit/pre-commit) that this one validates only changed lines of code but not the whole source tree.
 
 Installation
