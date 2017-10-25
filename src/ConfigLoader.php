@@ -83,7 +83,7 @@ class ConfigLoader
      */
     private function loadPhpCodeSnifferConfig(string $path) : array
     {
-        $phpCodeSnifferConfig = null;
+        $phpCodeSnifferConfig = [];
 
         require $path;
 
@@ -93,7 +93,7 @@ class ConfigLoader
     /**
      * Resolves relative installed paths against the configuration file path
      *
-     * @param array Configuration parameters
+     * @param array $config Configuration parameters
      * @param string $configPath Configuration file paths
      * @return array Configuration parameters
      */

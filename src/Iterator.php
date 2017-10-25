@@ -52,7 +52,7 @@ final class Iterator implements \IteratorAggregate
             new RecursiveArrayIterator(
                 new EmptyIterator()
             ),
-            null,
+            '',
             $this->config,
             $this->ruleSet
         ));

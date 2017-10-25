@@ -11,9 +11,11 @@ class RunnerTest extends TestCase
 {
     public function testEarlyReturn()
     {
+        /** @var Config|\PHPUnit_Framework_MockObject_MockObject $config */
         $config = $this->createMock(Config::class);
         $runner = new Runner($config);
 
+        /** @var Changeset|\PHPUnit_Framework_MockObject_MockObject $changeSet */
         $changeSet = $this->createMock(Changeset::class);
         $changeSet->expects($this->once())
             ->method('getDiff')

@@ -14,7 +14,7 @@ class Reporter extends BaseReporter
     /**
      * @var Diff
      */
-    private $diff = [];
+    private $diff;
 
     public function __construct(Diff $diff, Config $config)
     {
