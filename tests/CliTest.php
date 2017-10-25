@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DiffSniffer;
+namespace DiffSniffer\PreCommit\Tests;
 
 use DiffSniffer\Exception\RuntimeException;
 use DiffSniffer\PreCommit\Cli;

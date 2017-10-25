@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace DiffSniffer;
+namespace DiffSniffer\PreCommit\Tests;
 
 use DiffSniffer\PreCommit\Changeset;
 use DiffSniffer\PreCommit\Cli;
 use PHPUnit\Framework\TestCase;
 
-class PreCommitTest extends TestCase
+class ChangesetTest extends TestCase
 {
     /**
      * @var string
