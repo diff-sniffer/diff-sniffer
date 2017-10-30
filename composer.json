@@ -8,7 +8,7 @@
     }
   ],
   "require": {
-    "morozov/diff-sniffer-core" : "3.0.x-dev",
+    "morozov/diff-sniffer-core" : "^3.0",
     "php" : "^7.1"
   },
   "require-dev": {

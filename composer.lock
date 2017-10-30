@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b44cbbe383ee07f0646697e5caeeed38",
+    "content-hash": "2c441db377605ace25dfbea18df61056",
     "packages": [
         {
             "name": "morozov/bootstrap",
@@ -44,16 +44,16 @@
         },
         {
             "name": "morozov/diff-sniffer-core",
-            "version": "3.0.x-dev",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/morozov/diff-sniffer-core.git",
-                "reference": "10ef1541a30def0a6f9454442cfa715fc086daa9"
+                "reference": "c885f6cda7fe080374f6bbd8fe50edcdd24be18f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/10ef1541a30def0a6f9454442cfa715fc086daa9",
-                "reference": "10ef1541a30def0a6f9454442cfa715fc086daa9",
+                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/c885f6cda7fe080374f6bbd8fe50edcdd24be18f",
+                "reference": "c885f6cda7fe080374f6bbd8fe50edcdd24be18f",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2017-10-24T04:06:57+00:00"
+            "time": "2017-10-30T03:46:07+00:00"
         },
         {
             "name": "ocramius/package-versions",
@@ -2529,9 +2529,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "morozov/diff-sniffer-core": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
