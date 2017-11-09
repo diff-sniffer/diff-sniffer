@@ -51,7 +51,7 @@ final class Changeset implements ChangesetInterface
         return $this->cli->exec(
             $this->cli->pipe(
                 $this->cli->cmd('git', 'diff', '--staged', '--numstat'),
-                $this->cli->cmd('grep', '-vP', '^0\\t'),
+                $this->cli->cmd('grep', '-v', '^0[[:blank:]]'),
                 $this->cli->cmd('cut', '-f3'),
                 $this->cli->cmd('xargs', 'git', 'diff', '--staged', '--')
             ),
