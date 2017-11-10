@@ -24,7 +24,7 @@ class CliTest extends TestCase
     {
         $value = 'Hello, world "\'$!';
         $output = $this->cli->exec(
-            $this->cli->cmd('echo', '-n', $value)
+            $this->cli->cmd('/bin/echo', '-n', $value)
         );
 
         $this->assertEquals($value, $output);
@@ -43,7 +43,7 @@ class CliTest extends TestCase
     {
         $output = $this->cli->exec(
             $this->cli->pipe(
-                $this->cli->cmd('echo', '-n', 'Hello, world!'),
+                $this->cli->cmd('/bin/echo', '-n', 'Hello, world!'),
                 $this->cli->cmd('cat')
             )
         );
