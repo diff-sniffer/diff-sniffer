@@ -102,4 +102,28 @@ Hello, world #2!
 EOF
             , $changeset->getContents('file2.txt'));
     }
+
+    /** @test */
+    public function fileWithOnlyDeletedLinesIsIgnored()
+    {
+        file_put_contents($this->dir . '/file.txt', <<<EOF
+Line1
+Line2
+
+EOF
+        );
+
+        $this->cli->exec('git add .', $this->dir);
+        $this->cli->exec('git commit -m"Initial commit" --no-verify', $this->dir);
+
+        file_put_contents($this->dir . '/file.txt', <<<EOF
+Line2
+
+EOF
+        );
+        $this->cli->exec('git add file.txt', $this->dir);
+
+        $changeset = new Changeset($this->cli, $this->dir);
+        $this->assertSame('', $changeset->getDiff());
+    }
 }
