@@ -7,6 +7,8 @@ use DiffSniffer\Command as CommandInterface;
 
 /**
  * Git pre-commit hook
+ *
+ * @codeCoverageIgnore
  */
 final class Command implements CommandInterface
 {
