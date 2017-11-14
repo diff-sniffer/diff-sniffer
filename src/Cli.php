@@ -35,6 +35,28 @@ final class Cli
     }
 
     /**
+     * Joins commands by &&
+     *
+     * @param string[] ...$commands
+     * @return string
+     */
+    public function and(string ...$commands) : string
+    {
+        return implode(' && ', $commands);
+    }
+
+    /**
+     * Puts the given command in a sub-shell
+     *
+     * @param string $command
+     * @return string
+     */
+    public function subShell(string $command) : string
+    {
+        return '(' . $command . ')';
+    }
+
+    /**
      * Executes the specified command and returns its output or throws exception
      * containing error
      *

@@ -56,8 +56,13 @@ final class Changeset implements ChangesetInterface
         return $this->cli->exec(
             $this->cli->pipe(
                 $this->cli->cmd('git', 'diff', '--staged', '--numstat'),
-                $this->cli->cmd('awk', '$1 == 0 { print ":!"$3 }'),
-                $this->cli->cmd('xargs', 'git', 'diff', '--staged', '--', '.')
+                $this->cli->subShell(
+                    $this->cli->and(
+                        $this->cli->cmd('echo', '.'),
+                        $this->cli->cmd('awk', '$1 == 0 { print ":!"$3 }')
+                    )
+                ),
+                $this->cli->cmd('xargs', 'git', 'diff', '--staged', '--')
             ),
             $this->dir
         );
