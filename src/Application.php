@@ -86,29 +86,12 @@ HLP;
      */
     private function printVersion(Command $command)
     {
+        $version = Versions::getVersion($command->getPackageName());
+
         printf(
             '%s version %s' . PHP_EOL,
             $command->getName(),
-            $this->formatVersion(Versions::getVersion(
-                $command->getPackageName()
-            ))
-        );
-    }
-
-    /**
-     * Formats version string
-     *
-     * @param string $version
-     * @return string
-     */
-    private function formatVersion(string $version) : string
-    {
-        list($version, $hash) = explode('@', $version);
-
-        return preg_replace(
-            '/(\.9999999)+-dev$/',
-            '@' . preg_quote(substr($hash, 0, 7)),
-            $version
+            (new VersionFormatter())->format($version)
         );
     }
 }
