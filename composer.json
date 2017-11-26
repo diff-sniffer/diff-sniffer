@@ -21,5 +21,10 @@
     "psr-4": {
       "DiffSniffer\\": "src/"
     }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0-dev"
+    }
   }
 }
