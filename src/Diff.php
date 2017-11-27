@@ -3,13 +3,14 @@
 namespace DiffSniffer;
 
 use ArrayIterator;
+use Countable;
 use IteratorAggregate;
 use Traversable;
 
 /**
  * Diff
  */
-class Diff implements IteratorAggregate
+class Diff implements IteratorAggregate, Countable
 {
     /**
      * @var array<string,int[]>
@@ -34,6 +35,14 @@ class Diff implements IteratorAggregate
         return new ArrayIterator(
             array_keys($this->paths)
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function count() : int
+    {
+        return count($this->paths);
     }
 
     /**
