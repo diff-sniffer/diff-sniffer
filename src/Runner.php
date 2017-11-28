@@ -2,6 +2,7 @@
 
 namespace DiffSniffer;
 
+use PHP_CodeSniffer\Exceptions\DeepExitException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Runner as BaseRunner;
@@ -27,6 +28,8 @@ class Runner
      * @param Changeset $changeset Changeset instance
      *
      * @return int
+     * @throws DeepExitException
+     * @throws Exception
      */
     public function run(Changeset $changeset)
     {

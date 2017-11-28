@@ -5,6 +5,7 @@ namespace DiffSniffer;
 use DiffSniffer\Command\Exception\BadUsage;
 use PackageVersions\Versions;
 use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Exceptions\DeepExitException;
 
 /**
  * CLI application
@@ -41,26 +42,31 @@ final class Application
             return 1;
         }
 
-        $config = (new ConfigLoader())->loadConfig(getcwd());
-
-        if ($config !== null) {
-            foreach ($config as $key => $value) {
-                Config::setConfigData($key, $value, true);
-            }
-        }
-
         define('PHP_CODESNIFFER_CBF', false);
 
-        // workaround for an issue in Config: when $args are empty,
-        // it takes values from the environment
-        if (!count($args)) {
-            $args = ['-d', 'error_reporting=' . error_reporting()];
+        $config = (new ConfigLoader())->loadConfig(getcwd());
+
+        try {
+            if ($config !== null) {
+                foreach ($config as $key => $value) {
+                    Config::setConfigData($key, $value, true);
+                }
+            }
+
+            // workaround for an issue in Config: when $args are empty,
+            // it takes values from the environment
+            if (!count($args)) {
+                $args = ['-d', 'error_reporting=' . error_reporting()];
+            }
+
+            $config = new Config($args);
+            $runner = new Runner($config);
+
+            return $runner->run($changeSet);
+        } catch (DeepExitException $e) {
+            echo $e->getMessage();
+            return $e->getCode();
         }
-
-        $config = new Config($args);
-        $runner = new Runner($config);
-
-        return $runner->run($changeSet);
     }
 
     /**
