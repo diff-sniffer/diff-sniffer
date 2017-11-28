@@ -36,14 +36,6 @@ class Runner
             return 0;
         }
 
-        $config = (new ConfigLoader())->loadConfig(getcwd());
-
-        if ($config !== null) {
-            foreach ($config as $key => $value) {
-                Config::setConfigData($key, $value, true);
-            }
-        }
-
         $reporter = new Reporter($diff, $this->config);
 
         $runner = new BaseRunner();

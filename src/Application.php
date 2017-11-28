@@ -41,6 +41,14 @@ final class Application
             return 1;
         }
 
+        $config = (new ConfigLoader())->loadConfig(getcwd());
+
+        if ($config !== null) {
+            foreach ($config as $key => $value) {
+                Config::setConfigData($key, $value, true);
+            }
+        }
+
         define('PHP_CODESNIFFER_CBF', false);
 
         // workaround for an issue in Config: when $args are empty,
