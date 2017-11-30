@@ -3,7 +3,7 @@
 namespace DiffSniffer;
 
 use DiffSniffer\Command\Exception\BadUsage;
-use PackageVersions\Versions;
+use Jean85\PrettyVersions;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 
@@ -100,12 +100,12 @@ HLP;
      */
     private function printVersion(Command $command)
     {
-        $version = Versions::getVersion($command->getPackageName());
+        $version = PrettyVersions::getVersion($command->getPackageName());
 
         printf(
             '%s version %s' . PHP_EOL,
             $command->getName(),
-            (new VersionFormatter())->format($version)
+            $version->getPrettyVersion()
         );
     }
 }
