@@ -1,5 +1,15 @@
 # Changes in Diff Sniffer Core component
 
+## [3.1.0] - 2017-12-XX
+
+### Fixed
+
+* Compatibility with macOS (#3).
+
+### Changed
+
+* Updated the [core](https://github.com/morozov/diff-sniffer-core) component to [3.1.0](https://github.com/morozov/diff-sniffer-core/releases/tag/3.1.0).
+
 ## [3.0.0] - 2017-10-29
 
 ### Changed
