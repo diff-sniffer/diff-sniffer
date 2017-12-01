@@ -1,6 +1,8 @@
 Diff Sniffer Core component
 ===========================
 
+[![PHP Version](https://img.shields.io/badge/php-%5E7.1-blue.svg)](https://packagist.org/packages/morozov/diff-sniffer-core)
+[![Latest Stable Version](https://poser.pugx.org/morozov/diff-sniffer-core/v/stable)](https://packagist.org/packages/morozov/diff-sniffer-core)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/morozov/diff-sniffer-core/badges/quality-score.png)](https://scrutinizer-ci.com/g/morozov/diff-sniffer-core/)
 [![Code Coverage](https://scrutinizer-ci.com/g/morozov/diff-sniffer-core/badges/coverage.png)](https://scrutinizer-ci.com/g/morozov/diff-sniffer-core/)
 [![Build Status](https://travis-ci.org/morozov/diff-sniffer-core.png)](https://travis-ci.org/morozov/diff-sniffer-core)
