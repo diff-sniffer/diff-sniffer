@@ -63,16 +63,13 @@ EOF
 Line #2
 
 EOF
-            ,
-            FILE_APPEND
-        );
+            , FILE_APPEND);
 
         file_put_contents($this->dir . '/file2.txt', <<<EOF
 Line #2
 
 EOF
-            , FILE_APPEND
-        );
+            , FILE_APPEND);
 
         $this->cli->exec('git add file1.txt', $this->dir);
 
