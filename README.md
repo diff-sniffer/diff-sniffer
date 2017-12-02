@@ -12,46 +12,30 @@ This tool allows you using [PHP_CodeSniffer](https://github.com/squizlabs/PHP_Co
 Installation
 ------------
 
-Diff Sniffer is already built as PHAR-package with a few predefined configurations. All you need is download it and install as a pre-commit hook.
+Diff Sniffer is already built as a PHAR package. All you need is download it and install as a pre-commit hook.
 ```
-$ wget https://github.com/morozov/diff-sniffer-pre-commit/releases/download/3.0.0/pre-commit.phar
+$ wget https://github.com/morozov/diff-sniffer-pre-commit/releases/download/3.1.0/pre-commit.phar
 $ chmod +x pre-commit.phar
 $ mv pre-commit.phar /path/to/repo/.git/hooks/pre-commit
 ```
 
-You can also install and configure Diff Sniffer manually.
+Alternatively, you can install the hook globally for a user (see [`man githooks`](https://git-scm.com/docs/githooks)):
+```
+$ git config --global core.hooksPath '~/.git/hooks' # choose a path if you already haven't
+$ chmod +x pre-commit.phar
+$ mv pre-commit.phar ~/.git/hooks/pre-commit
+```
+
+You can also install Diff Sniffer manually:
 
 ```
 $ git clone git@github.com:morozov/diff-sniffer-pre-commit.git
-$ composer update
-$ ln -s /path/to/diff-sniffer-pre-commit/bin/pre-commit /path/to/repo/.git/hooks/
+$ cd diff-sniffer-pre-commit
+$ composer install
+$ bin/pre-commit --version
 ```
 
 Configuration
 -------------
 
-The coding standard used by default may be defined in config.php (the release package is pre-configured with PSR2). Similarly to PHP_CodeSniffer, both embedded and custom standards may be used.
-```php
-<?php
-
-return array(
-    '--standard=Zend',
-);
-```
-
-or
-
-```php
-<?php
-
-return array(
-    '--standard=/path/to/custom/standard',
-);
-```
-
-If you want to reuse the same installation of Diff Sniffer with different standards, you can pass `--standard` as command line option. You should use shell script wrapper as pre-commit hook instead of symlink then.
-```bash
-#!/bin/bash
-
-/path/to/diff-sniffer-pre-commit/bin/pre-commit --standard=PEAR
-```
+By default, the PHAR distribution uses the PSR2 coding standard. The configuration may be overridden by creating [configuration file](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#using-a-default-configuration-file) file in the project root.
