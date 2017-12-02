@@ -8,7 +8,7 @@
     }
   ],
   "require": {
-    "morozov/diff-sniffer-core" : "^3.0",
+    "morozov/diff-sniffer-core" : "^3.1",
     "php" : "^7.1"
   },
   "require-dev": {
@@ -27,7 +27,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "3.1.x-dev"
     }
   }
 }

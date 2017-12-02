@@ -1,6 +1,6 @@
 # Changes in Diff Sniffer Core component
 
-## [3.1.0] - 2017-12-XX
+## [3.1.0] - 2017-12-02
 
 ### Fixed
 
