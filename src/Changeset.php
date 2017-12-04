@@ -2,6 +2,8 @@
 
 namespace DiffSniffer;
 
+use DiffSniffer\Changeset\Exception;
+
 /**
  * Abstract changeset interface
  */

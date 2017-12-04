@@ -7,6 +7,8 @@ use Jean85\PrettyVersions;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 
+define('PHP_CODESNIFFER_CBF', false);
+
 /**
  * CLI application
  */
@@ -42,8 +44,6 @@ final class Application
             return 1;
         }
 
-        define('PHP_CODESNIFFER_CBF', false);
-
         $config = (new ConfigLoader())->loadConfig(getcwd());
 
         try {
@@ -53,13 +53,8 @@ final class Application
                 }
             }
 
-            // workaround for an issue in Config: when $args are empty,
-            // it takes values from the environment
-            if (!count($args)) {
-                $args = ['-d', 'error_reporting=' . error_reporting()];
-            }
-
-            $config = new Config($args);
+            // pass configuration using CLI arguments to override what's defined in the rule set
+            $config = new Config(['--no-cache']);
             $runner = new Runner($config);
 
             return $runner->run($changeSet);
