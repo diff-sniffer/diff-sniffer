@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9542b985ce364ce861e28b9fabff2cdd",
+    "content-hash": "73f08c87cbb81a3eabffbc72d976e80b",
     "packages": [
         {
             "name": "jean85/pretty-package-versions",
@@ -87,16 +87,16 @@
         },
         {
             "name": "morozov/diff-sniffer-core",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/morozov/diff-sniffer-core.git",
-                "reference": "87eb500d403906c66178a93eb7ae3614a6cc2aa6"
+                "reference": "dfb14f5d6a5c418de19e39abec8c5b259622aee7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/87eb500d403906c66178a93eb7ae3614a6cc2aa6",
-                "reference": "87eb500d403906c66178a93eb7ae3614a6cc2aa6",
+                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/dfb14f5d6a5c418de19e39abec8c5b259622aee7",
+                "reference": "dfb14f5d6a5c418de19e39abec8c5b259622aee7",
                 "shasum": ""
             },
             "require": {
@@ -132,7 +132,7 @@
                 }
             ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2017-12-02T18:12:40+00:00"
+            "time": "2017-12-05T06:44:00+00:00"
         },
         {
             "name": "ocramius/package-versions",
