@@ -14,7 +14,7 @@ Installation
 
 Diff Sniffer is already built as a PHAR package. All you need is download it and install as a pre-commit hook.
 ```
-$ wget https://github.com/morozov/diff-sniffer-pre-commit/releases/download/3.1.0/pre-commit.phar
+$ wget https://github.com/morozov/diff-sniffer-pre-commit/releases/download/3.1.1/pre-commit.phar
 $ chmod +x pre-commit.phar
 $ mv pre-commit.phar /path/to/repo/.git/hooks/pre-commit
 ```
