@@ -27,6 +27,8 @@ class ApplicationTest extends TestCase
         $app = new Application();
 
         $expectedOutput = file_get_contents($dir . '/output.txt');
+        $expectedOutput = str_replace("\n", PHP_EOL, $expectedOutput);
+
         $this->expectOutputString($expectedOutput);
         $exitCode = $app->run($command, [__FILE__]);
 

@@ -5,7 +5,8 @@ Diff Sniffer Core component
 [![Latest Stable Version](https://poser.pugx.org/morozov/diff-sniffer-core/v/stable)](https://packagist.org/packages/morozov/diff-sniffer-core)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/morozov/diff-sniffer-core/badges/quality-score.png)](https://scrutinizer-ci.com/g/morozov/diff-sniffer-core/)
 [![Code Coverage](https://scrutinizer-ci.com/g/morozov/diff-sniffer-core/badges/coverage.png)](https://scrutinizer-ci.com/g/morozov/diff-sniffer-core/)
-[![Build Status](https://travis-ci.org/morozov/diff-sniffer-core.png)](https://travis-ci.org/morozov/diff-sniffer-core)
+[![Travis CI Build Status](https://travis-ci.org/morozov/diff-sniffer-core.png)](https://travis-ci.org/morozov/diff-sniffer-core)
+[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/fa9mr4yg36pf1kgc?svg=true)](https://ci.appveyor.com/project/morozov/diff-sniffer-core)
 
 This is a tool that allows validation of coding standards only for changed lines but not the whole file.
 
