@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DiffSniffer\PreCommit;
+namespace DiffSniffer\Git;
 
 use DiffSniffer\Changeset as ChangesetInterface;
 use DiffSniffer\Command as CommandInterface;

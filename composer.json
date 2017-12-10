@@ -1,6 +1,6 @@
 {
-  "name": "morozov/diff-sniffer-pre-commit",
-  "description": "Git pre-commit hook for Diff Sniffer",
+  "name": "diff-sniffer/git",
+  "description": "Diff Sniffer for Git",
   "authors": [
     {
       "name": "Sergei Morozov",
@@ -18,17 +18,17 @@
   },
   "autoload": {
     "psr-4": {
-      "DiffSniffer\\PreCommit\\": "src/"
+      "DiffSniffer\\Git\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "DiffSniffer\\PreCommit\\Tests\\": "tests/"
+      "DiffSniffer\\Git\\Tests\\": "tests/"
     }
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.1.x-dev"
+      "dev-master": "0.0.x-dev"
     }
   }
 }

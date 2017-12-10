@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace DiffSniffer\PreCommit\Tests;
+namespace DiffSniffer\Git\Tests;
 
 use DiffSniffer\Exception\RuntimeException;
-use DiffSniffer\PreCommit\Cli;
+use DiffSniffer\Git\Cli;
 use PHPUnit\Framework\TestCase;
 
 class CliTest extends TestCase
