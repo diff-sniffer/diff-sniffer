@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+use DiffSniffer\Application;
+use DiffSniffer\Exception;
+use DiffSniffer\Git\Range\Command;
+
+require __DIR__ . '/../include/bootstrap.php';
+
+try {
+    exit(
+        (new Application())->run(new Command(), $_SERVER['argv'])
+    );
+} catch (Exception $e) {
+    fwrite(STDERR, $e->getMessage() . PHP_EOL);
+    exit(1);
+}

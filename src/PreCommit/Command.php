@@ -1,9 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace DiffSniffer\Git;
+namespace DiffSniffer\Git\PreCommit;
 
 use DiffSniffer\Changeset as ChangesetInterface;
 use DiffSniffer\Command as CommandInterface;
+use DiffSniffer\Git\Changeset;
+use DiffSniffer\Git\Cli;
 
 /**
  * Git pre-commit hook
@@ -25,7 +27,7 @@ final class Command implements CommandInterface
      */
     public function getPackageName() : string
     {
-        return 'morozov/diff-sniffer-pre-commit';
+        return 'diff-sniffer/git';
     }
 
     /**
@@ -35,7 +37,8 @@ final class Command implements CommandInterface
     {
         return <<<USG
 Usage: $programName [option]
-Validate staged changes to correspond to the coding standards
+
+Validate staged changes for correspondence to the coding standard
 
 USG;
     }
@@ -45,6 +48,6 @@ USG;
      */
     public function createChangeSet(array &$args) : ChangesetInterface
     {
-        return new Changeset(new Cli(), getcwd());
+        return new Changeset(new Cli(), ['--staged'], getcwd());
     }
 }
