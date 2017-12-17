@@ -24,17 +24,6 @@ final class Cli
     }
 
     /**
-     * Pipes commands together
-     *
-     * @param string[] ...$commands
-     * @return string
-     */
-    public function pipe(string ...$commands) : string
-    {
-        return implode(' | ', $commands);
-    }
-
-    /**
      * Joins commands by &&
      *
      * @param string[] ...$commands
@@ -68,30 +57,50 @@ final class Cli
      */
     public function exec(string $cmd, string $cwd = null) : string
     {
-        $process = proc_open(
-            $cmd,
-            array(
-                1 => array('pipe', 'w'),
-                2 => array('pipe', 'w'),
-            ),
-            $pipes,
-            $cwd
-        );
+        return $this->execPiped([$cmd], $cwd);
+    }
 
-        if (!$process) {
-            // @codeCoverageIgnoreStart
-            throw new RuntimeException('Unable to start process "' . $cmd . '"');
-            // @codeCoverageIgnoreEnd
+    /**
+     * Executes specified commands piped to each other and returns the resulting output or throws exception
+     * containing error
+     *
+     * @param string[] $commands Commands
+     * @param string|null $cwd Current directory
+     *
+     * @return string
+     * @throws RuntimeException
+     */
+    public function execPiped(array $commands, $cwd = null) : string
+    {
+        $pipedStream = ['pipe', 'r'];
+        $processes = $errorStreams = [];
+
+        foreach ($commands as $command) {
+            $processes[] = proc_open($command, [
+                $pipedStream,
+                ['pipe', 'w'],
+                ['pipe', 'w'],
+            ], $pipes, $cwd);
+
+            /** @var resource $pipedStream */
+            $pipedStream = $pipes[1];
+            $errorStreams[] = $pipes[2];
         }
 
-        $out = stream_get_contents($pipes[1]);
-        $err = stream_get_contents($pipes[2]);
+        $output = stream_get_contents($pipedStream);
 
-        $ret = proc_close($process);
-        if ($ret != 0) {
-            throw new RuntimeException($err, $ret);
+        $errors = implode('', array_map(function ($stream) {
+            return stream_get_contents($stream);
+        }, $errorStreams));
+
+        $success = array_reduce($processes, function ($success, $process) {
+            return proc_close($process) === 0 && $success;
+        }, true);
+
+        if (!$success) {
+            throw new RuntimeException($errors);
         }
 
-        return $out;
+        return $output;
     }
 }

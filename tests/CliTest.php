@@ -39,15 +39,26 @@ class CliTest extends TestCase
         );
     }
 
-    public function testPipe()
+    public function testExecPiped()
     {
-        $output = $this->cli->exec(
-            $this->cli->pipe(
-                $this->cli->cmd('/bin/echo', '-n', 'Hello, world!'),
-                $this->cli->cmd('cat')
-            )
-        );
+        $output = $this->cli->execPiped([
+            $this->cli->cmd('/bin/echo', '-n', 'Hello, world!'),
+            $this->cli->cmd('cat'),
+        ]);
 
         $this->assertEquals('Hello, world!', $output);
+    }
+
+    /**
+     * @test
+     */
+    public function execPipedFailure()
+    {
+        $this->expectException(RuntimeException::class);
+
+        $this->cli->execPiped([
+            $this->cli->cmd('false'),
+            $this->cli->cmd('cat'),
+        ]);
     }
 }

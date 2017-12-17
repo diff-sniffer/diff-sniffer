@@ -52,23 +52,20 @@ final class DiffSource
      */
     public function getDiff() : string
     {
-        return $this->cli->exec(
-            $this->cli->pipe(
-                $this->cli->cmd('git', 'diff', ...array_merge($this->args, [
-                    '--numstat',
-                    '--',
-                ])),
-                $this->cli->subShell(
-                    $this->cli->and(
-                        $this->cli->cmd('echo', '.'),
-                        $this->cli->cmd('awk', '$1 == 0 { print ":!"$3 }')
-                    )
-                ),
-                $this->cli->cmd('xargs', 'git', 'diff', ...array_merge($this->args, [
-                    '--',
-                ]))
+        return $this->cli->execPiped([
+            $this->cli->cmd('git', 'diff', ...array_merge($this->args, [
+                '--numstat',
+                '--',
+            ])),
+            $this->cli->subShell(
+                $this->cli->and(
+                    $this->cli->cmd('echo', '.'),
+                    $this->cli->cmd('awk', '$1 == 0 { print ":!"$3 }')
+                )
             ),
-            $this->dir
-        );
+            $this->cli->cmd('xargs', 'git', 'diff', ...array_merge($this->args, [
+                '--',
+            ]))
+        ], $this->dir);
     }
 }
