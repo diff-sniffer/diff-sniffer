@@ -22,12 +22,16 @@ class CliTest extends TestCase
 
     public function testEscaping()
     {
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+            $this->markTestSkipped('escapeshellarg() doesn\' t work as expected on Windows');
+        }
+
         $value = 'Hello, world "\'$!';
         $output = $this->cli->exec(
-            $this->cli->cmd('/bin/echo', '-n', $value)
+            $this->cli->cmd('echo', $value)
         );
 
-        $this->assertEquals($value, $output);
+        $this->assertEquals($value . PHP_EOL, $output);
     }
 
     public function testFailure()
@@ -41,12 +45,16 @@ class CliTest extends TestCase
 
     public function testExecPiped()
     {
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+            $this->markTestSkipped('TODO: rework using something else than `cat\'');
+        }
+
         $output = $this->cli->execPiped([
-            $this->cli->cmd('/bin/echo', '-n', 'Hello, world!'),
+            $this->cli->cmd('echo', 'Hello, world!'),
             $this->cli->cmd('cat'),
         ]);
 
-        $this->assertEquals('Hello, world!', $output);
+        $this->assertEquals('Hello, world!' . PHP_EOL, $output);
     }
 
     /**

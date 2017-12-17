@@ -5,41 +5,8 @@ namespace DiffSniffer\Git;
 /**
  * Diff source
  */
-final class DiffSource
+interface DiffSource
 {
-    /**
-     * CLI utilities
-     *
-     * @var Cli
-     */
-    private $cli;
-
-    /**
-     * @var string[]
-     */
-    private $args;
-
-    /**
-     * Git working directory
-     *
-     * @var string
-     */
-    private $dir;
-
-    /**
-     * Constructor
-     *
-     * @param Cli $cli CLI utilities
-     * @param array $args
-     * @param string $dir
-     */
-    public function __construct(Cli $cli, array $args, string $dir)
-    {
-        $this->cli = $cli;
-        $this->args = $args;
-        $this->dir = $dir;
-    }
-
     /**
      * Returns contents of the file with the given path
      *
@@ -50,22 +17,5 @@ final class DiffSource
      *
      * @return string
      */
-    public function getDiff() : string
-    {
-        return $this->cli->execPiped([
-            $this->cli->cmd('git', 'diff', ...array_merge($this->args, [
-                '--numstat',
-                '--',
-            ])),
-            $this->cli->subShell(
-                $this->cli->and(
-                    $this->cli->cmd('echo', '.'),
-                    $this->cli->cmd('awk', '$1 == 0 { print ":!"$3 }')
-                )
-            ),
-            $this->cli->cmd('xargs', 'git', 'diff', ...array_merge($this->args, [
-                '--',
-            ]))
-        ], $this->dir);
-    }
+    public function getDiff() : string;
 }

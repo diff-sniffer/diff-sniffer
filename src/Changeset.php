@@ -71,7 +71,11 @@ final class Changeset implements ChangesetInterface
      */
     private function getDiffSource(Cli $cli, array $args, string $dir) : DiffSource
     {
-        return new DiffSource($cli, $args, $dir);
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+            return new DiffSource\Windows($cli, $args, $dir);
+        }
+
+        return new DiffSource\Unix($cli, $args, $dir);
     }
 
     /**

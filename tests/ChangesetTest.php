@@ -60,9 +60,13 @@ class ChangesetTest extends TestCase
 
     public static function tearDownAfterClass()
     {
-        self::$cli->exec(
-            self::$cli->cmd('rm', '-rf', self::$dir)
-        );
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+            $cmd = 'rmdir /S /Q ' . escapeshellarg(self::$dir);
+        } else {
+            $cmd = self::$cli->cmd('rm', '-rf', self::$dir);
+        }
+
+        self::$cli->exec($cmd);
 
         parent::tearDownAfterClass();
     }

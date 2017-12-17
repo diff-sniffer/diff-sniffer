@@ -1,0 +1,33 @@
+build: false
+platform:
+  - x86
+  - x64
+clone_folder: C:\projects\diff-sniffer-git
+clone_depth: 1
+
+cache:
+  - C:\ProgramData\chocolatey\bin -> appveyor.yml
+  - C:\ProgramData\chocolatey\lib -> appveyor.yml
+  - C:\tools\php72 -> appveyor.yml
+  - '%LOCALAPPDATA%\Composer'
+
+init:
+  - SET ANSICON=121x90 (121x90)
+  - SET PATH=C:\Program Files\OpenSSL;C:\tools\php72;%PATH%
+
+install:
+  - ps: IF (!(Test-Path 'C:\tools\php72')) {cinst -y --no-progress php}
+  - ps: IF (!(Test-Path 'C:\Program Files\OpenSSL')) {cinst -y --no-progress OpenSSL.Light}
+  - cd C:\tools\php72
+  - copy php.ini-production php.ini
+  - echo date.timezone="UTC" >> php.ini
+  - echo extension_dir=ext >> php.ini
+  - echo extension=php_openssl.dll >> php.ini
+  - echo extension=php_mbstring.dll >> php.ini
+  - cd C:\projects\diff-sniffer-git
+  - php -r "readfile('http://getcomposer.org/installer');" | php
+  - php composer.phar install --no-interaction --no-progress
+
+test_script:
+  - cd C:\projects\diff-sniffer-git
+  - vendor\bin\phpunit
