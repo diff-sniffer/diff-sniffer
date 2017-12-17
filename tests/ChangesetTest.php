@@ -29,10 +29,36 @@ class ChangesetTest extends TestCase
         $this->cli = new Cli();
         $this->dir = $dir;
 
-        $this->cli->exec('git init', $this->dir);
-        $this->cli->exec('git config user.name phpunit', $this->dir);
-        $this->cli->exec('git config user.email phpunit@example.com', $this->dir);
-        $this->cli->exec('git config commit.gpgsign false', $this->dir);
+        $this->git('init');
+        $this->git('config', 'user.name', 'phpunit');
+        $this->git('config', 'user.email', 'phpunit@example.com');
+        $this->git('config', 'commit.gpgsign', 'false');
+    }
+
+    private function initRepo()
+    {
+        $this->putContents('file.txt', 'A');
+        $this->add('file.txt');
+        $this->commit('Commit A');
+
+        $this->putContents('file.txt', 'B');
+        $this->add('file.txt');
+        $this->commit('Commit B');
+
+        $this->git('checkout', '-b', 'feature');
+        $this->putContents('file.txt', 'C-feature');
+        $this->add('file.txt');
+        $this->commit('Commit C-feature');
+
+        $this->git('checkout', 'master');
+        $this->putContents('file.txt', 'C');
+        $this->add('file.txt');
+        $this->commit('Commit C');
+
+        $this->putContents('file.txt', 'C-staged');
+        $this->add('file.txt');
+
+        $this->putContents('file.txt', 'C-working');
     }
 
     protected function tearDown()
@@ -47,150 +73,231 @@ class ChangesetTest extends TestCase
     /**
      * @test
      */
-    public function preCommit()
+    public function stagedToHead()
     {
-        file_put_contents($this->dir . '/file1.txt', <<<EOF
-Hello, world #1!
-
-EOF
-        );
-        file_put_contents($this->dir . '/file2.txt', <<<EOF
-Hello, world #2!
-
-EOF
-        );
-
-        $this->cli->exec('git add .', $this->dir);
-        $this->cli->exec('git commit -m"Initial commit" --no-verify', $this->dir);
-
-        file_put_contents($this->dir . '/file1.txt', <<<EOF
-Line #2
-
-EOF
-            , FILE_APPEND);
-
-        file_put_contents($this->dir . '/file2.txt', <<<EOF
-Line #2
-
-EOF
-            , FILE_APPEND);
-
-        $this->cli->exec('git add file1.txt', $this->dir);
-
+        $this->initRepo();
         $changeset = $this->createChangeset('--staged');
-        $this->assertEquals(<<<EOF
-diff --git a/file1.txt b/file1.txt
-index 6326b19..2ec3083 100644
---- a/file1.txt
-+++ b/file1.txt
-@@ -1 +1,2 @@
- Hello, world #1!
-+Line #2
-
+        $this->assertDiff(<<<EOF
+diff --git a/file.txt b/file.txt
+index 3cc58df..2ec44f9 100644
+--- a/file.txt
++++ b/file.txt
+@@ -1 +1 @@
+-C
++C-staged
 EOF
-        , $changeset->getDiff());
+        , $changeset);
 
-        $this->assertEquals(<<<EOF
-Hello, world #1!
-Line #2
-
+        $this->assertContents(<<<EOF
+C-staged
 EOF
-            , $changeset->getContents('file1.txt'));
-
-        $this->assertEquals(<<<EOF
-Hello, world #2!
-
-EOF
-            , $changeset->getContents('file2.txt'));
+            , $changeset, 'file.txt');
     }
 
     /**
      * @test
      */
-    public function refs()
+    public function stagedToCommit()
     {
-        file_put_contents($this->dir . '/file1.txt', <<<EOF
-Hello, world #1!
-
+        $this->initRepo();
+        $changeset = $this->createChangeset('--staged', 'HEAD~');
+        $this->assertDiff(<<<EOF
+diff --git a/file.txt b/file.txt
+index 223b783..2ec44f9 100644
+--- a/file.txt
++++ b/file.txt
+@@ -1 +1 @@
+-B
++C-staged
 EOF
-        );
-        file_put_contents($this->dir . '/file2.txt', <<<EOF
-Hello, world #2!
+        , $changeset);
 
+        $this->assertContents(<<<EOF
+C-staged
 EOF
-        );
-
-        $this->cli->exec('git add .', $this->dir);
-        $this->cli->exec('git commit -m"Initial commit" --no-verify', $this->dir);
-
-        file_put_contents($this->dir . '/file1.txt', <<<EOF
-Line #2
-
-EOF
-            , FILE_APPEND);
-
-        file_put_contents($this->dir . '/file2.txt', <<<EOF
-Line #2
-
-EOF
-            , FILE_APPEND);
-
-        $this->cli->exec('git add file1.txt', $this->dir);
-        $this->cli->exec('git commit -m"Second commit" --no-verify', $this->dir);
-
-        $changeset = $this->createChangeset('HEAD~', 'HEAD');
-        $this->assertEquals(<<<EOF
-diff --git a/file1.txt b/file1.txt
-index 6326b19..2ec3083 100644
---- a/file1.txt
-+++ b/file1.txt
-@@ -1 +1,2 @@
- Hello, world #1!
-+Line #2
-
-EOF
-        , $changeset->getDiff());
-
-        $this->assertEquals(<<<EOF
-Hello, world #1!
-Line #2
-
-EOF
-            , $changeset->getContents('file1.txt'));
-
-        $this->assertEquals(<<<EOF
-Hello, world #2!
-
-EOF
-            , $changeset->getContents('file2.txt'));
+            , $changeset, 'file.txt');
     }
 
-    /** @test */
+
+    /**
+     * @test
+     */
+    public function workingToStaged()
+    {
+        $this->initRepo();
+        $changeset = $this->createChangeset();
+        $this->assertDiff(<<<EOF
+diff --git a/file.txt b/file.txt
+index 2ec44f9..ced1ed9 100644
+--- a/file.txt
++++ b/file.txt
+@@ -1 +1 @@
+-C-staged
++C-working
+EOF
+        , $changeset);
+
+        $this->assertContents(<<<EOF
+C-working
+EOF
+            , $changeset, 'file.txt');
+    }
+
+    /**
+     * @test
+     */
+    public function workingToCommit()
+    {
+        $this->initRepo();
+        $changeset = $this->createChangeset('HEAD~2');
+        $this->assertDiff(<<<EOF
+diff --git a/file.txt b/file.txt
+index f70f10e..ced1ed9 100644
+--- a/file.txt
++++ b/file.txt
+@@ -1 +1 @@
+-A
++C-working
+EOF
+        , $changeset);
+
+        $this->assertContents(<<<EOF
+C-working
+EOF
+            , $changeset, 'file.txt');
+    }
+
+    /**
+     * @test
+     */
+    public function commitToCommit()
+    {
+        $this->initRepo();
+        $changeset = $this->createChangeset('HEAD~2', 'HEAD~1');
+        $this->assertDiff(<<<EOF
+diff --git a/file.txt b/file.txt
+index f70f10e..223b783 100644
+--- a/file.txt
++++ b/file.txt
+@@ -1 +1 @@
+-A
++B
+EOF
+        , $changeset);
+
+        $this->assertContents(<<<EOF
+B
+EOF
+            , $changeset, 'file.txt');
+    }
+
+    /**
+     * @test
+     */
+    public function commitToCommitRangeNotation()
+    {
+        $this->initRepo();
+        $changeset = $this->createChangeset('HEAD~2..HEAD~1');
+        $this->assertDiff(<<<EOF
+diff --git a/file.txt b/file.txt
+index f70f10e..223b783 100644
+--- a/file.txt
++++ b/file.txt
+@@ -1 +1 @@
+-A
++B
+EOF
+        , $changeset);
+
+        $this->assertContents(<<<EOF
+B
+EOF
+            , $changeset, 'file.txt');
+    }
+
+    /**
+     * @test
+     */
+    public function commitToMergeBase()
+    {
+        $this->initRepo();
+        $changeset = $this->createChangeset('HEAD...feature');
+        $this->assertDiff(<<<EOF
+diff --git a/file.txt b/file.txt
+index 223b783..20e8d1f 100644
+--- a/file.txt
++++ b/file.txt
+@@ -1 +1 @@
+-B
++C-feature
+EOF
+        , $changeset);
+
+        $this->assertContents(<<<EOF
+C-feature
+EOF
+            , $changeset, 'file.txt');
+    }
+
+    /**
+     * @test
+     */
     public function fileWithOnlyDeletedLinesIsIgnored()
     {
-        file_put_contents($this->dir . '/file.txt', <<<EOF
+        $this->putContents('file.txt', <<<EOF
 Line1
 Line2
-
 EOF
         );
 
-        $this->cli->exec('git add .', $this->dir);
-        $this->cli->exec('git commit -m"Initial commit" --no-verify', $this->dir);
+        $this->add('file.txt');
+        $this->commit('Initial commit');
 
-        file_put_contents($this->dir . '/file.txt', <<<EOF
+        $this->putContents('file.txt', <<<EOF
 Line2
-
 EOF
         );
-        $this->cli->exec('git add file.txt', $this->dir);
+        $this->add('file.txt');
 
         $changeset = $this->createChangeset('--staged');
         $this->assertSame('', $changeset->getDiff());
     }
 
-    private function createChangeset(string ...$args)
+    private function putContents(string $path, string $contents, int $flags = 0) : void
+    {
+        file_put_contents($this->dir . '/' . $path, $contents . "\n", $flags);
+    }
+
+    private function git(string ...$args) : void
+    {
+        $this->cli->exec(
+            $this->cli->cmd('git', ...$args),
+            $this->dir
+        );
+    }
+
+    private function add(string $path) : void
+    {
+        $this->git('add', $path);
+    }
+
+    private function commit(string $message) : void
+    {
+        $this->git('commit', '-m', $message, '--no-verify');
+    }
+
+    private function createChangeset(string ...$args) : Changeset
     {
         return new Changeset($this->cli, $args, $this->dir);
+    }
+
+    private function assertDiff(string $expected, Changeset $changeset)
+    {
+        $this->assertSame($expected . "\n", $changeset->getDiff());
+    }
+
+    private function assertContents(string $expected, Changeset $changeset, string $path)
+    {
+        $this->assertSame($expected . "\n", $changeset->getContents($path));
     }
 }

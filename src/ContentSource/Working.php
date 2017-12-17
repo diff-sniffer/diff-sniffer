@@ -29,12 +29,6 @@ class Working implements ContentSource
      */
     public function getContents(string $path) : string
     {
-        $path = $this->dir . DIRECTORY_SEPARATOR . $path;
-
-        if (!file_exists($path)) {
-            return '';
-        }
-
-        return file_get_contents($path);
+        return file_get_contents($this->dir . DIRECTORY_SEPARATOR . $path);
     }
 }
