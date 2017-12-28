@@ -11,63 +11,60 @@ class ChangesetTest extends TestCase
     /**
      * @var string
      */
-    private $dir;
+    private static $dir;
 
     /**
      * @var Cli
      */
-    private $cli;
+    private static $cli;
 
-    protected function setUp()
+    public static function setUpBeforeClass()
     {
-        parent::setUp();
+        parent::setUpBeforeClass();
 
         $dir = tempnam(sys_get_temp_dir(), 'diff-sniffer-test');
         unlink($dir);
         mkdir($dir, 0777, true);
 
-        $this->cli = new Cli();
-        $this->dir = $dir;
+        self::$cli = new Cli();
+        self::$dir = $dir;
 
-        $this->git('init');
-        $this->git('config', 'user.name', 'phpunit');
-        $this->git('config', 'user.email', 'phpunit@example.com');
-        $this->git('config', 'commit.gpgsign', 'false');
+        self::git('init');
+        self::git('config', 'user.name', 'phpunit');
+        self::git('config', 'user.email', 'phpunit@example.com');
+        self::git('config', 'commit.gpgsign', 'false');
+
+        self::putContents('file.txt', 'A');
+        self::add('file.txt');
+        self::commit('Commit A');
+
+        self::putContents('file.txt', 'B');
+        self::add('file.txt');
+        self::commit('Commit B');
+
+        self::git('checkout', '-b', 'feature');
+        self::putContents('file.txt', 'C-feature');
+        self::add('file.txt');
+        self::commit('Commit C-feature');
+
+        self::git('checkout', 'master');
+        self::putContents('file.txt', 'C');
+        self::add('file.txt');
+        self::commit('Commit C');
+
+        self::putContents('file.txt', 'C-staged');
+        self::add('file.txt');
+
+        self::putContents('file.txt', 'C-working');
     }
 
-    private function initRepo()
+    public static function tearDownAfterClass()
     {
-        $this->putContents('file.txt', 'A');
-        $this->add('file.txt');
-        $this->commit('Commit A');
-
-        $this->putContents('file.txt', 'B');
-        $this->add('file.txt');
-        $this->commit('Commit B');
-
-        $this->git('checkout', '-b', 'feature');
-        $this->putContents('file.txt', 'C-feature');
-        $this->add('file.txt');
-        $this->commit('Commit C-feature');
-
-        $this->git('checkout', 'master');
-        $this->putContents('file.txt', 'C');
-        $this->add('file.txt');
-        $this->commit('Commit C');
-
-        $this->putContents('file.txt', 'C-staged');
-        $this->add('file.txt');
-
-        $this->putContents('file.txt', 'C-working');
-    }
-
-    protected function tearDown()
-    {
-        $this->cli->exec(
-            $this->cli->cmd('rm', '-rf', $this->dir)
+        self::$cli->exec(
+            self::$cli->cmd('rm', '-rf', self::$dir)
         );
 
-        parent::tearDown();
+        parent::tearDownAfterClass();
     }
 
     /**
@@ -75,7 +72,6 @@ class ChangesetTest extends TestCase
      */
     public function stagedToHead()
     {
-        $this->initRepo();
         $changeset = $this->createChangeset('--staged');
         $this->assertDiff(<<<EOF
 diff --git a/file.txt b/file.txt
@@ -99,7 +95,6 @@ EOF
      */
     public function stagedToCommit()
     {
-        $this->initRepo();
         $changeset = $this->createChangeset('--staged', 'HEAD~');
         $this->assertDiff(<<<EOF
 diff --git a/file.txt b/file.txt
@@ -124,7 +119,6 @@ EOF
      */
     public function workingToStaged()
     {
-        $this->initRepo();
         $changeset = $this->createChangeset();
         $this->assertDiff(<<<EOF
 diff --git a/file.txt b/file.txt
@@ -148,7 +142,6 @@ EOF
      */
     public function workingToCommit()
     {
-        $this->initRepo();
         $changeset = $this->createChangeset('HEAD~2');
         $this->assertDiff(<<<EOF
 diff --git a/file.txt b/file.txt
@@ -172,7 +165,6 @@ EOF
      */
     public function commitToCommit()
     {
-        $this->initRepo();
         $changeset = $this->createChangeset('HEAD~2', 'HEAD~1');
         $this->assertDiff(<<<EOF
 diff --git a/file.txt b/file.txt
@@ -196,7 +188,6 @@ EOF
      */
     public function commitToCommitRangeNotation()
     {
-        $this->initRepo();
         $changeset = $this->createChangeset('HEAD~2..HEAD~1');
         $this->assertDiff(<<<EOF
 diff --git a/file.txt b/file.txt
@@ -220,7 +211,6 @@ EOF
      */
     public function commitToMergeBase()
     {
-        $this->initRepo();
         $changeset = $this->createChangeset('HEAD...feature');
         $this->assertDiff(<<<EOF
 diff --git a/file.txt b/file.txt
@@ -263,32 +253,32 @@ EOF
         $this->assertSame('', $changeset->getDiff());
     }
 
-    private function putContents(string $path, string $contents, int $flags = 0) : void
+    private static function putContents(string $path, string $contents, int $flags = 0) : void
     {
-        file_put_contents($this->dir . '/' . $path, $contents . "\n", $flags);
+        file_put_contents(self::$dir . '/' . $path, $contents . "\n", $flags);
     }
 
-    private function git(string ...$args) : void
+    private static function git(string ...$args) : void
     {
-        $this->cli->exec(
-            $this->cli->cmd('git', ...$args),
-            $this->dir
+        self::$cli->exec(
+            self::$cli->cmd('git', ...$args),
+            self::$dir
         );
     }
 
-    private function add(string $path) : void
+    private static function add(string $path) : void
     {
-        $this->git('add', $path);
+        self::git('add', $path);
     }
 
-    private function commit(string $message) : void
+    private static function commit(string $message) : void
     {
-        $this->git('commit', '-m', $message, '--no-verify');
+        self::git('commit', '-m', $message, '--no-verify');
     }
 
     private function createChangeset(string ...$args) : Changeset
     {
-        return new Changeset($this->cli, $args, $this->dir);
+        return new Changeset(self::$cli, $args, self::$dir);
     }
 
     private function assertDiff(string $expected, Changeset $changeset)
