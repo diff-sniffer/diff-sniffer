@@ -2,15 +2,17 @@
 
 namespace DiffSniffer;
 
-use EmptyIterator;
 use IteratorIterator;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\DummyFile;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Filters\Filter as BaseFilter;
+use PHP_CodeSniffer\Filters\Filter;
 use PHP_CodeSniffer\Ruleset;
 use RecursiveArrayIterator;
 use Traversable;
+use const DIRECTORY_SEPARATOR;
+use function iterator_to_array;
+use function str_replace;
 
 /**
  * Changeset iterator
@@ -47,15 +49,28 @@ final class Iterator implements \IteratorAggregate
 
     public function getIterator() : Traversable
     {
-        $it = new IteratorIterator($this->files);
-        $it = new Filter($it, new BaseFilter(
-            new RecursiveArrayIterator(
-                new EmptyIterator()
-            ),
-            '',
+        // PHP_CodeSniffer expects file paths to contain the native directory separator on Windows when matching them
+        // against the exclude pattern but Git and GitHub REST API will return forward slashes regardless of the OS
+        if (DIRECTORY_SEPARATOR === '\\') {
+            $it = (function () : iterable {
+                foreach ($this->files as $file) {
+                    yield str_replace('/', DIRECTORY_SEPARATOR, $file);
+                }
+            })();
+        } else {
+            $it = new IteratorIterator($this->files);
+        }
+
+        $it = new RecursiveArrayIterator(
+            iterator_to_array($it)
+        );
+
+        $it = new Filter(
+            $it,
+            "\0",
             $this->config,
             $this->ruleSet
-        ));
+        );
 
         foreach ($it as $path) {
             yield $this->createFile(

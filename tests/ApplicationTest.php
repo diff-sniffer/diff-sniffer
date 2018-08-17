@@ -7,6 +7,7 @@ use DiffSniffer\Application;
 use DiffSniffer\Command;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use const DIRECTORY_SEPARATOR;
 
 class ApplicationTest extends TestCase
 {
@@ -16,9 +17,9 @@ class ApplicationTest extends TestCase
      */
     public function testUseCase(string $useCase, int $expectedExitCode)
     {
-        $dir = __DIR__ . '/fixtures/' . $useCase;
+        $dir = __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . $useCase;
         $changeset = new FixtureChangeset($dir);
-        chdir($dir . '/tree');
+        chdir($dir . DIRECTORY_SEPARATOR . 'tree');
 
         /** @var Command|MockObject $command */
         $command = $this->createMock(Command::class);
@@ -27,7 +28,7 @@ class ApplicationTest extends TestCase
             ->willReturn($changeset);
         $app = new Application();
 
-        $expectedOutput = file_get_contents($dir . '/output.txt');
+        $expectedOutput = file_get_contents($dir . DIRECTORY_SEPARATOR . 'output.txt');
         $expectedOutput = str_replace("\n", PHP_EOL, $expectedOutput);
 
         $this->expectOutputString($expectedOutput);
@@ -46,6 +47,10 @@ class ApplicationTest extends TestCase
             'excluded-rule-cache' => [
                 'excluded-rule-cache',
                 0,
+            ],
+            'exclude-pattern' => [
+                'exclude-pattern',
+                1,
             ],
         ];
     }

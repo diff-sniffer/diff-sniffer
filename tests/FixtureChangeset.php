@@ -3,6 +3,7 @@
 namespace DiffSniffer\Tests;
 
 use DiffSniffer\Changeset;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Fixture changeset
@@ -29,7 +30,7 @@ class FixtureChangeset implements Changeset
      */
     public function getDiff() : string
     {
-        return file_get_contents($this->dir . '/changeset.diff');
+        return file_get_contents($this->dir . DIRECTORY_SEPARATOR . 'changeset.diff');
     }
 
     /**
