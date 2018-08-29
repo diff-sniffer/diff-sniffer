@@ -16,6 +16,8 @@ init:
   - SET PATH=C:\Program Files\OpenSSL;C:\tools\php72;%PATH%
 
 install:
+  - sc config wuauserv start=auto
+  - net start wuauserv
   - ps: IF (!(Test-Path 'C:\tools\php72')) {cinst -y --no-progress php}
   - ps: IF (!(Test-Path 'C:\Program Files\OpenSSL')) {cinst -y --no-progress OpenSSL.Light}
   - cd C:\tools\php72
