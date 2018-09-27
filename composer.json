@@ -15,7 +15,7 @@
     "php": "^7.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.5",
+    "phpunit/phpunit": "^7.3",
     "php-vfs/php-vfs": "^v1.3",
     "phpstan/phpstan": "^0.9"
   },
