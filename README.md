@@ -15,7 +15,7 @@ Installation
 
 Diff Sniffer is already built as a PHAR package. All you need is download it and install as a pre-commit hook.
 ```
-$ wget https://github.com/diff-sniffer/git/releases/download/0.1.0/pre-commit.phar
+$ wget https://github.com/diff-sniffer/git/releases/download/0.2.0/pre-commit.phar
 $ chmod +x pre-commit.phar
 $ mv pre-commit.phar /path/to/repo/.git/hooks/pre-commit
 ```
@@ -41,7 +41,7 @@ Continuous integration mode
 
 Diff Sniffer for Git can also run on a CI server and validate pull requests. For example, on Travis CI:
 ```
-$ wget https://github.com/diff-sniffer/git/releases/download/0.1.0/git-phpcs.phar
+$ wget https://github.com/diff-sniffer/git/releases/download/0.2.0/git-phpcs.phar
 $ php git-phpcs.phar origin/$TRAVIS_BRANCH...$TRAVIS_PULL_REQUEST_SHA
 ```
 
