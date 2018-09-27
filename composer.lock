@@ -1,23 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a113e63b224532bdcf35c92ad35e04fd",
+    "content-hash": "700ac94bfe63bbdd84bdd3556ee23fc4",
     "packages": [
         {
             "name": "jean85/pretty-package-versions",
-            "version": "1.0.3",
+            "version": "1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jean85/pretty-package-versions.git",
-                "reference": "3c8487fdd6c750ff3f10c32ddfdd2a7803c1d461"
+                "reference": "75c7effcf3f77501d0e0caa75111aff4daa0dd48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jean85/pretty-package-versions/zipball/3c8487fdd6c750ff3f10c32ddfdd2a7803c1d461",
-                "reference": "3c8487fdd6c750ff3f10c32ddfdd2a7803c1d461",
+                "url": "https://api.github.com/repos/Jean85/pretty-package-versions/zipball/75c7effcf3f77501d0e0caa75111aff4daa0dd48",
+                "reference": "75c7effcf3f77501d0e0caa75111aff4daa0dd48",
                 "shasum": ""
             },
             "require": {
@@ -28,6 +28,11 @@
                 "phpunit/phpunit": "^6.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Jean85\\": "src/"
@@ -43,24 +48,27 @@
                     "email": "alessandro.lai85@gmail.com"
                 }
             ],
-            "description": "A wrapper for ocramius/pretty-package-versions to get pretty versions strings",
+            "description": "A wrapper for ocramius/package-versions to get pretty versions strings",
             "keywords": [
-                "package versions"
+                "composer",
+                "package",
+                "release",
+                "versions"
             ],
-            "time": "2017-11-30T22:02:29+00:00"
+            "time": "2018-06-13T13:22:40+00:00"
         },
         {
             "name": "morozov/bootstrap",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/morozov/bootstrap.git",
-                "reference": "f8c583a3220a38c0d6cb5f97238baa8d2be7c390"
+                "reference": "79389edd29998a0b02221cf911dac5c158230ca5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morozov/bootstrap/zipball/f8c583a3220a38c0d6cb5f97238baa8d2be7c390",
-                "reference": "f8c583a3220a38c0d6cb5f97238baa8d2be7c390",
+                "url": "https://api.github.com/repos/morozov/bootstrap/zipball/79389edd29998a0b02221cf911dac5c158230ca5",
+                "reference": "79389edd29998a0b02221cf911dac5c158230ca5",
                 "shasum": ""
             },
             "require": {
@@ -83,32 +91,32 @@
                 }
             ],
             "description": "Command line application bootstrap component",
-            "time": "2017-10-02T19:03:22+00:00"
+            "time": "2018-01-02T22:19:26+00:00"
         },
         {
             "name": "morozov/diff-sniffer-core",
-            "version": "3.1.1",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/morozov/diff-sniffer-core.git",
-                "reference": "dfb14f5d6a5c418de19e39abec8c5b259622aee7"
+                "reference": "3b248d3fb32d4aa462684aa9f51bf4c9637e01f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/dfb14f5d6a5c418de19e39abec8c5b259622aee7",
-                "reference": "dfb14f5d6a5c418de19e39abec8c5b259622aee7",
+                "url": "https://api.github.com/repos/morozov/diff-sniffer-core/zipball/3b248d3fb32d4aa462684aa9f51bf4c9637e01f5",
+                "reference": "3b248d3fb32d4aa462684aa9f51bf4c9637e01f5",
                 "shasum": ""
             },
             "require": {
                 "jean85/pretty-package-versions": "^1.0.3",
                 "morozov/bootstrap": "^1.1",
                 "php": "^7.1",
-                "squizlabs/php_codesniffer": "^3.1"
+                "squizlabs/php_codesniffer": "^3.3"
             },
             "require-dev": {
                 "php-vfs/php-vfs": "^v1.3",
                 "phpstan/phpstan": "^0.9",
-                "phpunit/phpunit": "^6.1"
+                "phpunit/phpunit": "^7.3"
             },
             "type": "library",
             "extra": {
@@ -132,31 +140,31 @@
                 }
             ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2017-12-05T06:44:00+00:00"
+            "time": "2018-09-27T05:41:58+00:00"
         },
         {
             "name": "ocramius/package-versions",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/PackageVersions.git",
-                "reference": "ad8a245decad4897cc6b432743913dad0d69753c"
+                "reference": "4489d5002c49d55576fa0ba786f42dbb009be46f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/ad8a245decad4897cc6b432743913dad0d69753c",
-                "reference": "ad8a245decad4897cc6b432743913dad0d69753c",
+                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/4489d5002c49d55576fa0ba786f42dbb009be46f",
+                "reference": "4489d5002c49d55576fa0ba786f42dbb009be46f",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.0",
-                "php": "~7.0"
+                "composer-plugin-api": "^1.0.0",
+                "php": "^7.1.0"
             },
             "require-dev": {
-                "composer/composer": "^1.3",
+                "composer/composer": "^1.6.3",
                 "ext-zip": "*",
-                "humbug/humbug": "dev-master",
-                "phpunit/phpunit": "^6.4"
+                "infection/infection": "^0.7.1",
+                "phpunit/phpunit": "^7.0.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -181,20 +189,20 @@
                 }
             ],
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "time": "2017-11-24T11:07:03+00:00"
+            "time": "2018-02-05T13:05:30+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.2.0",
+            "version": "3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "ba816f2e1bacc16278792c78b67c730dfff064a6"
+                "reference": "6ad28354c04b364c3c71a34e4a18b629cc3b231e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/ba816f2e1bacc16278792c78b67c730dfff064a6",
-                "reference": "ba816f2e1bacc16278792c78b67c730dfff064a6",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/6ad28354c04b364c3c71a34e4a18b629cc3b231e",
+                "reference": "6ad28354c04b364c3c71a34e4a18b629cc3b231e",
                 "shasum": ""
             },
             "require": {
@@ -204,7 +212,7 @@
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0"
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
             "bin": [
                 "bin/phpcs",
@@ -232,7 +240,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-12-12T21:36:10+00:00"
+            "time": "2018-09-23T23:08:17+00:00"
         }
     ],
     "packages-dev": [
