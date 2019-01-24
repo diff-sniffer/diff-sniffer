@@ -54,7 +54,7 @@ final class Application
             }
 
             // pass configuration using CLI arguments to override what's defined in the rule set
-            $config = new Config(['--no-cache']);
+            $config = new Config(array_merge($args, ['--no-cache']));
             $runner = new Runner($config);
 
             return $runner->run($changeSet);
