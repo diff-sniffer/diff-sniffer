@@ -5,17 +5,18 @@ namespace DiffSniffer\Tests;
 use DiffSniffer\Changeset;
 use DiffSniffer\Runner;
 use PHP_CodeSniffer\Config;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class RunnerTest extends TestCase
 {
     public function testEarlyReturn()
     {
-        /** @var Config|\PHPUnit_Framework_MockObject_MockObject $config */
+        /** @var Config|MockObject $config */
         $config = $this->createMock(Config::class);
         $runner = new Runner($config);
 
-        /** @var Changeset|\PHPUnit_Framework_MockObject_MockObject $changeSet */
+        /** @var Changeset|MockObject $changeSet */
         $changeSet = $this->createMock(Changeset::class);
         $changeSet->expects($this->once())
             ->method('getDiff')

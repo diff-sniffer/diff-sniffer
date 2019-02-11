@@ -5,6 +5,7 @@ namespace DiffSniffer\Tests;
 use function chdir;
 use DiffSniffer\Application;
 use DiffSniffer\Command;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
@@ -19,7 +20,7 @@ class ApplicationTest extends TestCase
         $changeset = new FixtureChangeset($dir);
         chdir($dir . '/tree');
 
-        /** @var Command|\PHPUnit_Framework_MockObject_MockObject $command */
+        /** @var Command|MockObject $command */
         $command = $this->createMock(Command::class);
         $command->expects($this->once())
             ->method('createChangeset')

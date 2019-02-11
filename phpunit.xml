@@ -1,4 +1,8 @@
-<phpunit bootstrap="include/bootstrap.php">
+<phpunit
+    bootstrap="include/bootstrap.php"
+    executionOrder="random"
+    resolveDependencies="true"
+>
     <testsuites>
         <testsuite name="diff-sniffer-core">
             <directory>tests</directory>
