@@ -1,4 +1,6 @@
-<phpunit bootstrap="vendor/autoload.php">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+>
     <testsuites>
         <testsuite name="diff-sniffer-git">
             <directory>tests</directory>

@@ -13,10 +13,8 @@ class CliTest extends TestCase
      */
     private $cli;
 
-    protected function setUp()
+    protected function setUp() : void
     {
-        parent::setUp();
-
         $this->cli = new Cli();
     }
 

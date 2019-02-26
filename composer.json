@@ -10,10 +10,10 @@
   "license": "MIT",
   "require": {
     "morozov/diff-sniffer-core" : "^3.3",
-    "php" : "^7.1"
+    "php" : "^7.2"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7.3",
+    "phpunit/phpunit": "^8.0",
     "phpstan/phpstan": "^0.9"
   },
   "autoload": {

@@ -18,10 +18,8 @@ class ChangesetTest extends TestCase
      */
     private static $cli;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass() : void
     {
-        parent::setUpBeforeClass();
-
         $dir = tempnam(sys_get_temp_dir(), 'diff-sniffer-test');
         unlink($dir);
         mkdir($dir, 0777, true);
@@ -58,7 +56,7 @@ class ChangesetTest extends TestCase
         self::putContents('file.txt', 'C-working');
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass() : void
     {
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             $cmd = 'rmdir /S /Q ' . escapeshellarg(self::$dir);
@@ -67,8 +65,6 @@ class ChangesetTest extends TestCase
         }
 
         self::$cli->exec($cmd);
-
-        parent::tearDownAfterClass();
     }
 
     /**

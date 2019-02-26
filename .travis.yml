@@ -3,9 +3,8 @@ cache:
   directories:
     - $HOME/.composer/cache
 php:
-  - 7.1
   - 7.2
-  - nightly
+  - 7.3
 before_script:
   - make install
 script:
