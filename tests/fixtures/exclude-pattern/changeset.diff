@@ -1,0 +1,18 @@
+diff --git a/main.php b/main.php
+`--- /dev/null
++++ b/main.php
+@@ -0,0 +1,5 @@
++<?php
++
++if ( ! isset($foo)) {
++    $foo = 'bar';
++}
+diff --git a/excluded/excluded.php b/excluded/excluded.php
+`--- /dev/null
++++ b/excluded/excluded.php
+@@ -0,0 +1,5 @@
++<?php
++
++if ( ! isset($foo)) {
++    $foo = 'bar';
++}
