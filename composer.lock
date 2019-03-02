@@ -4,37 +4,37 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "32679cab7d1c96bc5f7153e8eeee8105",
+    "content-hash": "729bdccb6aaa60f2e8d8af8bc54a0505",
     "packages": [
         {
             "name": "diff-sniffer/core",
-            "version": "3.3.0",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diff-sniffer/core.git",
-                "reference": "3b248d3fb32d4aa462684aa9f51bf4c9637e01f5"
+                "reference": "f3b2f9df0dc85ba9e9496ebf2b77f1c298ec7352"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diff-sniffer/core/zipball/3b248d3fb32d4aa462684aa9f51bf4c9637e01f5",
-                "reference": "3b248d3fb32d4aa462684aa9f51bf4c9637e01f5",
+                "url": "https://api.github.com/repos/diff-sniffer/core/zipball/f3b2f9df0dc85ba9e9496ebf2b77f1c298ec7352",
+                "reference": "f3b2f9df0dc85ba9e9496ebf2b77f1c298ec7352",
                 "shasum": ""
             },
             "require": {
-                "jean85/pretty-package-versions": "^1.0.3",
+                "jean85/pretty-package-versions": "^1.2",
                 "morozov/bootstrap": "^1.1",
-                "php": "^7.1",
-                "squizlabs/php_codesniffer": "^3.3"
+                "php": "^7.2",
+                "squizlabs/php_codesniffer": "^3.4"
             },
             "require-dev": {
-                "php-vfs/php-vfs": "^v1.3",
+                "php-vfs/php-vfs": "^v1.4",
                 "phpstan/phpstan": "^0.9",
-                "phpunit/phpunit": "^7.3"
+                "phpunit/phpunit": "^8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1.x-dev"
+                    "dev-master": "3.5.x-dev"
                 }
             },
             "autoload": {
@@ -53,7 +53,7 @@
                 }
             ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2018-09-27T05:41:58+00:00"
+            "time": "2019-03-02T03:03:55+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",

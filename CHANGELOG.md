@@ -1,5 +1,12 @@
 # Changes in Diff Sniffer for Git
 
+## [0.3.0] - 2019-03-01
+
+### Changed
+
+* Updated [PHP\_CodeSniffer](https://packagist.org/packages/squizlabs/php_codesniffer) to `^3.4`.
+* Updated [diff-sniffer/core](https://packagist.org/packages/diff-sniffer/core) to `^3.4`.
+
 ## [0.2.0] - 2018-09-25
 
 ### Changed
