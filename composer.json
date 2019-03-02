@@ -1,5 +1,5 @@
 {
-  "name": "morozov/diff-sniffer-core",
+  "name": "diff-sniffer/core",
   "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
   "authors": [
     {
