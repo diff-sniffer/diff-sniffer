@@ -5,6 +5,7 @@ namespace DiffSniffer\Tests;
 use function chdir;
 use DiffSniffer\Application;
 use DiffSniffer\Command;
+use Dummy;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use const DIRECTORY_SEPARATOR;
@@ -17,7 +18,27 @@ class ApplicationTest extends TestCase
      */
     public function testUseCase(string $useCase, int $expectedExitCode)
     {
-        $dir = __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . $useCase;
+        $app = new Application();
+
+        $this->expectOutputString($this->getExpectedOutput($useCase));
+        $exitCode = $app->run($this->createCommand($useCase), [__FILE__]);
+
+        $this->assertSame($expectedExitCode, $exitCode);
+    }
+
+    public function testClassLoader()
+    {
+        $app = new Application();
+
+        $app->run($this->createCommand('class-loader'), [__FILE__]);
+
+        self::assertTrue(class_exists(Dummy::class));
+    }
+
+    private function createCommand(string $useCase) : Command
+    {
+        $dir = $this->getDirectory($useCase);
+
         $changeset = new FixtureChangeset($dir);
         chdir($dir . DIRECTORY_SEPARATOR . 'tree');
 
@@ -26,15 +47,23 @@ class ApplicationTest extends TestCase
         $command->expects($this->once())
             ->method('createChangeset')
             ->willReturn($changeset);
-        $app = new Application();
 
-        $expectedOutput = file_get_contents($dir . DIRECTORY_SEPARATOR . 'output.txt');
-        $expectedOutput = str_replace("\n", PHP_EOL, $expectedOutput);
+        return $command;
+    }
 
-        $this->expectOutputString($expectedOutput);
-        $exitCode = $app->run($command, [__FILE__]);
+    private function getExpectedOutput(string $useCase) : string
+    {
+        $dir = $this->getDirectory($useCase);
 
-        $this->assertSame($expectedExitCode, $exitCode);
+        $output = file_get_contents($dir . DIRECTORY_SEPARATOR . 'output.txt');
+        $output = str_replace("\n", PHP_EOL, $output);
+
+        return $output;
+    }
+
+    private function getDirectory(string $useCase) : string
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . $useCase;
     }
 
     public static function useCaseProvider()
@@ -51,6 +80,10 @@ class ApplicationTest extends TestCase
             'exclude-pattern' => [
                 'exclude-pattern',
                 1,
+            ],
+            'class-loader' => [
+                'class-loader',
+                0,
             ],
         ];
     }
