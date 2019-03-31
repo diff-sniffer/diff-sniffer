@@ -2,32 +2,26 @@
 
 namespace DiffSniffer\Tests;
 
-use DiffSniffer\ConfigLoader;
+use DiffSniffer\ProjectLoader;
 use DiffSniffer\Exception;
 use PHPUnit\Framework\TestCase;
 use VirtualFileSystem\FileSystem;
 
 /**
- * @covers \DiffSniffer\ConfigLoader
+ * @covers \DiffSniffer\ProjectLoader
  */
-class ConfigLoaderTest extends TestCase
+class ProjectLoaderTest extends TestCase
 {
     /**
      * @var FileSystem
      */
     private $fs;
 
-    /**
-     * @var ConfigLoader
-     */
-    private $loader;
-
     protected function setUp() : void
     {
         parent::setUp();
 
         $this->fs = new FileSystem();
-        $this->loader = new ConfigLoader();
     }
 
     /**
@@ -38,7 +32,9 @@ class ConfigLoaderTest extends TestCase
     {
         $this->fs->createStructure($structure);
         $dir = $this->fs->path($dir);
-        $config = $this->loader->loadConfig($dir);
+
+        $loader = new ProjectLoader($dir);
+        $config = $loader->getPhpCodeSnifferConfiguration();
 
         if (isset($expected['installed_paths'])) {
             $expected['installed_paths'] = implode(',', array_map(function ($path) {
@@ -114,7 +110,9 @@ EOF
     {
         $this->fs->createStructure($structure);
         $dir = $this->fs->path($dir);
-        $config = $this->loader->loadConfig($dir);
+
+        $loader = new ProjectLoader($dir);
+        $config = $loader->getPhpCodeSnifferConfiguration();
 
         $this->assertNull($config);
     }
@@ -149,8 +147,10 @@ EOF
         $this->fs->createStructure($structure);
         $dir = $this->fs->path($dir);
 
+        $loader = new ProjectLoader($dir);
+
         $this->expectException(Exception::class);
-        $this->loader->loadConfig($dir);
+        $loader->getPhpCodeSnifferConfiguration();
     }
 
     public static function failureProvider() : array

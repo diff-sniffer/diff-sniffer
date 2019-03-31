@@ -44,7 +44,10 @@ final class Application
             return 1;
         }
 
-        $config = (new ConfigLoader())->loadConfig(getcwd());
+        $loader = new ProjectLoader(getcwd());
+        $loader->registerClassLoader();
+
+        $config = $loader->getPhpCodeSnifferConfiguration();
 
         try {
             if ($config !== null) {
