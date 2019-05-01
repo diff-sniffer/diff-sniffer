@@ -9,4 +9,18 @@ if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
 }
 
 require __DIR__ . '/../vendor/autoload.php';
+
+$currentDir = getcwd();
+
+if (file_exists($currentDir . '/vendor/autoload.php')) {
+    require $currentDir . '/vendor/autoload.php';
+}
+
+if (file_exists($currentDir . '/vendor/squizlabs/php_codesniffer/autoload.php')) {
+    require $currentDir . '/vendor/squizlabs/php_codesniffer/autoload.php';
+
+    return;
+}
+
 require __DIR__ . '/../vendor/squizlabs/php_codesniffer/autoload.php';
+
