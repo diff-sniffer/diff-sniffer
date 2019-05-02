@@ -1,5 +1,11 @@
 # Changes in Diff Sniffer Core component
 
+## [3.4.1] - 2019-05-01
+
+### Fixed
+
+* Improved handling of coding standards with additional dependencies (#8, #9).
+
 ## [3.4.0] - 2019-03-01
 
 ### Changed
