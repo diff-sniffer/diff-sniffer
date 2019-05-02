@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "729bdccb6aaa60f2e8d8af8bc54a0505",
+    "content-hash": "32246d821ad993e63f94381b2b064f5e",
     "packages": [
         {
             "name": "diff-sniffer/core",
-            "version": "3.4.0",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diff-sniffer/core.git",
-                "reference": "f3b2f9df0dc85ba9e9496ebf2b77f1c298ec7352"
+                "reference": "583369a5f5c91496862f6bdf60b69565da4bc05d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diff-sniffer/core/zipball/f3b2f9df0dc85ba9e9496ebf2b77f1c298ec7352",
-                "reference": "f3b2f9df0dc85ba9e9496ebf2b77f1c298ec7352",
+                "url": "https://api.github.com/repos/diff-sniffer/core/zipball/583369a5f5c91496862f6bdf60b69565da4bc05d",
+                "reference": "583369a5f5c91496862f6bdf60b69565da4bc05d",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
                 }
             ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2019-03-02T03:03:55+00:00"
+            "time": "2019-05-02T01:45:56+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",

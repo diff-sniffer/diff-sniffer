@@ -1,5 +1,11 @@
 # Changes in Diff Sniffer for Git
 
+## [0.3.1] - 2019-05-01
+
+### Changed
+
+* Updated [diff-sniffer/core](https://packagist.org/packages/diff-sniffer/core) to `^3.4.1`.
+
 ## [0.3.0] - 2019-03-01
 
 ### Changed

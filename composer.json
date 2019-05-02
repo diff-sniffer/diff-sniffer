@@ -9,7 +9,7 @@
   ],
   "license": "MIT",
   "require": {
-    "diff-sniffer/core" : "^3.4",
+    "diff-sniffer/core" : "^3.4.1",
     "php" : "^7.2"
   },
   "require-dev": {
