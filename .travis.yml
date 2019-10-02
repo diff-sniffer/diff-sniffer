@@ -8,6 +8,7 @@ branches:
 php:
   - 7.2
   - 7.3
+  - 7.4snapshot
 before_script:
   - make install
 script:
