@@ -2,7 +2,7 @@ install:
 	composer install
 test:
 	vendor/bin/phpunit --color
-	vendor/bin/phpstan analyse -l 7 src tests
+	vendor/bin/phpstan a
 	vendor/bin/phpcs
 coverage:
 	$(eval TMPDIR=$(shell mktemp -d))

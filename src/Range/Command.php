@@ -15,6 +15,16 @@ use DiffSniffer\Git\Cli;
 final class Command implements CommandInterface
 {
     /**
+     * @var string
+     */
+    private $directory;
+
+    public function __construct(string $directory)
+    {
+        $this->directory = $directory;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getName() : string
@@ -53,8 +63,12 @@ USG;
     {
         $diffArgs = [];
 
-        while ($args) {
+        while (true) {
             $arg = array_shift($args);
+
+            if ($arg === null) {
+                break;
+            }
 
             if (substr($arg, 0, 1) == '-' && $arg != '--staged') {
                 array_unshift($args, $arg);
@@ -64,6 +78,6 @@ USG;
             $diffArgs[] = $arg;
         }
 
-        return new Changeset(new Cli(), $diffArgs, getcwd());
+        return new Changeset(new Cli(), $diffArgs, $this->directory);
     }
 }

@@ -72,22 +72,30 @@ final class Cli
      */
     public function execPiped(array $commands, $cwd = null) : string
     {
-        $pipedStream = ['pipe', 'r'];
+        $spec = ['pipe', 'r'];
+        $stream = null;
         $processes = $errorStreams = [];
 
         foreach ($commands as $command) {
             $processes[] = proc_open($command, [
-                $pipedStream,
+                $stream ?? $spec,
                 ['pipe', 'w'],
                 ['pipe', 'w'],
             ], $pipes, $cwd);
 
-            /** @var resource $pipedStream */
-            $pipedStream = $pipes[1];
+            $stream = $pipes[1];
             $errorStreams[] = $pipes[2];
         }
 
-        $output = stream_get_contents($pipedStream);
+        assert(is_resource($stream));
+        $output = stream_get_contents($stream);
+
+        if ($output === false) {
+            $error = error_get_last();
+            assert(is_array($error));
+
+            throw new RuntimeException($error['message']);
+        }
 
         $errors = implode('', array_map(function ($stream) {
             return stream_get_contents($stream);

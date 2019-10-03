@@ -2,6 +2,7 @@
 
 namespace DiffSniffer\Git\ContentSource;
 
+use DiffSniffer\Exception\RuntimeException;
 use DiffSniffer\Git\ContentSource;
 
 /**
@@ -29,6 +30,15 @@ class Working implements ContentSource
      */
     public function getContents(string $path) : string
     {
-        return file_get_contents($this->dir . DIRECTORY_SEPARATOR . $path);
+        $contents = file_get_contents($this->dir . DIRECTORY_SEPARATOR . $path);
+
+        if ($contents === false) {
+            $error = error_get_last();
+            assert(is_array($error));
+
+            throw new RuntimeException($error['message']);
+        }
+
+        return $contents;
     }
 }

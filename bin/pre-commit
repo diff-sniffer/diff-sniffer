@@ -15,7 +15,7 @@ require __DIR__ . '/../include/bootstrap.php';
 
 try {
     exit(
-        (new Application())->run(new Command(), $_SERVER['argv'])
+        (new Application())->run(new Command(getcwd()), $_SERVER['argv'])
     );
 } catch (Exception $e) {
     fwrite(STDERR, $e->getMessage() . PHP_EOL);

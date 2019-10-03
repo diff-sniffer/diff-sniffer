@@ -21,6 +21,8 @@ class ChangesetTest extends TestCase
     public static function setUpBeforeClass() : void
     {
         $dir = tempnam(sys_get_temp_dir(), 'diff-sniffer-test');
+        self::assertIsString($dir);
+
         unlink($dir);
         mkdir($dir, 0777, true);
 
