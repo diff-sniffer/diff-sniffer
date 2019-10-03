@@ -20,6 +20,7 @@ final class Application
      * @param Command $command Command to run
      * @param array $args Command line arguments
      * @return int Exit code
+     * @throws Exception
      */
     public function run(Command $command, array $args) : int
     {
@@ -44,7 +45,10 @@ final class Application
             return 1;
         }
 
-        $loader = new ProjectLoader(getcwd());
+        $cwd = getcwd();
+        assert(is_string($cwd));
+
+        $loader = new ProjectLoader($cwd);
         $loader->registerClassLoader();
 
         $config = $loader->getPhpCodeSnifferConfiguration();

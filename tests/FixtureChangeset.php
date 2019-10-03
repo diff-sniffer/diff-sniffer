@@ -30,7 +30,7 @@ class FixtureChangeset implements Changeset
      */
     public function getDiff() : string
     {
-        return file_get_contents($this->dir . DIRECTORY_SEPARATOR . 'changeset.diff');
+        return $this->getFileContents($this->dir . DIRECTORY_SEPARATOR . 'changeset.diff');
     }
 
     /**
@@ -38,6 +38,14 @@ class FixtureChangeset implements Changeset
      */
     public function getContents(string $path) : string
     {
-        return file_get_contents($this->dir . '/tree/' . $path);
+        return $this->getFileContents($this->dir . '/tree/' . $path);
+    }
+
+    private function getFileContents(string $path) : string
+    {
+        $contents = file_get_contents($path);
+        assert(is_string($contents));
+
+        return $contents;
     }
 }

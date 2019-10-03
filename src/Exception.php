@@ -2,9 +2,11 @@
 
 namespace DiffSniffer;
 
+use Throwable;
+
 /**
  * DiffSniffer exception
  */
-interface Exception
+interface Exception extends Throwable
 {
 }

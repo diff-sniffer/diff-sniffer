@@ -1,5 +1,11 @@
 parameters:
-	excludes_analyse:
-		- %currentWorkingDirectory%/tests/fixtures/*
-	ignoreErrors:
-		- '~^Class Dummy not found.$~i'
+    level: 7
+    paths:
+        - %currentWorkingDirectory%/src
+        - %currentWorkingDirectory%/tests
+    excludes_analyse:
+        - %currentWorkingDirectory%/tests/fixtures
+    ignoreErrors:
+        - '~^Class Dummy not found\.$~'
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon

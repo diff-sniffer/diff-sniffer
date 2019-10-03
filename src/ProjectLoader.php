@@ -121,6 +121,14 @@ class ProjectLoader
     private function loadComposerConfiguration() : array
     {
         $contents = file_get_contents($this->root . '/composer.json');
+
+        if ($contents === false) {
+            $error = error_get_last();
+            assert(is_array($error));
+
+            throw new RuntimeException($error['message']);
+        }
+
         $config = json_decode($contents, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {

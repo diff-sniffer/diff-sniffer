@@ -98,6 +98,8 @@ class Diff implements IteratorAggregate, Countable
     private function parse(string $diff) : array
     {
         $diff = preg_split("/((\r?\n)|(\r\n?))/", $diff);
+        assert(is_array($diff));
+
         $paths = [];
         $number = 0;
         $path = null;

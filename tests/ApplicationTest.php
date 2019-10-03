@@ -56,6 +56,7 @@ class ApplicationTest extends TestCase
         $dir = $this->getDirectory($useCase);
 
         $output = file_get_contents($dir . DIRECTORY_SEPARATOR . 'output.txt');
+        $this->assertIsString($output);
         $output = str_replace("\n", PHP_EOL, $output);
 
         return $output;

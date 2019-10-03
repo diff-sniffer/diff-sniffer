@@ -52,7 +52,7 @@ final class Iterator implements \IteratorAggregate
         // PHP_CodeSniffer expects file paths to contain the native directory separator on Windows when matching them
         // against the exclude pattern but Git and GitHub REST API will return forward slashes regardless of the OS
         if (DIRECTORY_SEPARATOR === '\\') {
-            $it = (function () : iterable {
+            $it = (function () : Traversable {
                 foreach ($this->files as $file) {
                     yield str_replace('/', DIRECTORY_SEPARATOR, $file);
                 }
