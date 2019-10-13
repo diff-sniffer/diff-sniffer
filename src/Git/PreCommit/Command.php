@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer\Git\PreCommit;
 
@@ -14,9 +16,7 @@ use DiffSniffer\Git\Changeset;
  */
 final class Command implements CommandInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $directory;
 
     public function __construct(string $directory)

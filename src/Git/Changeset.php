@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer\Git;
 
@@ -12,28 +14,29 @@ use DiffSniffer\Git\ContentSource\Staged;
 use DiffSniffer\Git\ContentSource\Working;
 use DiffSniffer\Git\DiffSource\Unix;
 use DiffSniffer\Git\DiffSource\Windows;
+use function count;
+use function defined;
+use function in_array;
+use function preg_match;
+use function rtrim;
 
 /**
  * Changeset that represents Git staged area
  */
 final class Changeset implements ChangesetInterface
 {
-    /**
-     * @var DiffSource
-     */
+    /** @var DiffSource */
     private $diffSource;
 
-    /**
-     * @var ContentSource
-     */
+    /** @var ContentSource */
     private $contentSource;
 
     /**
      * Constructor
      *
-     * @param Cli $cli CLI utilities
-     * @param array $args
-     * @param string $dir
+     * @param Cli               $cli  CLI utilities
+     * @param array<int,string> $args
+     *
      * @throws RuntimeException
      */
     public function __construct(Cli $cli, array $args, string $dir)
@@ -45,7 +48,7 @@ final class Changeset implements ChangesetInterface
 
         $dir = rtrim($dir);
 
-        $this->diffSource = $this->getDiffSource($cli, $args, $dir);
+        $this->diffSource    = $this->getDiffSource($cli, $args, $dir);
         $this->contentSource = $this->getContentSource($cli, $args, $dir);
     }
 
@@ -68,11 +71,7 @@ final class Changeset implements ChangesetInterface
     /**
      * Creates the content source corresponding to the given `git diff` arguments
      *
-     * @param Cli $cli
-     * @param string[] $args
-     * @param string $dir
-     *
-     * @return DiffSource
+     * @param array<int,string> $args
      */
     private function getDiffSource(Cli $cli, array $args, string $dir) : DiffSource
     {
@@ -86,11 +85,7 @@ final class Changeset implements ChangesetInterface
     /**
      * Creates the content source corresponding to the given `git diff` arguments
      *
-     * @param Cli $cli
-     * @param string[] $args
-     * @param string $dir
-     *
-     * @return ContentSource
+     * @param array<int,string> $args
      */
     private function getContentSource(Cli $cli, array $args, string $dir) : ContentSource
     {

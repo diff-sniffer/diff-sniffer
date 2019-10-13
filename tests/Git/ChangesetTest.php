@@ -1,21 +1,26 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer\Tests\Git;
 
 use DiffSniffer\Cli;
 use DiffSniffer\Git\Changeset;
 use PHPUnit\Framework\TestCase;
+use function defined;
+use function escapeshellarg;
+use function file_put_contents;
+use function mkdir;
+use function sys_get_temp_dir;
+use function tempnam;
+use function unlink;
 
 class ChangesetTest extends TestCase
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private static $dir;
 
-    /**
-     * @var Cli
-     */
+    /** @var Cli */
     private static $cli;
 
     public static function setUpBeforeClass() : void
@@ -72,7 +77,7 @@ class ChangesetTest extends TestCase
     /**
      * @test
      */
-    public function stagedToHead()
+    public function stagedToHead() : void
     {
         $changeset = $this->createChangeset('--staged');
         $this->assertDiff(<<<EOF
@@ -95,7 +100,7 @@ EOF
     /**
      * @test
      */
-    public function stagedToCommit()
+    public function stagedToCommit() : void
     {
         $changeset = $this->createChangeset('--staged', 'HEAD~');
         $this->assertDiff(<<<EOF
@@ -115,11 +120,10 @@ EOF
             , $changeset, 'file.txt');
     }
 
-
     /**
      * @test
      */
-    public function workingToStaged()
+    public function workingToStaged() : void
     {
         $changeset = $this->createChangeset();
         $this->assertDiff(<<<EOF
@@ -142,7 +146,7 @@ EOF
     /**
      * @test
      */
-    public function workingToCommit()
+    public function workingToCommit() : void
     {
         $changeset = $this->createChangeset('HEAD~2');
         $this->assertDiff(<<<EOF
@@ -165,7 +169,7 @@ EOF
     /**
      * @test
      */
-    public function commitToCommit()
+    public function commitToCommit() : void
     {
         $changeset = $this->createChangeset('HEAD~2', 'HEAD~1');
         $this->assertDiff(<<<EOF
@@ -188,7 +192,7 @@ EOF
     /**
      * @test
      */
-    public function commitToCommitRangeNotation()
+    public function commitToCommitRangeNotation() : void
     {
         $changeset = $this->createChangeset('HEAD~2..HEAD~1');
         $this->assertDiff(<<<EOF
@@ -211,7 +215,7 @@ EOF
     /**
      * @test
      */
-    public function commitToMergeBase()
+    public function commitToMergeBase() : void
     {
         $changeset = $this->createChangeset('HEAD...feature');
         $this->assertDiff(<<<EOF
@@ -234,7 +238,7 @@ EOF
     /**
      * @test
      */
-    public function fileWithOnlyDeletedLinesIsIgnored()
+    public function fileWithOnlyDeletedLinesIsIgnored() : void
     {
         $this->putContents('file.txt', <<<EOF
 Line1
@@ -283,12 +287,12 @@ EOF
         return new Changeset(self::$cli, $args, self::$dir);
     }
 
-    private function assertDiff(string $expected, Changeset $changeset)
+    private function assertDiff(string $expected, Changeset $changeset) : void
     {
         $this->assertSame($expected . "\n", $changeset->getDiff());
     }
 
-    private function assertContents(string $expected, Changeset $changeset, string $path)
+    private function assertContents(string $expected, Changeset $changeset, string $path) : void
     {
         $this->assertSame($expected . "\n", $changeset->getContents($path));
     }

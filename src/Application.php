@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer;
 
@@ -6,6 +8,16 @@ use DiffSniffer\Command\Exception\BadUsage;
 use Jean85\PrettyVersions;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
+use const PHP_EOL;
+use function array_merge;
+use function array_shift;
+use function assert;
+use function basename;
+use function current;
+use function define;
+use function getcwd;
+use function is_string;
+use function printf;
 
 define('PHP_CODESNIFFER_CBF', false);
 
@@ -17,24 +29,30 @@ final class Application
     /**
      * Runs command
      *
-     * @param Command $command Command to run
-     * @param array $args Command line arguments
+     * @param Command           $command Command to run
+     * @param array<int,string> $args    Command line arguments
+     *
      * @return int Exit code
+     *
      * @throws Exception
      */
     public function run(Command $command, array $args) : int
     {
-        $programName = basename(array_shift($args));
+        $programName = array_shift($args);
+        assert(is_string($programName));
+        $programName = basename($programName);
 
         $arg = current($args);
 
         if ($arg === '--help') {
             $this->printUsage($command, $programName);
+
             return 0;
         }
 
         if ($arg === '--version') {
             $this->printVersion($command);
+
             return 0;
         }
 
@@ -42,6 +60,7 @@ final class Application
             $changeSet = $command->createChangeSet($args);
         } catch (BadUsage $e) {
             $this->printUsage($command, $programName);
+
             return 1;
         }
 
@@ -67,17 +86,15 @@ final class Application
             return $runner->run($changeSet);
         } catch (DeepExitException $e) {
             echo $e->getMessage();
+
             return $e->getCode();
         }
     }
 
     /**
      * Prints command usage text
-     *
-     * @param Command $command
-     * @param string $programName
      */
-    private function printUsage(Command $command, string $programName)
+    private function printUsage(Command $command, string $programName) : void
     {
         echo $command->getUsage($programName);
         echo PHP_EOL;
@@ -97,10 +114,8 @@ HLP;
 
     /**
      * Prints command version
-     *
-     * @param Command $command
      */
-    private function printVersion(Command $command)
+    private function printVersion(Command $command) : void
     {
         $version = PrettyVersions::getVersion($command->getPackageName());
 

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer\Git\Range;
 
@@ -6,6 +8,9 @@ use DiffSniffer\Changeset as ChangesetInterface;
 use DiffSniffer\Cli;
 use DiffSniffer\Command as CommandInterface;
 use DiffSniffer\Git\Changeset;
+use function array_shift;
+use function array_unshift;
+use function substr;
 
 /**
  * Git pre-commit hook
@@ -14,9 +19,7 @@ use DiffSniffer\Git\Changeset;
  */
 final class Command implements CommandInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $directory;
 
     public function __construct(string $directory)
@@ -70,7 +73,7 @@ USG;
                 break;
             }
 
-            if (substr($arg, 0, 1) == '-' && $arg != '--staged') {
+            if (substr($arg, 0, 1) === '-' && $arg !== '--staged') {
                 array_unshift($args, $arg);
                 break;
             }

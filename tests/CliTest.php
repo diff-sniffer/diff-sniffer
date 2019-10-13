@@ -1,16 +1,18 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer\Tests;
 
 use DiffSniffer\Cli;
 use DiffSniffer\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
+use const PHP_EOL;
+use function defined;
 
 class CliTest extends TestCase
 {
-    /**
-     * @var Cli
-     */
+    /** @var Cli */
     private $cli;
 
     protected function setUp() : void
@@ -18,13 +20,13 @@ class CliTest extends TestCase
         $this->cli = new Cli();
     }
 
-    public function testEscaping()
+    public function testEscaping() : void
     {
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->markTestSkipped('escapeshellarg() doesn\' t work as expected on Windows');
         }
 
-        $value = 'Hello, world "\'$!';
+        $value  = 'Hello, world "\'$!';
         $output = $this->cli->exec(
             $this->cli->cmd('echo', $value)
         );
@@ -32,7 +34,7 @@ class CliTest extends TestCase
         $this->assertEquals($value . PHP_EOL, $output);
     }
 
-    public function testFailure()
+    public function testFailure() : void
     {
         $this->expectException(RuntimeException::class);
 
@@ -41,7 +43,7 @@ class CliTest extends TestCase
         );
     }
 
-    public function testExecPiped()
+    public function testExecPiped() : void
     {
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->markTestSkipped('TODO: rework using something else than `cat\'');
@@ -58,7 +60,7 @@ class CliTest extends TestCase
     /**
      * @test
      */
-    public function execPipedFailure()
+    public function execPipedFailure() : void
     {
         $this->expectException(RuntimeException::class);
 

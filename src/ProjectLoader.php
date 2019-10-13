@@ -1,8 +1,25 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer;
 
 use DiffSniffer\Exception\RuntimeException;
+use const JSON_ERROR_NONE;
+use function array_map;
+use function assert;
+use function dirname;
+use function error_get_last;
+use function explode;
+use function file_exists;
+use function file_get_contents;
+use function implode;
+use function is_array;
+use function is_file;
+use function json_decode;
+use function json_last_error;
+use function json_last_error_msg;
+use function sprintf;
 
 /**
  * Configuration loader
@@ -39,7 +56,7 @@ class ProjectLoader
     }
 
     /**
-     * @return array|null Configuration parameters or NULL if not found
+     * @return array<string,mixed>|null Configuration parameters or NULL if not found
      */
     public function getPhpCodeSnifferConfiguration() : ?array
     {
@@ -49,7 +66,7 @@ class ProjectLoader
 
         $path = sprintf('%s/%s/squizlabs/php_codesniffer/CodeSniffer.conf', $this->root, $this->getVendorDirectory());
 
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             return null;
         }
 
@@ -69,7 +86,7 @@ class ProjectLoader
 
         $path = sprintf('%s/%s/autoload.php', $this->root, $this->getVendorDirectory());
 
-        if (!is_file($path)) {
+        if (! is_file($path)) {
             return;
         }
 
@@ -80,7 +97,6 @@ class ProjectLoader
      * Finds project root by locating composer.json located in the current working directory or its closest parent
      *
      * @param string $dir Current working directory
-     * @return string|null
      */
     private function findProjectRoot(string $dir) : ?string
     {
@@ -92,7 +108,7 @@ class ProjectLoader
             }
 
             $prev = $dir;
-            $dir = dirname($dir);
+            $dir  = dirname($dir);
         } while ($dir !== $prev);
 
         return null;
@@ -100,7 +116,7 @@ class ProjectLoader
 
     private function getVendorDirectory() : string
     {
-        if (!$this->composerConfigurationLoaded) {
+        if (! $this->composerConfigurationLoaded) {
             $config = $this->loadComposerConfiguration();
 
             if (isset($config['vendor-dir'])) {
@@ -116,7 +132,7 @@ class ProjectLoader
     /**
      * Loads composer configuration from the given file
      *
-     * @return array Configuration parameters
+     * @return array<string,mixed> Configuration parameters
      */
     private function loadComposerConfiguration() : array
     {
@@ -142,7 +158,8 @@ class ProjectLoader
      * Loads PHP_CodeSniffer configuration from the given file
      *
      * @param string $path File path
-     * @return array Configuration parameters
+     *
+     * @return array<string,mixed> Configuration parameters
      */
     private function loadPhpCodeSnifferConfiguration(string $path) : array
     {
@@ -156,17 +173,18 @@ class ProjectLoader
     /**
      * Resolves relative installed paths against the configuration file path
      *
-     * @param array $config Configuration parameters
-     * @param string $configPath Configuration file paths
-     * @return array Configuration parameters
+     * @param array<string,mixed> $config     Configuration parameters
+     * @param string              $configPath Configuration file paths
+     *
+     * @return array<string,mixed> Configuration parameters
      */
     private function massageConfig(array $config, string $configPath) : array
     {
-        if (!isset($config['installed_paths'])) {
+        if (! isset($config['installed_paths'])) {
             return $config;
         }
 
-        $config['installed_paths'] = implode(',', array_map(function ($path) use ($configPath) {
+        $config['installed_paths'] = implode(',', array_map(static function ($path) use ($configPath) {
             return dirname($configPath) . '/' . $path;
         }, explode(',', $config['installed_paths'])));
 

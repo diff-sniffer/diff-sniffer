@@ -1,11 +1,16 @@
 <?xml version="1.0"?>
 <ruleset>
     <arg name="basepath" value="."/>
+    <arg name="colors"/>
+    <arg name="cache" value=".phpcs.cache"/>
+    <arg value="ps"/>
 
     <file>src</file>
     <file>include</file>
     <file>tests</file>
     <exclude-pattern>tests/fixtures/*</exclude-pattern>
 
-    <rule ref="PSR2"/>
+    <rule ref="Doctrine">
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
+    </rule>
 </ruleset>

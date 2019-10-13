@@ -1,18 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DiffSniffer\Tests;
 
 use DiffSniffer\Changeset;
 use const DIRECTORY_SEPARATOR;
+use function assert;
+use function file_get_contents;
+use function is_string;
 
 /**
  * Fixture changeset
  */
 class FixtureChangeset implements Changeset
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $dir;
 
     /**

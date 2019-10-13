@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer;
 
@@ -9,15 +11,11 @@ interface Command
 {
     /**
      * Returns human-readable command name
-     *
-     * @return string
      */
     public function getName() : string;
 
     /**
      * Returns the name of the Composer package implementing the command
-     *
-     * @return string
      */
     public function getPackageName() : string;
 
@@ -25,15 +23,13 @@ interface Command
      * Returns command usage text
      *
      * @param string $programName CLI program name
-     * @return string
      */
     public function getUsage(string $programName) : string;
 
     /**
      * Creates changeset from the arguments and removes the used ones leaving the rest for further processing
      *
-     * @param string[] $args Command arguments
-     * @return Changeset
+     * @param array<int,string> $args Command arguments
      */
     public function createChangeSet(array &$args) : Changeset;
 }

@@ -1,20 +1,23 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer\Tests;
 
-use DiffSniffer\ProjectLoader;
 use DiffSniffer\Exception;
+use DiffSniffer\ProjectLoader;
 use PHPUnit\Framework\TestCase;
 use VirtualFileSystem\FileSystem;
+use function array_map;
+use function explode;
+use function implode;
 
 /**
  * @covers \DiffSniffer\ProjectLoader
  */
 class ProjectLoaderTest extends TestCase
 {
-    /**
-     * @var FileSystem
-     */
+    /** @var FileSystem */
     private $fs;
 
     protected function setUp() : void
@@ -25,10 +28,13 @@ class ProjectLoaderTest extends TestCase
     }
 
     /**
+     * @param array<string,mixed> $structure
+     * @param array<string,mixed> $expected
+     *
      * @test
      * @dataProvider successProvider
      */
-    public function success(array $structure, string $dir, array $expected)
+    public function success(array $structure, string $dir, array $expected) : void
     {
         $this->fs->createStructure($structure);
         $dir = $this->fs->path($dir);
@@ -45,7 +51,10 @@ class ProjectLoaderTest extends TestCase
         $this->assertSame($expected, $config);
     }
 
-    public static function successProvider() : array
+    /**
+     * @return iterable<string,mixed>
+     */
+    public static function successProvider() : iterable
     {
         return [
             'default' => [
@@ -62,6 +71,7 @@ $phpCodeSnifferConfig = [
     'installed_paths' => '../../doctrine/coding-standard/lib/,../../drupal/coder/coder_sniffer/',
 ];
 EOF
+                                    ,
                                 ],
                             ],
                         ],
@@ -89,24 +99,25 @@ $phpCodeSnifferConfig = [
     'foo' => 'bar',
 ];
 EOF
+                                    ,
                                 ],
                             ],
                         ],
                     ],
                 ],
                 '/project',
-                [
-                    'foo' => 'bar',
-                ],
+                ['foo' => 'bar'],
             ],
         ];
     }
 
     /**
+     * @param array<string,mixed> $structure
+     *
      * @test
      * @dataProvider notFoundProvider
      */
-    public function notFound(array $structure, string $dir)
+    public function notFound(array $structure, string $dir) : void
     {
         $this->fs->createStructure($structure);
         $dir = $this->fs->path($dir);
@@ -117,21 +128,21 @@ EOF
         $this->assertNull($config);
     }
 
-    public static function notFoundProvider() : array
+    /**
+     * @return iterable<string,mixed>
+     */
+    public static function notFoundProvider() : iterable
     {
         return [
             'no-composer-config' => [
                 [
-                    'project' => [
-                    ],
+                    'project' => [],
                 ],
                 '/project',
             ],
             'no-phpcs-config' => [
                 [
-                    'project' => [
-                        'composer.json' => '{}',
-                    ],
+                    'project' => ['composer.json' => '{}'],
                 ],
                 '/project',
             ],
@@ -139,10 +150,12 @@ EOF
     }
 
     /**
+     * @param array<string,mixed> $structure
+     *
      * @test
      * @dataProvider failureProvider
      */
-    public function failure(array $structure, string $dir)
+    public function failure(array $structure, string $dir) : void
     {
         $this->fs->createStructure($structure);
         $dir = $this->fs->path($dir);
@@ -153,14 +166,15 @@ EOF
         $loader->getPhpCodeSnifferConfiguration();
     }
 
-    public static function failureProvider() : array
+    /**
+     * @return iterable<string,mixed>
+     */
+    public static function failureProvider() : iterable
     {
         return [
             'invalid-composer-config' => [
                 [
-                    'project' => [
-                        'composer.json' => '{',
-                    ],
+                    'project' => ['composer.json' => '{'],
                 ],
                 '/project',
             ],

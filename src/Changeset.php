@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer;
 
@@ -12,7 +14,6 @@ interface Changeset
     /**
      * Returns diff of the changeset
      *
-     * @return string
      * @throws Exception
      */
     public function getDiff() : string;
@@ -20,8 +21,6 @@ interface Changeset
     /**
      * Returns contents of the given file
      *
-     * @param string $path
-     * @return string
      * @throws Exception
      */
     public function getContents(string $path) : string;
