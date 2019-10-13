@@ -4,32 +4,34 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d9c0abbf32130ce24620cce594abf68",
+    "content-hash": "f161fc31e0ed75fb4ac406ff35b237a7",
     "packages": [
         {
             "name": "diff-sniffer/core",
-            "version": "3.4.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diff-sniffer/core.git",
-                "reference": "583369a5f5c91496862f6bdf60b69565da4bc05d"
+                "reference": "35bdf25b3e3b94378e1ac22090fc5325901b421f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diff-sniffer/core/zipball/583369a5f5c91496862f6bdf60b69565da4bc05d",
-                "reference": "583369a5f5c91496862f6bdf60b69565da4bc05d",
+                "url": "https://api.github.com/repos/diff-sniffer/core/zipball/35bdf25b3e3b94378e1ac22090fc5325901b421f",
+                "reference": "35bdf25b3e3b94378e1ac22090fc5325901b421f",
                 "shasum": ""
             },
             "require": {
+                "ext-json": "*",
                 "jean85/pretty-package-versions": "^1.2",
                 "morozov/bootstrap": "^1.1",
                 "php": "^7.2",
-                "squizlabs/php_codesniffer": "^3.4"
+                "squizlabs/php_codesniffer": "^3.5"
             },
             "require-dev": {
-                "php-vfs/php-vfs": "^v1.4",
-                "phpstan/phpstan": "^0.9",
-                "phpunit/phpunit": "^8.0"
+                "php-vfs/php-vfs": "1.4.x-dev#16eb61dff29f054345710bce5423bfa1ae7ce9d7",
+                "phpstan/phpstan": "^0.11",
+                "phpstan/phpstan-phpunit": "^0.11",
+                "phpunit/phpunit": "^8.4"
             },
             "type": "library",
             "extra": {
@@ -53,7 +55,7 @@
                 }
             ],
             "description": "Core component for Diff Sniffer, a tool to validate coding standards only in changed line",
-            "time": "2019-05-02T01:45:56+00:00"
+            "time": "2019-10-11T20:08:16+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
@@ -194,16 +196,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.4.0",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "379deb987e26c7cd103a7b387aea178baec96e48"
+                "reference": "0afebf16a2e7f1e434920fa976253576151effe9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/379deb987e26c7cd103a7b387aea178baec96e48",
-                "reference": "379deb987e26c7cd103a7b387aea178baec96e48",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/0afebf16a2e7f1e434920fa976253576151effe9",
+                "reference": "0afebf16a2e7f1e434920fa976253576151effe9",
                 "shasum": ""
             },
             "require": {
@@ -236,12 +238,12 @@
                 }
             ],
             "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
-            "homepage": "http://www.squizlabs.com/php-codesniffer",
+            "homepage": "https://github.com/squizlabs/PHP_CodeSniffer",
             "keywords": [
                 "phpcs",
                 "standards"
             ],
-            "time": "2018-12-19T23:57:18+00:00"
+            "time": "2019-09-26T23:12:26+00:00"
         }
     ],
     "packages-dev": [
@@ -2956,7 +2958,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "diff-sniffer/core": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
