@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DiffSniffer\Git;
+namespace DiffSniffer;
 
 /**
  * Content source

@@ -3,10 +3,15 @@
 namespace DiffSniffer\Git;
 
 use DiffSniffer\Changeset as ChangesetInterface;
+use DiffSniffer\Cli;
+use DiffSniffer\ContentSource;
+use DiffSniffer\DiffSource;
 use DiffSniffer\Exception\RuntimeException;
 use DiffSniffer\Git\ContentSource\Commit;
 use DiffSniffer\Git\ContentSource\Staged;
 use DiffSniffer\Git\ContentSource\Working;
+use DiffSniffer\Git\DiffSource\Unix;
+use DiffSniffer\Git\DiffSource\Windows;
 
 /**
  * Changeset that represents Git staged area
@@ -72,10 +77,10 @@ final class Changeset implements ChangesetInterface
     private function getDiffSource(Cli $cli, array $args, string $dir) : DiffSource
     {
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
-            return new DiffSource\Windows($cli, $args, $dir);
+            return new Windows($cli, $args, $dir);
         }
 
-        return new DiffSource\Unix($cli, $args, $dir);
+        return new Unix($cli, $args, $dir);
     }
 
     /**

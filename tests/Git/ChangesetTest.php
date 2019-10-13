@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace DiffSniffer\Git\Tests;
+namespace DiffSniffer\Tests\Git;
 
+use DiffSniffer\Cli;
 use DiffSniffer\Git\Changeset;
-use DiffSniffer\Git\Cli;
 use PHPUnit\Framework\TestCase;
 
 class ChangesetTest extends TestCase

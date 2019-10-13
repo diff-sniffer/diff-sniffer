@@ -3,9 +3,9 @@
 namespace DiffSniffer\Git\PreCommit;
 
 use DiffSniffer\Changeset as ChangesetInterface;
+use DiffSniffer\Cli;
 use DiffSniffer\Command as CommandInterface;
 use DiffSniffer\Git\Changeset;
-use DiffSniffer\Git\Cli;
 
 /**
  * Git pre-commit hook

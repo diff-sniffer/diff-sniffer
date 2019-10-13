@@ -3,7 +3,7 @@
 namespace DiffSniffer\Git\ContentSource;
 
 use DiffSniffer\Exception\RuntimeException;
-use DiffSniffer\Git\ContentSource;
+use DiffSniffer\ContentSource;
 
 /**
  * Working content source

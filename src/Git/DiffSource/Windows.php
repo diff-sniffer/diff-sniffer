@@ -2,13 +2,13 @@
 
 namespace DiffSniffer\Git\DiffSource;
 
-use DiffSniffer\Git\Cli;
-use DiffSniffer\Git\DiffSource;
+use DiffSniffer\Cli;
+use DiffSniffer\DiffSource;
 
 /**
- * Unix-specific implementation of the diff source
+ * Windows-specific implementation of the diff source
  */
-class Unix implements DiffSource
+class Windows implements DiffSource
 {
     /**
      * CLI utilities
@@ -45,6 +45,8 @@ class Unix implements DiffSource
 
     /**
      * {@inheritDoc}
+     *
+     * @see https://bugs.php.net/bug.php?id=49446
      */
     public function getDiff() : string
     {
@@ -53,15 +55,10 @@ class Unix implements DiffSource
                 '--numstat',
                 '--',
             ])),
-            $this->cli->subShell(
-                $this->cli->and(
-                    $this->cli->cmd('echo', '.'),
-                    $this->cli->cmd('awk', '$1 == 0 { print ":!"$3 }')
-                )
-            ),
-            $this->cli->cmd('xargs', 'git', 'diff', ...array_merge($this->args, [
+            'for /f "tokens=1,3" %i in (\'findstr "^"\') do @if not "%i" == "0" '
+            . $this->cli->cmd('git', 'diff', ...array_merge($this->args, [
                 '--',
-            ]))
+            ])) . ' %j',
         ], $this->dir);
     }
 }

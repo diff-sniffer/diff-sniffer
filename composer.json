@@ -24,12 +24,12 @@
   },
   "autoload": {
     "psr-4": {
-      "DiffSniffer\\Git\\": "src/"
+      "DiffSniffer\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "DiffSniffer\\Git\\Tests\\": "tests/"
+      "DiffSniffer\\Tests\\": "tests/"
     }
   },
   "extra": {
