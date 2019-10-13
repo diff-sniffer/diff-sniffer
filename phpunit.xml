@@ -1,8 +1,9 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="include/bootstrap.php"
 >
     <testsuites>
-        <testsuite name="diff-sniffer-git">
+        <testsuite name="diff-sniffer">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

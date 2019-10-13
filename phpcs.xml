@@ -3,7 +3,9 @@
     <arg name="basepath" value="."/>
 
     <file>src</file>
+    <file>include</file>
     <file>tests</file>
+    <exclude-pattern>tests/fixtures/*</exclude-pattern>
 
     <rule ref="PSR2"/>
 </ruleset>

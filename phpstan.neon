@@ -3,5 +3,9 @@ parameters:
     paths:
         - %currentWorkingDirectory%/src
         - %currentWorkingDirectory%/tests
+    excludes_analyse:
+        - %currentWorkingDirectory%/tests/fixtures
+    ignoreErrors:
+        - '~^Class Dummy not found\.$~'
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
