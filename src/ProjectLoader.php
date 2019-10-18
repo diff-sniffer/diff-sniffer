@@ -20,6 +20,7 @@ use function json_decode;
 use function json_last_error;
 use function json_last_error_msg;
 use function sprintf;
+use function substr;
 
 /**
  * Configuration loader
@@ -105,6 +106,12 @@ class ProjectLoader
 
             if (file_exists($path)) {
                 return $dir;
+            }
+
+            // this is only possible when testing within a virtual filesystem
+            // but we need to handle it here in order to let tests pass
+            if (substr($dir, -1) === ':') {
+                break;
             }
 
             $prev = $dir;
