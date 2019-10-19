@@ -1,30 +1,25 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer\Git\ContentSource;
 
-use DiffSniffer\ContentSource;
 use DiffSniffer\Cli;
+use DiffSniffer\ContentSource;
 
 /**
  * Staged content source
  */
 class Staged implements ContentSource
 {
-    /**
-     * @var Cli
-     */
+    /** @var Cli */
     private $cli;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $dir;
 
     /**
      * Constructor
-     *
-     * @param Cli $cli
-     * @param string $dir
      */
     public function __construct(Cli $cli, string $dir)
     {

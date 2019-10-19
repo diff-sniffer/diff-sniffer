@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer;
 
@@ -14,8 +16,6 @@ interface DiffSource
      * removed ones in order to avoid parsing their diffs since there's nothing to check in them.
      *
      * This is useful for checking commits which remove a lot of files or a lot of lines in a lot of files.
-     *
-     * @return string
      */
     public function getDiff() : string;
 }

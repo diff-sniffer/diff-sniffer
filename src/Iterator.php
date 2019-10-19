@@ -1,7 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer;
 
+use IteratorAggregate;
 use IteratorIterator;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\DummyFile;
@@ -17,34 +20,26 @@ use function str_replace;
 /**
  * Changeset iterator
  */
-final class Iterator implements \IteratorAggregate
+final class Iterator implements IteratorAggregate
 {
-    /**
-     * @var Changeset
-     */
+    /** @var Changeset */
     private $changeSet;
 
-    /**
-     * @var Traversable
-     */
+    /** @var Traversable */
     private $files;
 
-    /**
-     * @var Config
-     */
+    /** @var Config */
     private $config;
 
-    /**
-     * @var Ruleset
-     */
+    /** @var Ruleset */
     private $ruleSet;
 
     public function __construct(Traversable $files, Changeset $changeSet, Ruleset $ruleSet, Config $config)
     {
-        $this->files = $files;
+        $this->files     = $files;
         $this->changeSet = $changeSet;
-        $this->ruleSet = $ruleSet;
-        $this->config = $config;
+        $this->ruleSet   = $ruleSet;
+        $this->config    = $config;
     }
 
     public function getIterator() : Traversable
@@ -82,7 +77,7 @@ final class Iterator implements \IteratorAggregate
 
     private function createFile(string $path, string $contents) : File
     {
-        $file = new DummyFile($contents, $this->ruleSet, $this->config);
+        $file       = new DummyFile($contents, $this->ruleSet, $this->config);
         $file->path = $path;
 
         return $file;

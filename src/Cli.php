@@ -1,8 +1,22 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer;
 
 use DiffSniffer\Exception\RuntimeException;
+use function array_map;
+use function array_merge;
+use function array_reduce;
+use function assert;
+use function error_get_last;
+use function escapeshellcmd;
+use function implode;
+use function is_array;
+use function is_resource;
+use function proc_close;
+use function proc_open;
+use function stream_get_contents;
 
 /**
  * CLI utility class
@@ -12,9 +26,8 @@ final class Cli
     /**
      * Creates a shell command with given executable and arguments
      *
-     * @param string $cmd Executable command
-     * @param string[] ...$args Command arguments
-     * @return string
+     * @param string            $cmd     Executable command
+     * @param array<int,string> ...$args Command arguments
      */
     public function cmd(string $cmd, string ...$args) : string
     {
@@ -27,7 +40,6 @@ final class Cli
      * Joins commands by &&
      *
      * @param string[] ...$commands
-     * @return string
      */
     public function and(string ...$commands) : string
     {
@@ -36,9 +48,6 @@ final class Cli
 
     /**
      * Puts the given command in a sub-shell
-     *
-     * @param string $command
-     * @return string
      */
     public function subShell(string $command) : string
     {
@@ -49,13 +58,12 @@ final class Cli
      * Executes the specified command and returns its output or throws exception
      * containing error
      *
-     * @param string $cmd Command
+     * @param string      $cmd Command
      * @param string|null $cwd Current directory
      *
-     * @return string
      * @throws RuntimeException
      */
-    public function exec(string $cmd, string $cwd = null) : string
+    public function exec(string $cmd, ?string $cwd = null) : string
     {
         return $this->execPiped([$cmd], $cwd);
     }
@@ -64,16 +72,15 @@ final class Cli
      * Executes specified commands piped to each other and returns the resulting output or throws exception
      * containing error
      *
-     * @param string[] $commands Commands
-     * @param string|null $cwd Current directory
+     * @param string[]    $commands Commands
+     * @param string|null $cwd      Current directory
      *
-     * @return string
      * @throws RuntimeException
      */
-    public function execPiped(array $commands, $cwd = null) : string
+    public function execPiped(array $commands, ?string $cwd = null) : string
     {
-        $spec = ['pipe', 'r'];
-        $stream = null;
+        $spec      = ['pipe', 'r'];
+        $stream    = null;
         $processes = $errorStreams = [];
 
         foreach ($commands as $command) {
@@ -83,7 +90,7 @@ final class Cli
                 ['pipe', 'w'],
             ], $pipes, $cwd);
 
-            $stream = $pipes[1];
+            $stream         = $pipes[1];
             $errorStreams[] = $pipes[2];
         }
 
@@ -97,15 +104,15 @@ final class Cli
             throw new RuntimeException($error['message']);
         }
 
-        $errors = implode('', array_map(function ($stream) {
+        $errors = implode('', array_map(static function ($stream) {
             return stream_get_contents($stream);
         }, $errorStreams));
 
-        $success = array_reduce($processes, function ($success, $process) {
+        $success = array_reduce($processes, static function ($success, $process) {
             return proc_close($process) === 0 && $success;
         }, true);
 
-        if (!$success) {
+        if (! $success) {
             throw new RuntimeException($errors);
         }
 

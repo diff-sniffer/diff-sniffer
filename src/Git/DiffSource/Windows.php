@@ -1,9 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer\Git\DiffSource;
 
 use DiffSniffer\Cli;
 use DiffSniffer\DiffSource;
+use function array_merge;
 
 /**
  * Windows-specific implementation of the diff source
@@ -17,9 +20,7 @@ class Windows implements DiffSource
      */
     private $cli;
 
-    /**
-     * @var string[]
-     */
+    /** @var array<int,string> */
     private $args;
 
     /**
@@ -32,15 +33,14 @@ class Windows implements DiffSource
     /**
      * Constructor
      *
-     * @param Cli $cli CLI utilities
-     * @param array $args
-     * @param string $dir
+     * @param Cli               $cli  CLI utilities
+     * @param array<int,string> $args
      */
     public function __construct(Cli $cli, array $args, string $dir)
     {
-        $this->cli = $cli;
+        $this->cli  = $cli;
         $this->args = $args;
-        $this->dir = $dir;
+        $this->dir  = $dir;
     }
 
     /**
@@ -56,9 +56,7 @@ class Windows implements DiffSource
                 '--',
             ])),
             'for /f "tokens=1,3" %i in (\'findstr "^"\') do @if not "%i" == "0" '
-            . $this->cli->cmd('git', 'diff', ...array_merge($this->args, [
-                '--',
-            ])) . ' %j',
+            . $this->cli->cmd('git', 'diff', ...array_merge($this->args, ['--'])) . ' %j',
         ], $this->dir);
     }
 }

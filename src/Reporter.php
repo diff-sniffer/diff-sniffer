@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer;
 
@@ -11,9 +13,7 @@ use PHP_CodeSniffer\Reporter as BaseReporter;
  */
 class Reporter extends BaseReporter
 {
-    /**
-     * @var Diff
-     */
+    /** @var Diff */
     private $diff;
 
     public function __construct(Diff $diff, Config $config)

@@ -1,41 +1,33 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer\Git\ContentSource;
 
-use DiffSniffer\ContentSource;
 use DiffSniffer\Cli;
+use DiffSniffer\ContentSource;
 
 /**
  * Commit content source
  */
 class Commit implements ContentSource
 {
-    /**
-     * @var Cli
-     */
+    /** @var Cli */
     private $cli;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $dir;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $commit;
 
     /**
      * Constructor
-     *
-     * @param Cli $cli
-     * @param string $dir
-     * @param string $commit
      */
     public function __construct(Cli $cli, string $dir, string $commit)
     {
-        $this->cli = $cli;
-        $this->dir = $dir;
+        $this->cli    = $cli;
+        $this->dir    = $dir;
         $this->commit = $commit;
     }
 
@@ -45,7 +37,7 @@ class Commit implements ContentSource
     public function getContents(string $path) : string
     {
         return $this->cli->exec(
-            $this->cli->cmd('git', 'show', $this->commit. ':' . $path),
+            $this->cli->cmd('git', 'show', $this->commit . ':' . $path),
             $this->dir
         );
     }

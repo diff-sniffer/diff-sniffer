@@ -1,14 +1,20 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer\Tests;
 
-use function chdir;
 use DiffSniffer\Application;
 use DiffSniffer\Command;
 use Dummy;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use const DIRECTORY_SEPARATOR;
+use const PHP_EOL;
+use function chdir;
+use function class_exists;
+use function file_get_contents;
+use function str_replace;
 
 class ApplicationTest extends TestCase
 {
@@ -16,7 +22,7 @@ class ApplicationTest extends TestCase
      * @test
      * @dataProvider useCaseProvider
      */
-    public function testUseCase(string $useCase, int $expectedExitCode)
+    public function testUseCase(string $useCase, int $expectedExitCode) : void
     {
         $app = new Application();
 
@@ -26,7 +32,7 @@ class ApplicationTest extends TestCase
         $this->assertSame($expectedExitCode, $exitCode);
     }
 
-    public function testClassLoader()
+    public function testClassLoader() : void
     {
         $app = new Application();
 
@@ -67,7 +73,10 @@ class ApplicationTest extends TestCase
         return __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . $useCase;
     }
 
-    public static function useCaseProvider()
+    /**
+     * @return iterable<string,mixed>
+     */
+    public static function useCaseProvider() : iterable
     {
         return [
             'only-changed-lines-reported' => [

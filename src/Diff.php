@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer;
 
@@ -6,15 +8,24 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use Traversable;
+use function array_flip;
+use function array_intersect_key;
+use function array_keys;
+use function array_merge;
+use function assert;
+use function count;
+use function is_array;
+use function preg_match;
+use function preg_split;
+use function strpos;
+use function substr;
 
 /**
  * Diff
  */
 class Diff implements IteratorAggregate, Countable
 {
-    /**
-     * @var array<string,int[]>
-     */
+    /** @var array<string,int[]> */
     private $paths;
 
     /**
@@ -48,10 +59,10 @@ class Diff implements IteratorAggregate, Countable
     /**
      * Filters file report producing another one containing only the lines affected by diff
      *
-     * @param string $path File path
-     * @param array $report Report data
+     * @param string              $path   File path
+     * @param array<string,mixed> $report Report data
      *
-     * @return array
+     * @return array<string,mixed>
      */
     public function filter(string $path, array $report) : array
     {
@@ -74,9 +85,11 @@ class Diff implements IteratorAggregate, Countable
                             break;
                     }
 
-                    if ($message['fixable']) {
-                        $fixable++;
+                    if (! $message['fixable']) {
+                        continue;
                     }
+
+                    $fixable++;
                 }
             }
         }
@@ -93,16 +106,16 @@ class Diff implements IteratorAggregate, Countable
      *
      * @param string $diff Diff output
      *
-     * @return array
+     * @return array<string,int[]>
      */
     private function parse(string $diff) : array
     {
         $diff = preg_split("/((\r?\n)|(\r\n?))/", $diff);
         assert(is_array($diff));
 
-        $paths = [];
+        $paths  = [];
         $number = 0;
-        $path = null;
+        $path   = null;
 
         foreach ($diff as $line) {
             if (preg_match('~^\+\+\+\s(.*)~', $line, $matches)) {

@@ -1,20 +1,21 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer;
 
+use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Runner as BaseRunner;
+use function count;
 
 /**
  * CodeSniffer runner
  */
 class Runner
 {
-    /**
-     * @var Config
-     */
+    /** @var Config */
     private $config;
 
     public function __construct(Config $config)
@@ -27,22 +28,21 @@ class Runner
      *
      * @param Changeset $changeset Changeset instance
      *
-     * @return int
      * @throws DeepExitException
      * @throws Exception
      */
-    public function run(Changeset $changeset)
+    public function run(Changeset $changeset) : int
     {
         $diff = new Diff($changeset->getDiff());
 
-        if (!count($diff)) {
+        if (! count($diff)) {
             return 0;
         }
 
         $reporter = new Reporter($diff, $this->config);
 
-        $runner = new BaseRunner();
-        $runner->config = $this->config;
+        $runner           = new BaseRunner();
+        $runner->config   = $this->config;
         $runner->reporter = $reporter;
         $runner->init();
 

@@ -1,24 +1,27 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer\Git\ContentSource;
 
-use DiffSniffer\Exception\RuntimeException;
 use DiffSniffer\ContentSource;
+use DiffSniffer\Exception\RuntimeException;
+use const DIRECTORY_SEPARATOR;
+use function assert;
+use function error_get_last;
+use function file_get_contents;
+use function is_array;
 
 /**
  * Working content source
  */
 class Working implements ContentSource
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $dir;
 
     /**
      * Constructor
-     *
-     * @param string $dir
      */
     public function __construct(string $dir)
     {

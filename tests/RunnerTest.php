@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DiffSniffer\Tests;
 
@@ -10,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class RunnerTest extends TestCase
 {
-    public function testEarlyReturn()
+    public function testEarlyReturn() : void
     {
         /** @var Config|MockObject $config */
         $config = $this->createMock(Config::class);
