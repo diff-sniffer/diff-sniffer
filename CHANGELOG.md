@@ -1,6 +1,6 @@
 # Changes in Diff Sniffer
 
-## [3.5.0] - 2019-MM-DD
+## [3.5.0] - 2019-10-21
 
 ### Added
 
