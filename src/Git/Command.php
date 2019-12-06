@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-namespace DiffSniffer\Git\Range;
+namespace DiffSniffer\Git;
 
 use DiffSniffer\Changeset as ChangesetInterface;
 use DiffSniffer\Cli;
 use DiffSniffer\Command as CommandInterface;
-use DiffSniffer\Git\Changeset;
 use function array_shift;
 use function array_unshift;
 use function substr;
 
 /**
- * Git pre-commit hook
+ * Git command
  *
  * @codeCoverageIgnore
  */
@@ -25,29 +24,6 @@ final class Command implements CommandInterface
     public function __construct(string $directory)
     {
         $this->directory = $directory;
-    }
-
-    public function getName() : string
-    {
-        return 'Diff Sniffer for Git';
-    }
-
-    public function getPackageName() : string
-    {
-        return 'diff-sniffer/git';
-    }
-
-    public function getUsage(string $programName) : string
-    {
-        /** @lang text */
-        return <<<USG
-Usage: $programName
-       $programName --staged
-       $programName <commit1> <commit2>
-
-Validate changes for correspondence to the coding standard
-
-USG;
     }
 
     /**

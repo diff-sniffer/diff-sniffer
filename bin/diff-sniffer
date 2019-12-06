@@ -1,6 +1,9 @@
-<?php
+#!/usr/bin/env php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
+use DiffSniffer\Application;
+use DiffSniffer\Exception;
+use DiffSniffer\Git\Command;
 
 if (! file_exists(__DIR__ . '/../vendor/autoload.php')) {
     echo 'You must set up the project dependencies, run the following commands:'
@@ -11,4 +14,12 @@ if (! file_exists(__DIR__ . '/../vendor/autoload.php')) {
 }
 
 require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../vendor/squizlabs/php_codesniffer/autoload.php';
+
+try {
+    exit(
+        (new Application())->run(new Command(getcwd()), $_SERVER['argv'])
+    );
+} catch (Exception $e) {
+    fwrite(STDERR, $e->getMessage() . PHP_EOL);
+    exit(1);
+}

@@ -36,7 +36,10 @@
   "autoload": {
     "psr-4": {
       "DiffSniffer\\": "src/"
-    }
+    },
+    "files": [
+      "vendor/squizlabs/php_codesniffer/autoload.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
@@ -44,9 +47,12 @@
       "PHP_CodeSniffer\\" : "vendor/squizlabs/php_codesniffer/src/"
     }
   },
+  "bin": [
+    "bin/diff-sniffer"
+  ],
   "extra": {
     "branch-alias": {
-      "dev-master": "3.5.x-dev"
+      "dev-master": "0.4.x-dev"
     }
   }
 }
