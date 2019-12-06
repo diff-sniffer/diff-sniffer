@@ -3,8 +3,6 @@ Diff Sniffer for Git
 
 [![PHP Version](https://img.shields.io/badge/php-%5E7.2-blue.svg)](https://packagist.org/packages/diff-sniffer/git)
 [![Latest Stable Version](https://poser.pugx.org/diff-sniffer/git/v/stable)](https://packagist.org/packages/diff-sniffer/git)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/diff-sniffer/git/badges/quality-score.png)](https://scrutinizer-ci.com/g/diff-sniffer/git/)
-[![Code Coverage](https://scrutinizer-ci.com/g/diff-sniffer/git/badges/coverage.png)](https://scrutinizer-ci.com/g/diff-sniffer/git/)
 [![Build Status](https://travis-ci.org/diff-sniffer/git.png)](https://travis-ci.org/diff-sniffer/git)
 [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/uv1xbj7l7lupgxta?svg=true)](https://ci.appveyor.com/project/morozov/git)
 
