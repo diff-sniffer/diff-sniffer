@@ -7,8 +7,8 @@ namespace DiffSniffer\Tests;
 use DiffSniffer\Cli;
 use DiffSniffer\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
-use const PHP_EOL;
 use function defined;
+use const PHP_EOL;
 
 class CliTest extends TestCase
 {

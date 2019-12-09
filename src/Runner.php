@@ -6,7 +6,6 @@ namespace DiffSniffer;
 
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
-use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Runner as BaseRunner;
 use function count;
 
@@ -48,7 +47,6 @@ class Runner
 
         $it = new Iterator($diff, $changeset, $runner->ruleset, $this->config);
 
-        /** @var File $file */
         foreach ($it as $file) {
             $runner->processFile($file);
         }

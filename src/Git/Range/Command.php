@@ -27,25 +27,16 @@ final class Command implements CommandInterface
         $this->directory = $directory;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getName() : string
     {
         return 'Diff Sniffer for Git';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getPackageName() : string
     {
         return 'diff-sniffer/git';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getUsage(string $programName) : string
     {
         /** @lang text */

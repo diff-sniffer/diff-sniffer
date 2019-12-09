@@ -39,7 +39,7 @@ class Diff implements IteratorAggregate, Countable
     }
 
     /**
-     * {@inheritDoc}
+     * @return Traversable<string>
      */
     public function getIterator() : Traversable
     {
@@ -48,9 +48,6 @@ class Diff implements IteratorAggregate, Countable
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function count() : int
     {
         return count($this->paths);
@@ -80,6 +77,7 @@ class Diff implements IteratorAggregate, Countable
                         case 'ERROR':
                             $errors++;
                             break;
+
                         case 'WARNING':
                             $warnings++;
                             break;
