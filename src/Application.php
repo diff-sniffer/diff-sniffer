@@ -8,7 +8,6 @@ use DiffSniffer\Command\Exception\BadUsage;
 use Jean85\PrettyVersions;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
-use const PHP_EOL;
 use function array_merge;
 use function array_shift;
 use function assert;
@@ -18,6 +17,7 @@ use function define;
 use function getcwd;
 use function is_string;
 use function printf;
+use const PHP_EOL;
 
 define('PHP_CODESNIFFER_CBF', false);
 

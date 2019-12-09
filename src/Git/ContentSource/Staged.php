@@ -27,9 +27,6 @@ class Staged implements ContentSource
         $this->dir = $dir;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getContents(string $path) : string
     {
         return $this->cli->exec(

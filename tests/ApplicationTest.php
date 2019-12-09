@@ -9,12 +9,12 @@ use DiffSniffer\Command;
 use Dummy;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use const DIRECTORY_SEPARATOR;
-use const PHP_EOL;
 use function chdir;
 use function class_exists;
 use function file_get_contents;
 use function str_replace;
+use const DIRECTORY_SEPARATOR;
+use const PHP_EOL;
 
 class ApplicationTest extends TestCase
 {

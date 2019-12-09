@@ -31,9 +31,6 @@ class Commit implements ContentSource
         $this->commit = $commit;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getContents(string $path) : string
     {
         return $this->cli->exec(

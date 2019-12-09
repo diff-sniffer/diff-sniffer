@@ -13,9 +13,9 @@ use PHP_CodeSniffer\Filters\Filter;
 use PHP_CodeSniffer\Ruleset;
 use RecursiveArrayIterator;
 use Traversable;
-use const DIRECTORY_SEPARATOR;
 use function iterator_to_array;
 use function str_replace;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Changeset iterator
@@ -25,7 +25,7 @@ final class Iterator implements IteratorAggregate
     /** @var Changeset */
     private $changeSet;
 
-    /** @var Traversable */
+    /** @var Traversable<int,string> */
     private $files;
 
     /** @var Config */
@@ -34,6 +34,9 @@ final class Iterator implements IteratorAggregate
     /** @var Ruleset */
     private $ruleSet;
 
+    /**
+     * @param Traversable<int,string> $files
+     */
     public function __construct(Traversable $files, Changeset $changeSet, Ruleset $ruleSet, Config $config)
     {
         $this->files     = $files;
@@ -42,6 +45,9 @@ final class Iterator implements IteratorAggregate
         $this->config    = $config;
     }
 
+    /**
+     * @return Traversable<int,File>
+     */
     public function getIterator() : Traversable
     {
         // PHP_CodeSniffer expects file paths to contain the native directory separator on Windows when matching them

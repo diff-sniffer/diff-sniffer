@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace DiffSniffer;
 
 use DiffSniffer\Exception\RuntimeException;
-use const JSON_ERROR_NONE;
 use function array_map;
 use function assert;
 use function dirname;
@@ -21,6 +20,7 @@ use function json_last_error;
 use function json_last_error_msg;
 use function sprintf;
 use function substr;
+use const JSON_ERROR_NONE;
 
 /**
  * Configuration loader

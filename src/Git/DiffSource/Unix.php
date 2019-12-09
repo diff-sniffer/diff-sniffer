@@ -43,9 +43,6 @@ class Unix implements DiffSource
         $this->dir  = $dir;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getDiff() : string
     {
         return $this->cli->execPiped([

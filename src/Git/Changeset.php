@@ -52,17 +52,11 @@ final class Changeset implements ChangesetInterface
         $this->contentSource = $this->getContentSource($cli, $args, $dir);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getDiff() : string
     {
         return $this->diffSource->getDiff();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getContents(string $path) : string
     {
         return $this->contentSource->getContents($path);

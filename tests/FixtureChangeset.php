@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace DiffSniffer\Tests;
 
 use DiffSniffer\Changeset;
-use const DIRECTORY_SEPARATOR;
 use function assert;
 use function file_get_contents;
 use function is_string;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Fixture changeset
@@ -28,17 +28,11 @@ class FixtureChangeset implements Changeset
         $this->dir = $dir;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getDiff() : string
     {
         return $this->getFileContents($this->dir . DIRECTORY_SEPARATOR . 'changeset.diff');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getContents(string $path) : string
     {
         return $this->getFileContents($this->dir . '/tree/' . $path);
