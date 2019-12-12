@@ -308,7 +308,7 @@
         },
         {
             "name": "doctrine/coding-standard",
-            "version": "7.0.0",
+            "version": "7.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/coding-standard.git",
@@ -2649,21 +2649,21 @@
         },
         {
             "name": "slevomat/coding-standard",
-            "version": "6.0.0",
+            "version": "6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "85e3329381d420e74b2da8b352b6041076ac00e8"
+                "reference": "beea16e33a97884ddfcc5d310b78e0a394538505"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/85e3329381d420e74b2da8b352b6041076ac00e8",
-                "reference": "85e3329381d420e74b2da8b352b6041076ac00e8",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/beea16e33a97884ddfcc5d310b78e0a394538505",
+                "reference": "beea16e33a97884ddfcc5d310b78e0a394538505",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1",
-                "phpstan/phpdoc-parser": "0.3.5 - 0.4.0",
+                "phpstan/phpdoc-parser": "0.3.5 - 0.4.1",
                 "squizlabs/php_codesniffer": "^3.5.3"
             },
             "require-dev": {
@@ -2673,7 +2673,7 @@
                 "phpstan/phpstan": "0.11.19|0.12",
                 "phpstan/phpstan-phpunit": "0.11.2|0.12",
                 "phpstan/phpstan-strict-rules": "0.11.1|0.12",
-                "phpunit/phpunit": "7.5.17|8.4.3"
+                "phpunit/phpunit": "7.5.18|8.5.0"
             },
             "type": "phpcodesniffer-standard",
             "autoload": {
@@ -2686,7 +2686,7 @@
                 "MIT"
             ],
             "description": "Slevomat Coding Standard for PHP_CodeSniffer complements Consistence Coding Standard by providing sniffs with additional checks.",
-            "time": "2019-12-04T15:45:40+00:00"
+            "time": "2019-12-09T17:24:48+00:00"
         },
         {
             "name": "symfony/console",
