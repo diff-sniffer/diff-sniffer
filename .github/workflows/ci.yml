@@ -1,0 +1,108 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  coding-standards:
+    name: Coding Standards
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        php-version:
+          - "7.4"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: none
+          php-version: "${{ matrix.php-version }}"
+          tools: cs2pr
+
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: "php-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-composer-"
+
+      - name: Install dependencies with composer
+        run: composer install --no-interaction --no-progress --no-suggest
+
+      - name: Run PHP_CodeSniffer
+        run: vendor/bin/phpcs -q --no-colors --report=checkstyle | cs2pr
+
+  psalm:
+    name: PHPStan
+    runs-on: ubuntu-18.04
+
+    strategy:
+      matrix:
+        php-version:
+          - "7.4"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: none
+          php-version: "${{ matrix.php-version }}"
+
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: "php-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-composer-"
+
+      - name: Install dependencies with composer
+        run: composer install --no-interaction --no-progress --no-suggest
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan a
+
+  phpunit:
+    name: PHPUnit
+    runs-on: ubuntu-18.04
+
+    strategy:
+      matrix:
+        php-version:
+          - "7.2"
+          - "7.3"
+          - "7.4"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: pcov
+          php-version: "${{ matrix.php-version }}"
+
+      - name: Cache dependencies installed with composer
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: "php-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-composer-"
+
+      - name: Install dependencies with composer
+        run: composer install --no-interaction --no-progress --no-suggest
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml
+
+      - name: Upload Code Coverage
+        uses: codecov/codecov-action@v1

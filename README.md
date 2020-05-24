@@ -3,7 +3,7 @@ Diff Sniffer for Git
 
 [![PHP Version](https://img.shields.io/badge/php-%5E7.2-blue.svg)](https://packagist.org/packages/diff-sniffer/git)
 [![Latest Stable Version](https://poser.pugx.org/diff-sniffer/git/v/stable)](https://packagist.org/packages/diff-sniffer/git)
-[![Build Status](https://travis-ci.org/diff-sniffer/git.png)](https://travis-ci.org/diff-sniffer/git)
+[Build Status](https://github.com/diff-sniffer/git/workflows/CI/badge.svg)
 [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/uv1xbj7l7lupgxta?svg=true)](https://ci.appveyor.com/project/morozov/git)
 
 This tool allows you to use [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) as a pre-commit hook. The main difference from [existing solutions](https://github.com/s0enke/git-hooks/blob/master/phpcs-pre-commit/pre-commit) that this one validates only changed lines of code but not the whole source tree.
