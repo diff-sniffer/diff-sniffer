@@ -1,7 +1,7 @@
 Diff Sniffer for Git
 ====================
 
-[![PHP Version](https://img.shields.io/badge/php-%5E7.2-blue.svg)](https://packagist.org/packages/diff-sniffer/git)
+[![PHP Version](https://img.shields.io/badge/php-%5E7.3-blue.svg)](https://packagist.org/packages/diff-sniffer/git)
 [![Latest Stable Version](https://poser.pugx.org/diff-sniffer/git/v/stable)](https://packagist.org/packages/diff-sniffer/git)
 [Build Status](https://github.com/diff-sniffer/git/workflows/CI/badge.svg)
 [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/uv1xbj7l7lupgxta?svg=true)](https://ci.appveyor.com/project/morozov/git)
