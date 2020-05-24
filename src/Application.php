@@ -120,7 +120,7 @@ USG;
      */
     private function printVersion() : void
     {
-        $version = PrettyVersions::getVersion('diff-sniffer/git');
+        $version = PrettyVersions::getVersion('diff-sniffer/diff-sniffer');
 
         printf(
             'Diff Sniffer version %s' . PHP_EOL,

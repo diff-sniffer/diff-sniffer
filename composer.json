@@ -1,5 +1,5 @@
 {
-  "name": "diff-sniffer/git",
+  "name": "diff-sniffer/diff-sniffer",
   "description": "Diff Sniffer, a tool to validate coding standards only in changed line",
   "authors": [
     {
