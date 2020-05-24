@@ -6,7 +6,6 @@
     <arg value="ps"/>
 
     <file>src</file>
-    <file>include</file>
     <file>tests</file>
     <exclude-pattern>tests/fixtures/*</exclude-pattern>
 

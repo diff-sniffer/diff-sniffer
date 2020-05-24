@@ -29,8 +29,7 @@ final class Application
     /**
      * Runs command
      *
-     * @param Command           $command Command to run
-     * @param array<int,string> $args    Command line arguments
+     * @param array<int,string> $args Command line arguments
      *
      * @return int Exit code
      *
@@ -45,13 +44,13 @@ final class Application
         $arg = current($args);
 
         if ($arg === '--help') {
-            $this->printUsage($command, $programName);
+            $this->printUsage($programName);
 
             return 0;
         }
 
         if ($arg === '--version') {
-            $this->printVersion($command);
+            $this->printVersion();
 
             return 0;
         }
@@ -59,7 +58,7 @@ final class Application
         try {
             $changeSet = $command->createChangeSet($args);
         } catch (BadUsage $e) {
-            $this->printUsage($command, $programName);
+            $this->printUsage($programName);
 
             return 1;
         }
@@ -94,12 +93,16 @@ final class Application
     /**
      * Prints command usage text
      */
-    private function printUsage(Command $command, string $programName) : void
+    private function printUsage(string $programName) : void
     {
-        echo $command->getUsage($programName);
-        echo PHP_EOL;
+        /** @lang text */
+        echo <<<USG
+Usage: $programName
+       $programName --staged
+       $programName <commit1> <commit2>
 
-        echo <<<HLP
+Validate changes for correspondence to the coding standard
+
 PHP_CodeSniffer Options:
 
   See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage
@@ -109,19 +112,18 @@ Miscellaneous Options:
   --help        Prints this usage information.
   --version     Prints the version and exits.
 
-HLP;
+USG;
     }
 
     /**
      * Prints command version
      */
-    private function printVersion(Command $command) : void
+    private function printVersion() : void
     {
-        $version = PrettyVersions::getVersion($command->getPackageName());
+        $version = PrettyVersions::getVersion('diff-sniffer/git');
 
         printf(
-            '%s version %s' . PHP_EOL,
-            $command->getName(),
+            'Diff Sniffer version %s' . PHP_EOL,
             $version->getPrettyVersion()
         );
     }
