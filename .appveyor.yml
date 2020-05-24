@@ -11,19 +11,19 @@ clone_depth: 1
 cache:
   - C:\ProgramData\chocolatey\bin -> appveyor.yml
   - C:\ProgramData\chocolatey\lib -> appveyor.yml
-  - C:\tools\php72 -> appveyor.yml
+  - C:\tools\php74 -> appveyor.yml
   - '%LOCALAPPDATA%\Composer'
 
 init:
   - SET ANSICON=121x90 (121x90)
-  - SET PATH=C:\Program Files\OpenSSL;C:\tools\php72;%PATH%
+  - SET PATH=C:\Program Files\OpenSSL;C:\tools\php74;%PATH%
 
 install:
   - sc config wuauserv start=auto
   - net start wuauserv
-  - ps: IF (!(Test-Path 'C:\tools\php72')) {cinst -y --no-progress php}
+  - ps: IF (!(Test-Path 'C:\tools\php74')) {cinst -y --no-progress php --version 7.4.5}
   - ps: IF (!(Test-Path 'C:\Program Files\OpenSSL')) {cinst -y --no-progress OpenSSL.Light}
-  - cd C:\tools\php72
+  - cd C:\tools\php74
   - copy php.ini-production php.ini
   - echo date.timezone="UTC" >> php.ini
   - echo extension_dir=ext >> php.ini
