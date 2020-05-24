@@ -3,7 +3,7 @@ Diff Sniffer for Git
 
 [![PHP Version](https://img.shields.io/badge/php-%5E7.3-blue.svg)](https://packagist.org/packages/diff-sniffer/git)
 [![Latest Stable Version](https://poser.pugx.org/diff-sniffer/git/v/stable)](https://packagist.org/packages/diff-sniffer/git)
-![Build Status](https://github.com/diff-sniffer/git/workflows/CI/badge.svg)
+![Build Status](https://github.com/diff-sniffer/diff-sniffer/workflows/CI/badge.svg)
 [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/uv1xbj7l7lupgxta?svg=true)](https://ci.appveyor.com/project/morozov/git)
 [![Code Coverage](https://codecov.io/gh/diff-sniffer/git/branch/master/graph/badge.svg)](https://codecov.io/gh/diff-sniffer/git)
 
@@ -14,7 +14,7 @@ Installation
 
 Diff Sniffer is already built as a PHAR package. All you need is download it and install as a pre-commit hook.
 ```
-$ wget https://github.com/diff-sniffer/git/releases/download/0.3.2/pre-commit.phar
+$ wget https://github.com/diff-sniffer/diff-sniffer/releases/download/0.3.2/pre-commit.phar
 $ chmod +x pre-commit.phar
 $ mv pre-commit.phar /path/to/repo/.git/hooks/pre-commit
 ```
@@ -40,7 +40,7 @@ Continuous integration mode
 
 Diff Sniffer for Git can also run on a CI server and validate pull requests. For example, on Travis CI:
 ```
-$ wget https://github.com/diff-sniffer/git/releases/download/0.3.2/git-phpcs.phar
+$ wget https://github.com/diff-sniffer/diff-sniffer/releases/download/0.3.2/git-phpcs.phar
 $ php git-phpcs.phar origin/$TRAVIS_BRANCH...$TRAVIS_PULL_REQUEST_SHA
 ```
 
