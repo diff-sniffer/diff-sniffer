@@ -9,30 +9,50 @@ clone_folder: C:\projects\diff-sniffer
 clone_depth: 1
 
 cache:
-  - C:\ProgramData\chocolatey\bin -> appveyor.yml
-  - C:\ProgramData\chocolatey\lib -> appveyor.yml
-  - C:\tools\php74 -> appveyor.yml
-  - '%LOCALAPPDATA%\Composer'
+  - C:\ProgramData\chocolatey\bin -> .appveyor.yml
+  - C:\ProgramData\chocolatey\lib -> .appveyor.yml
+  - C:\tools\php74 -> .appveyor.yml
+  - C:\tools\composer -> .appveyor.yml
+  - '%LOCALAPPDATA%\Composer\files -> composer.json'
 
 init:
   - SET ANSICON=121x90 (121x90)
-  - SET PATH=C:\Program Files\OpenSSL;C:\tools\php74;%PATH%
+  - SET PATH=C:\Program Files\OpenSSL;C:\tools\php74;C:\tools\composer;%PATH%
 
 install:
   - sc config wuauserv start=auto
   - net start wuauserv
-  - ps: IF (!(Test-Path 'C:\tools\php74')) {cinst -y --no-progress php --version 7.4.5}
-  - ps: IF (!(Test-Path 'C:\Program Files\OpenSSL')) {cinst -y --no-progress OpenSSL.Light}
-  - cd C:\tools\php74
-  - copy php.ini-production php.ini
-  - echo date.timezone="UTC" >> php.ini
-  - echo extension_dir=ext >> php.ini
-  - echo extension=php_openssl.dll >> php.ini
-  - echo extension=php_mbstring.dll >> php.ini
+  - ps: |
+      if (!(Test-Path C:\tools\php74)) {
+        cinst -y --no-progress php --version 7.4.5
+        cd C:\tools\php74
+
+        # Set PHP environment items that are always needed
+        copy php.ini-production php.ini
+        Add-Content php.ini "`n date.timezone=UTC"
+        Add-Content php.ini "`n extension_dir=ext"
+        Add-Content php.ini "`n extension=php_mbstring.dll"
+        Add-Content php.ini "`n extension=php_openssl.dll"
+
+        # Install Xdebug
+        Invoke-WebRequest https://xdebug.org/files/php_xdebug-2.9.5-7.4-vc15-nts-x86_64.dll -OutFile C:\tools\php74\ext\php_xdebug.dll
+        Add-Content php.ini "`n zend_extension=php_xdebug.dll"
+      }
+
+      if (!(Test-Path C:\tools\composer)) {
+        New-Item -path C:\tools -name composer -itemtype directory
+      }
+      if (!(Test-Path C:\tools\composer\composer.phar)) {
+        cd C:\tools\composer
+        php -r "readfile('http://getcomposer.org/installer');" | php
+        Set-Content -path 'composer.bat' -Value ('@php "%~dp0composer.phar" %*')
+      }
   - cd C:\projects\diff-sniffer
-  - php -r "readfile('http://getcomposer.org/installer');" | php
-  - php composer.phar install --no-interaction --no-progress
+  - composer install --no-interaction --no-progress --prefer-dist
 
 test_script:
-  - cd C:\projects\diff-sniffer
-  - vendor\bin\phpunit
+  - vendor\bin\phpunit --coverage-clover=coverage.xml
+
+on_success:
+  - appveyor DownloadFile https://codecov.io/bash -FileName codecov.sh
+  - bash codecov.sh -f coverage.xml
