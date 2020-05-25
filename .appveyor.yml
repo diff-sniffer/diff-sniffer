@@ -3,7 +3,6 @@ branches:
   only:
     - master
 platform:
-  - x86
   - x64
 clone_folder: C:\projects\diff-sniffer
 clone_depth: 1
@@ -25,18 +24,23 @@ install:
   - ps: |
       if (!(Test-Path C:\tools\php74)) {
         cinst -y --no-progress php --version 7.4.5
-        cd C:\tools\php74
 
-        # Set PHP environment items that are always needed
+        # Download and unpack extensions
+        cd $env:temp
+
+        $DLLVersion = (Invoke-WebRequest "https://pecl.php.net/rest/r/pcov/stable.txt").Content
+        Invoke-WebRequest https://windows.php.net/downloads/pecl/releases/pcov/$($DLLVersion)/php_pcov-$($DLLVersion)-7.4-nts-vc15-$($env:platform).zip -OutFile pcov.zip
+        7z x -y pcov.zip > $null
+        copy php_pcov.dll C:\tools\php74\ext
+
+        # Configure PHP
+        cd C:\tools\php74
         copy php.ini-production php.ini
         Add-Content php.ini "`n date.timezone=UTC"
         Add-Content php.ini "`n extension_dir=ext"
         Add-Content php.ini "`n extension=php_mbstring.dll"
         Add-Content php.ini "`n extension=php_openssl.dll"
-
-        # Install Xdebug
-        Invoke-WebRequest https://xdebug.org/files/php_xdebug-2.9.5-7.4-vc15-nts-x86_64.dll -OutFile C:\tools\php74\ext\php_xdebug.dll
-        Add-Content php.ini "`n zend_extension=php_xdebug.dll"
+        Add-Content php.ini "`n extension=php_pcov.dll"
       }
 
       if (!(Test-Path C:\tools\composer)) {
