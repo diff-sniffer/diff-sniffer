@@ -7,11 +7,14 @@ namespace DiffSniffer\Tests;
 use DiffSniffer\Application;
 use DiffSniffer\Command;
 use Dummy;
+use PHP_CodeSniffer\Autoload;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use function array_shift;
 use function chdir;
 use function class_exists;
 use function file_get_contents;
+use function spl_autoload_functions;
 use function str_replace;
 use const DIRECTORY_SEPARATOR;
 use const PHP_EOL;
@@ -39,6 +42,10 @@ class ApplicationTest extends TestCase
         $app->run($this->createCommand('class-loader'), [__FILE__]);
 
         self::assertTrue(class_exists(Dummy::class));
+
+        $loaders = spl_autoload_functions();
+        self::assertIsArray($loaders);
+        self::assertSame([Autoload::class, 'load'], array_shift($loaders));
     }
 
     private function createCommand(string $useCase) : Command

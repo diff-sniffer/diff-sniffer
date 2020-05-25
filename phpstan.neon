@@ -7,5 +7,9 @@ parameters:
         - %currentWorkingDirectory%/tests/fixtures
     ignoreErrors:
         - '~^Class Dummy not found\.$~'
+        -
+            message: "~^Parameter #1 \\$autoload_function of function spl_autoload_register expects callable\\(string\\): void, array\\('PHP_CodeSniffer…', 'load'\\) given\\.$~"
+            paths:
+                - %currentWorkingDirectory%/src/ProjectLoader.php
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
