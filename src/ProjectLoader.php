@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DiffSniffer;
 
 use DiffSniffer\Exception\RuntimeException;
+use PHP_CodeSniffer\Autoload;
 use function array_map;
 use function assert;
 use function dirname;
@@ -18,6 +19,8 @@ use function is_file;
 use function json_decode;
 use function json_last_error;
 use function json_last_error_msg;
+use function spl_autoload_register;
+use function spl_autoload_unregister;
 use function sprintf;
 use function substr;
 use const JSON_ERROR_NONE;
@@ -92,6 +95,12 @@ class ProjectLoader
         }
 
         require $path;
+
+        // Re-prepend PHP_CodeSniffer's autoloader in order to let it stay on top of the stack
+        // and track the loading of its own classes. Otherwise, if a sniff is loaded by another
+        // loader, it may be loaded again by the PHP_CodeSniffer's loader
+        spl_autoload_unregister([Autoload::class, 'load']);
+        spl_autoload_register([Autoload::class, 'load'], true, true);
     }
 
     /**
