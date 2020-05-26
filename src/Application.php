@@ -6,6 +6,7 @@ namespace DiffSniffer;
 
 use DiffSniffer\Command\Exception\BadUsage;
 use Jean85\PrettyVersions;
+use PackageVersions\Versions;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 use function array_merge;
@@ -120,7 +121,7 @@ USG;
      */
     private function printVersion() : void
     {
-        $version = PrettyVersions::getVersion('diff-sniffer/diff-sniffer');
+        $version = PrettyVersions::getVersion(Versions::ROOT_PACKAGE_NAME);
 
         printf(
             'Diff Sniffer version %s' . PHP_EOL,
