@@ -12,39 +12,46 @@ This tool allows you to use [PHP_CodeSniffer](https://github.com/squizlabs/PHP_C
 Installation
 ------------
 
-Diff Sniffer is already built as a PHAR package. All you need is download it and install as a pre-commit hook.
+Download a PHAR package of the latest release and put it somewhere within your `$PATH`:
 ```
-$ wget https://github.com/diff-sniffer/diff-sniffer/releases/download/0.3.2/pre-commit.phar
-$ chmod +x pre-commit.phar
-$ mv pre-commit.phar /path/to/repo/.git/hooks/pre-commit
+$ wget https://github.com/diff-sniffer/diff-sniffer/releases/download/0.4.0/diff-sniffer.phar
+$ chmod +x diff-sniffer.phar
+$ sudo cp diff-sniffer.phar /usr/local/bin/diff-sniffer
 ```
 
-Alternatively, you can install the hook globally for a user (see [`man githooks`](https://git-scm.com/docs/githooks)):
+Create a pre-commit hook in a specific Git repository .
 ```
-$ git config --global core.hooksPath '~/.git/hooks' # choose a path if you already haven't
-$ chmod +x pre-commit.phar
-$ mv pre-commit.phar ~/.git/hooks/pre-commit
+$ cd /path/to/repo
+$ cat > .git/hooks/pre-commit << 'EOF'
+#!/usr/bin/env bash
+
+diff-sniffer --staged "$@"
+EOF
+```
+
+Alternatively, you can create a global pre-commit hook for your user (see [`man githooks`](https://git-scm.com/docs/githooks)):
+```
+$ cat > ~/.config/git/hooks/pre-commit << 'EOF'
+#!/usr/bin/env bash
+
+diff-sniffer --staged "$@"
+EOF
 ```
 
 You can also install Diff Sniffer manually:
 
 ```
 $ git clone git@github.com:diff-sniffer/diff-sniffer.git
-$ cd diff-sniffer-pre-commit
+$ cd diff-sniffer
 $ composer install
-$ bin/pre-commit --version
+$ bin/diff-sniffer --version
 ```
 
 Continuous integration mode
 ---------------------------
 
-Diff Sniffer for Git can also run on a CI server and validate pull requests. For example, on Travis CI:
+Diff Sniffer can also run on a CI server and validate pull requests. For example, on Travis CI:
 ```
-$ wget https://github.com/diff-sniffer/diff-sniffer/releases/download/0.3.2/git-phpcs.phar
-$ php git-phpcs.phar origin/$TRAVIS_BRANCH...$TRAVIS_PULL_REQUEST_SHA
+$ wget https://github.com/diff-sniffer/diff-sniffer/releases/download/0.4.0/diff-sniffer.phar
+$ php diff-sniffer.phar origin/$TRAVIS_BRANCH...$TRAVIS_PULL_REQUEST_SHA
 ```
-
-Configuration
--------------
-
-By default, the PHAR distribution uses the PSR2 coding standard. The configuration may be overridden by creating [configuration file](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#using-a-default-configuration-file) file in the project root.
