@@ -12,5 +12,5 @@ interface ContentSource
     /**
      * Returns contents of the file with the given path
      */
-    public function getContents(string $path) : string;
+    public function getContents(string $path): string;
 }

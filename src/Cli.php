@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DiffSniffer;
 
 use DiffSniffer\Exception\RuntimeException;
+
 use function array_map;
 use function array_merge;
 use function array_reduce;
@@ -29,7 +30,7 @@ final class Cli
      * @param string            $cmd     Executable command
      * @param array<int,string> ...$args Command arguments
      */
-    public function cmd(string $cmd, string ...$args) : string
+    public function cmd(string $cmd, string ...$args): string
     {
         return implode(' ', array_merge([
             escapeshellcmd($cmd),
@@ -41,7 +42,7 @@ final class Cli
      *
      * @param string[] ...$commands
      */
-    public function and(string ...$commands) : string
+    public function and(string ...$commands): string
     {
         return implode(' && ', $commands);
     }
@@ -49,7 +50,7 @@ final class Cli
     /**
      * Puts the given command in a sub-shell
      */
-    public function subShell(string $command) : string
+    public function subShell(string $command): string
     {
         return '(' . $command . ')';
     }
@@ -63,7 +64,7 @@ final class Cli
      *
      * @throws RuntimeException
      */
-    public function exec(string $cmd, ?string $cwd = null) : string
+    public function exec(string $cmd, ?string $cwd = null): string
     {
         return $this->execPiped([$cmd], $cwd);
     }
@@ -77,7 +78,7 @@ final class Cli
      *
      * @throws RuntimeException
      */
-    public function execPiped(array $commands, ?string $cwd = null) : string
+    public function execPiped(array $commands, ?string $cwd = null): string
     {
         $spec      = ['pipe', 'r'];
         $stream    = null;

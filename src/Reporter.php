@@ -28,7 +28,7 @@ class Reporter extends BaseReporter
      *
      * @return array<string,mixed>
      */
-    public function prepareFileReport(File $file) : array
+    public function prepareFileReport(File $file): array
     {
         return $this->diff->filter(
             $file->path,

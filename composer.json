@@ -22,7 +22,7 @@
     "php": "^7.3"
   },
   "require-dev": {
-    "doctrine/coding-standard": "^7.0",
+    "doctrine/coding-standard": "^8.1",
     "phpunit/phpunit": "^9.2.3",
     "php-vfs/php-vfs": "^1.4.1",
     "phpstan/phpstan": "^0.12",

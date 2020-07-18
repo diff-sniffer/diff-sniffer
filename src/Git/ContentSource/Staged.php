@@ -27,7 +27,7 @@ class Staged implements ContentSource
         $this->dir = $dir;
     }
 
-    public function getContents(string $path) : string
+    public function getContents(string $path): string
     {
         return $this->cli->exec(
             $this->cli->cmd('git', 'show', ':' . $path),

@@ -8,6 +8,7 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use Traversable;
+
 use function array_flip;
 use function array_intersect_key;
 use function array_keys;
@@ -41,14 +42,14 @@ class Diff implements IteratorAggregate, Countable
     /**
      * @return Traversable<string>
      */
-    public function getIterator() : Traversable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator(
             array_keys($this->paths)
         );
     }
 
-    public function count() : int
+    public function count(): int
     {
         return count($this->paths);
     }
@@ -61,7 +62,7 @@ class Diff implements IteratorAggregate, Countable
      *
      * @return array<string,mixed>
      */
-    public function filter(string $path, array $report) : array
+    public function filter(string $path, array $report): array
     {
         $report['messages'] = isset($this->paths[$path]) ? array_intersect_key(
             $report['messages'],
@@ -106,7 +107,7 @@ class Diff implements IteratorAggregate, Countable
      *
      * @return array<string,int[]>
      */
-    private function parse(string $diff) : array
+    private function parse(string $diff): array
     {
         $diff = preg_split("/((\r?\n)|(\r\n?))/", $diff);
         assert(is_array($diff));
@@ -118,11 +119,13 @@ class Diff implements IteratorAggregate, Countable
         foreach ($diff as $line) {
             if (preg_match('~^\+\+\+\s(.*)~', $line, $matches)) {
                 $path = substr($matches[1], strpos($matches[1], '/') + 1);
-            } elseif (preg_match(
-                '~^@@ -[0-9]+,[0-9]+? \+([0-9]+),[0-9]+? @@.*$~',
-                $line,
-                $matches
-            )) {
+            } elseif (
+                preg_match(
+                    '~^@@ -[0-9]+,[0-9]+? \+([0-9]+),[0-9]+? @@.*$~',
+                    $line,
+                    $matches
+                )
+            ) {
                 $number = (int) $matches[1];
             } elseif (preg_match('~^\+(.*)~', $line, $matches)) {
                 $paths[$path][] = $number;

@@ -9,6 +9,7 @@ use Jean85\PrettyVersions;
 use PackageVersions\Versions;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
+
 use function array_merge;
 use function array_shift;
 use function assert;
@@ -18,6 +19,7 @@ use function define;
 use function getcwd;
 use function is_string;
 use function printf;
+
 use const PHP_EOL;
 
 define('PHP_CODESNIFFER_CBF', false);
@@ -36,7 +38,7 @@ final class Application
      *
      * @throws Exception
      */
-    public function run(Command $command, array $args) : int
+    public function run(Command $command, array $args): int
     {
         $programName = array_shift($args);
         assert(is_string($programName));
@@ -94,7 +96,7 @@ final class Application
     /**
      * Prints command usage text
      */
-    private function printUsage(string $programName) : void
+    private function printUsage(string $programName): void
     {
         /** @lang text */
         echo <<<USG
@@ -119,7 +121,7 @@ USG;
     /**
      * Prints command version
      */
-    private function printVersion() : void
+    private function printVersion(): void
     {
         $version = PrettyVersions::getVersion(Versions::ROOT_PACKAGE_NAME);
 

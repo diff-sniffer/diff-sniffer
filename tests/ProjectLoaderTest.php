@@ -8,6 +8,7 @@ use DiffSniffer\Exception;
 use DiffSniffer\ProjectLoader;
 use PHPUnit\Framework\TestCase;
 use VirtualFileSystem\FileSystem;
+
 use function array_map;
 use function explode;
 use function implode;
@@ -20,7 +21,7 @@ class ProjectLoaderTest extends TestCase
     /** @var FileSystem */
     private $fs;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -34,7 +35,7 @@ class ProjectLoaderTest extends TestCase
      * @test
      * @dataProvider successProvider
      */
-    public function success(array $structure, string $dir, array $expected) : void
+    public function success(array $structure, string $dir, array $expected): void
     {
         $this->fs->createStructure($structure);
         $dir = $this->fs->path($dir);
@@ -54,7 +55,7 @@ class ProjectLoaderTest extends TestCase
     /**
      * @return iterable<string,mixed>
      */
-    public static function successProvider() : iterable
+    public static function successProvider(): iterable
     {
         return [
             'default' => [
@@ -117,7 +118,7 @@ EOF
      * @test
      * @dataProvider notFoundProvider
      */
-    public function notFound(array $structure, string $dir) : void
+    public function notFound(array $structure, string $dir): void
     {
         $this->fs->createStructure($structure);
         $dir = $this->fs->path($dir);
@@ -131,7 +132,7 @@ EOF
     /**
      * @return iterable<string,mixed>
      */
-    public static function notFoundProvider() : iterable
+    public static function notFoundProvider(): iterable
     {
         return [
             'no-composer-config' => [
@@ -155,7 +156,7 @@ EOF
      * @test
      * @dataProvider failureProvider
      */
-    public function failure(array $structure, string $dir) : void
+    public function failure(array $structure, string $dir): void
     {
         $this->fs->createStructure($structure);
         $dir = $this->fs->path($dir);
@@ -169,7 +170,7 @@ EOF
     /**
      * @return iterable<string,mixed>
      */
-    public static function failureProvider() : iterable
+    public static function failureProvider(): iterable
     {
         return [
             'invalid-composer-config' => [

@@ -7,6 +7,7 @@ namespace DiffSniffer\Tests\Git;
 use DiffSniffer\Cli;
 use DiffSniffer\Git\Changeset;
 use PHPUnit\Framework\TestCase;
+
 use function defined;
 use function escapeshellarg;
 use function file_put_contents;
@@ -23,7 +24,7 @@ class ChangesetTest extends TestCase
     /** @var Cli */
     private static $cli;
 
-    public static function setUpBeforeClass() : void
+    public static function setUpBeforeClass(): void
     {
         $dir = tempnam(sys_get_temp_dir(), 'diff-sniffer-test');
         self::assertIsString($dir);
@@ -63,7 +64,7 @@ class ChangesetTest extends TestCase
         self::putContents('file.txt', 'C-working');
     }
 
-    public static function tearDownAfterClass() : void
+    public static function tearDownAfterClass(): void
     {
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             $cmd = 'rmdir /S /Q ' . escapeshellarg(self::$dir);
@@ -77,7 +78,7 @@ class ChangesetTest extends TestCase
     /**
      * @test
      */
-    public function stagedToHead() : void
+    public function stagedToHead(): void
     {
         $changeset = $this->createChangeset('--staged');
         $this->assertDiff(<<<EOF
@@ -100,7 +101,7 @@ EOF
     /**
      * @test
      */
-    public function stagedToCommit() : void
+    public function stagedToCommit(): void
     {
         $changeset = $this->createChangeset('--staged', 'HEAD~');
         $this->assertDiff(<<<EOF
@@ -123,7 +124,7 @@ EOF
     /**
      * @test
      */
-    public function workingToStaged() : void
+    public function workingToStaged(): void
     {
         $changeset = $this->createChangeset();
         $this->assertDiff(<<<EOF
@@ -146,7 +147,7 @@ EOF
     /**
      * @test
      */
-    public function workingToCommit() : void
+    public function workingToCommit(): void
     {
         $changeset = $this->createChangeset('HEAD~2');
         $this->assertDiff(<<<EOF
@@ -169,7 +170,7 @@ EOF
     /**
      * @test
      */
-    public function commitToCommit() : void
+    public function commitToCommit(): void
     {
         $changeset = $this->createChangeset('HEAD~2', 'HEAD~1');
         $this->assertDiff(<<<EOF
@@ -192,7 +193,7 @@ EOF
     /**
      * @test
      */
-    public function commitToCommitRangeNotation() : void
+    public function commitToCommitRangeNotation(): void
     {
         $changeset = $this->createChangeset('HEAD~2..HEAD~1');
         $this->assertDiff(<<<EOF
@@ -215,7 +216,7 @@ EOF
     /**
      * @test
      */
-    public function commitToMergeBase() : void
+    public function commitToMergeBase(): void
     {
         $changeset = $this->createChangeset('HEAD...feature');
         $this->assertDiff(<<<EOF
@@ -238,7 +239,7 @@ EOF
     /**
      * @test
      */
-    public function fileWithOnlyDeletedLinesIsIgnored() : void
+    public function fileWithOnlyDeletedLinesIsIgnored(): void
     {
         $this->putContents('file.txt', <<<EOF
 Line1
@@ -259,12 +260,12 @@ EOF
         $this->assertSame('', $changeset->getDiff());
     }
 
-    private static function putContents(string $path, string $contents, int $flags = 0) : void
+    private static function putContents(string $path, string $contents, int $flags = 0): void
     {
         file_put_contents(self::$dir . '/' . $path, $contents . "\n", $flags);
     }
 
-    private static function git(string ...$args) : void
+    private static function git(string ...$args): void
     {
         self::$cli->exec(
             self::$cli->cmd('git', ...$args),
@@ -272,27 +273,27 @@ EOF
         );
     }
 
-    private static function add(string $path) : void
+    private static function add(string $path): void
     {
         self::git('add', $path);
     }
 
-    private static function commit(string $message) : void
+    private static function commit(string $message): void
     {
         self::git('commit', '-m', $message, '--no-verify');
     }
 
-    private function createChangeset(string ...$args) : Changeset
+    private function createChangeset(string ...$args): Changeset
     {
         return new Changeset(self::$cli, $args, self::$dir);
     }
 
-    private function assertDiff(string $expected, Changeset $changeset) : void
+    private function assertDiff(string $expected, Changeset $changeset): void
     {
         $this->assertSame($expected . "\n", $changeset->getDiff());
     }
 
-    private function assertContents(string $expected, Changeset $changeset, string $path) : void
+    private function assertContents(string $expected, Changeset $changeset, string $path): void
     {
         $this->assertSame($expected . "\n", $changeset->getContents($path));
     }

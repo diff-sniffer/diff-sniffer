@@ -6,6 +6,7 @@ namespace DiffSniffer\Git\DiffSource;
 
 use DiffSniffer\Cli;
 use DiffSniffer\DiffSource;
+
 use function array_merge;
 
 /**
@@ -43,7 +44,7 @@ class Unix implements DiffSource
         $this->dir  = $dir;
     }
 
-    public function getDiff() : string
+    public function getDiff(): string
     {
         return $this->cli->execPiped([
             $this->cli->cmd('git', 'diff', ...array_merge($this->args, [

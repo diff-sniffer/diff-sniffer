@@ -7,6 +7,7 @@ namespace DiffSniffer\Git;
 use DiffSniffer\Changeset as ChangesetInterface;
 use DiffSniffer\Cli;
 use DiffSniffer\Command as CommandInterface;
+
 use function array_shift;
 use function array_unshift;
 use function substr;
@@ -29,7 +30,7 @@ final class Command implements CommandInterface
     /**
      * {@inheritDoc}
      */
-    public function createChangeSet(array &$args) : ChangesetInterface
+    public function createChangeSet(array &$args): ChangesetInterface
     {
         $diffArgs = [];
 

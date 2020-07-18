@@ -16,12 +16,12 @@ interface Changeset
      *
      * @throws Exception
      */
-    public function getDiff() : string;
+    public function getDiff(): string;
 
     /**
      * Returns contents of the given file
      *
      * @throws Exception
      */
-    public function getContents(string $path) : string;
+    public function getContents(string $path): string;
 }

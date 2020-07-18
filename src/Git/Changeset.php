@@ -14,6 +14,7 @@ use DiffSniffer\Git\ContentSource\Staged;
 use DiffSniffer\Git\ContentSource\Working;
 use DiffSniffer\Git\DiffSource\Unix;
 use DiffSniffer\Git\DiffSource\Windows;
+
 use function count;
 use function defined;
 use function in_array;
@@ -52,12 +53,12 @@ final class Changeset implements ChangesetInterface
         $this->contentSource = $this->getContentSource($cli, $args, $dir);
     }
 
-    public function getDiff() : string
+    public function getDiff(): string
     {
         return $this->diffSource->getDiff();
     }
 
-    public function getContents(string $path) : string
+    public function getContents(string $path): string
     {
         return $this->contentSource->getContents($path);
     }
@@ -67,7 +68,7 @@ final class Changeset implements ChangesetInterface
      *
      * @param array<int,string> $args
      */
-    private function getDiffSource(Cli $cli, array $args, string $dir) : DiffSource
+    private function getDiffSource(Cli $cli, array $args, string $dir): DiffSource
     {
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             return new Windows($cli, $args, $dir);
@@ -81,7 +82,7 @@ final class Changeset implements ChangesetInterface
      *
      * @param array<int,string> $args
      */
-    private function getContentSource(Cli $cli, array $args, string $dir) : ContentSource
+    private function getContentSource(Cli $cli, array $args, string $dir): ContentSource
     {
         if (in_array('--staged', $args, true)) {
             return new Staged($cli, $dir);

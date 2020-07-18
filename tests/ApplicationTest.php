@@ -10,12 +10,14 @@ use Dummy;
 use PHP_CodeSniffer\Autoload;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+
 use function array_shift;
 use function chdir;
 use function class_exists;
 use function file_get_contents;
 use function spl_autoload_functions;
 use function str_replace;
+
 use const DIRECTORY_SEPARATOR;
 use const PHP_EOL;
 
@@ -25,7 +27,7 @@ class ApplicationTest extends TestCase
      * @test
      * @dataProvider useCaseProvider
      */
-    public function testUseCase(string $useCase, int $expectedExitCode) : void
+    public function testUseCase(string $useCase, int $expectedExitCode): void
     {
         $app = new Application();
 
@@ -35,7 +37,7 @@ class ApplicationTest extends TestCase
         $this->assertSame($expectedExitCode, $exitCode);
     }
 
-    public function testClassLoader() : void
+    public function testClassLoader(): void
     {
         $app = new Application();
 
@@ -48,7 +50,7 @@ class ApplicationTest extends TestCase
         self::assertSame([Autoload::class, 'load'], array_shift($loaders));
     }
 
-    private function createCommand(string $useCase) : Command
+    private function createCommand(string $useCase): Command
     {
         $dir = $this->getDirectory($useCase);
 
@@ -64,7 +66,7 @@ class ApplicationTest extends TestCase
         return $command;
     }
 
-    private function getExpectedOutput(string $useCase) : string
+    private function getExpectedOutput(string $useCase): string
     {
         $dir = $this->getDirectory($useCase);
 
@@ -75,7 +77,7 @@ class ApplicationTest extends TestCase
         return $output;
     }
 
-    private function getDirectory(string $useCase) : string
+    private function getDirectory(string $useCase): string
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . $useCase;
     }
@@ -83,7 +85,7 @@ class ApplicationTest extends TestCase
     /**
      * @return iterable<string,mixed>
      */
-    public static function useCaseProvider() : iterable
+    public static function useCaseProvider(): iterable
     {
         return [
             'only-changed-lines-reported' => [
