@@ -6,10 +6,12 @@ namespace DiffSniffer\Git\ContentSource;
 
 use DiffSniffer\ContentSource;
 use DiffSniffer\Exception\RuntimeException;
+
 use function assert;
 use function error_get_last;
 use function file_get_contents;
 use function is_array;
+
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -28,7 +30,7 @@ class Working implements ContentSource
         $this->dir = $dir;
     }
 
-    public function getContents(string $path) : string
+    public function getContents(string $path): string
     {
         $contents = file_get_contents($this->dir . DIRECTORY_SEPARATOR . $path);
 

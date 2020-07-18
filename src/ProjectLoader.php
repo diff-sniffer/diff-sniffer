@@ -6,6 +6,7 @@ namespace DiffSniffer;
 
 use DiffSniffer\Exception\RuntimeException;
 use PHP_CodeSniffer\Autoload;
+
 use function array_map;
 use function assert;
 use function dirname;
@@ -23,6 +24,7 @@ use function spl_autoload_register;
 use function spl_autoload_unregister;
 use function sprintf;
 use function substr;
+
 use const JSON_ERROR_NONE;
 
 /**
@@ -62,7 +64,7 @@ class ProjectLoader
     /**
      * @return array<string,mixed>|null Configuration parameters or NULL if not found
      */
-    public function getPhpCodeSnifferConfiguration() : ?array
+    public function getPhpCodeSnifferConfiguration(): ?array
     {
         if ($this->root === null) {
             return null;
@@ -82,7 +84,7 @@ class ProjectLoader
     /**
      * Registers class loader if it's defined in the project
      */
-    public function registerClassLoader() : void
+    public function registerClassLoader(): void
     {
         if ($this->root === null) {
             return;
@@ -108,7 +110,7 @@ class ProjectLoader
      *
      * @param string $dir Current working directory
      */
-    private function findProjectRoot(string $dir) : ?string
+    private function findProjectRoot(string $dir): ?string
     {
         do {
             $path = $dir . '/composer.json';
@@ -130,7 +132,7 @@ class ProjectLoader
         return null;
     }
 
-    private function getVendorDirectory() : string
+    private function getVendorDirectory(): string
     {
         if (! $this->composerConfigurationLoaded) {
             $config = $this->loadComposerConfiguration();
@@ -150,7 +152,7 @@ class ProjectLoader
      *
      * @return array<string,mixed> Configuration parameters
      */
-    private function loadComposerConfiguration() : array
+    private function loadComposerConfiguration(): array
     {
         $contents = file_get_contents($this->root . '/composer.json');
 
@@ -177,7 +179,7 @@ class ProjectLoader
      *
      * @return array<string,mixed> Configuration parameters
      */
-    private function loadPhpCodeSnifferConfiguration(string $path) : array
+    private function loadPhpCodeSnifferConfiguration(string $path): array
     {
         $phpCodeSnifferConfig = [];
 
@@ -194,7 +196,7 @@ class ProjectLoader
      *
      * @return array<string,mixed> Configuration parameters
      */
-    private function massageConfig(array $config, string $configPath) : array
+    private function massageConfig(array $config, string $configPath): array
     {
         if (! isset($config['installed_paths'])) {
             return $config;

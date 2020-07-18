@@ -31,7 +31,7 @@ class Commit implements ContentSource
         $this->commit = $commit;
     }
 
-    public function getContents(string $path) : string
+    public function getContents(string $path): string
     {
         return $this->cli->exec(
             $this->cli->cmd('git', 'show', $this->commit . ':' . $path),

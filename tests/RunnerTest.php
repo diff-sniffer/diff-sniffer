@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class RunnerTest extends TestCase
 {
-    public function testEarlyReturn() : void
+    public function testEarlyReturn(): void
     {
         /** @var Config|MockObject $config */
         $config = $this->createMock(Config::class);

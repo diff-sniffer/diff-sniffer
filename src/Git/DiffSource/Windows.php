@@ -6,6 +6,7 @@ namespace DiffSniffer\Git\DiffSource;
 
 use DiffSniffer\Cli;
 use DiffSniffer\DiffSource;
+
 use function array_merge;
 
 /**
@@ -48,7 +49,7 @@ class Windows implements DiffSource
      *
      * @see https://bugs.php.net/bug.php?id=49446
      */
-    public function getDiff() : string
+    public function getDiff(): string
     {
         return $this->cli->execPiped([
             $this->cli->cmd('git', 'diff', ...array_merge($this->args, [

@@ -7,6 +7,7 @@ namespace DiffSniffer;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 use PHP_CodeSniffer\Runner as BaseRunner;
+
 use function count;
 
 /**
@@ -30,7 +31,7 @@ class Runner
      * @throws DeepExitException
      * @throws Exception
      */
-    public function run(Changeset $changeset) : int
+    public function run(Changeset $changeset): int
     {
         $diff = new Diff($changeset->getDiff());
 

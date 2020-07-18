@@ -17,5 +17,5 @@ interface DiffSource
      *
      * This is useful for checking commits which remove a lot of files or a lot of lines in a lot of files.
      */
-    public function getDiff() : string;
+    public function getDiff(): string;
 }

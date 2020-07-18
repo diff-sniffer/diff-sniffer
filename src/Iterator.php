@@ -13,8 +13,10 @@ use PHP_CodeSniffer\Filters\Filter;
 use PHP_CodeSniffer\Ruleset;
 use RecursiveArrayIterator;
 use Traversable;
+
 use function iterator_to_array;
 use function str_replace;
+
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -50,12 +52,12 @@ final class Iterator implements IteratorAggregate
     /**
      * @return Traversable<int,File>
      */
-    public function getIterator() : Traversable
+    public function getIterator(): Traversable
     {
         // PHP_CodeSniffer expects file paths to contain the native directory separator on Windows when matching them
         // against the exclude pattern but Git and GitHub REST API will return forward slashes regardless of the OS
         if (DIRECTORY_SEPARATOR === '\\') {
-            $it = (function () : Traversable {
+            $it = (function (): Traversable {
                 foreach ($this->files as $file) {
                     yield str_replace('/', DIRECTORY_SEPARATOR, $file);
                 }
@@ -83,7 +85,7 @@ final class Iterator implements IteratorAggregate
         }
     }
 
-    private function createFile(string $path, string $contents) : File
+    private function createFile(string $path, string $contents): File
     {
         $file       = new DummyFile($contents, $this->ruleSet, $this->config);
         $file->path = $path;
