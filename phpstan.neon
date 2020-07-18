@@ -6,9 +6,8 @@ parameters:
     excludes_analyse:
         - %currentWorkingDirectory%/tests/fixtures
     ignoreErrors:
-        - '~^Class Dummy not found\.$~'
         -
-            message: "~^Parameter #1 \\$autoload_function of function spl_autoload_register expects callable\\(string\\): void, array\\('PHP_CodeSniffer…', 'load'\\) given\\.$~"
+            message: "~^Parameter #1 \\$autoload_function of function spl_autoload_register expects callable\\(string\\): void, array\\('PHP_CodeSniffer\\\\\\\\Autoload', 'load'\\) given\\.$~"
             paths:
                 - %currentWorkingDirectory%/src/ProjectLoader.php
 includes:

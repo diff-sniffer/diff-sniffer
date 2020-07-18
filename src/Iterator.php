@@ -19,6 +19,8 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Changeset iterator
+ *
+ * @implements IteratorAggregate<int,File>
  */
 final class Iterator implements IteratorAggregate
 {

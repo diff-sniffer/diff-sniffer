@@ -21,7 +21,7 @@ use function strpos;
 use function substr;
 
 /**
- * Diff
+ * @implements IteratorAggregate<string>
  */
 class Diff implements IteratorAggregate, Countable
 {

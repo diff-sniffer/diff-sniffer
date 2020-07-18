@@ -25,6 +25,8 @@ class Reporter extends BaseReporter
 
     /**
      * {@inheritDoc}
+     *
+     * @return array<string,mixed>
      */
     public function prepareFileReport(File $file) : array
     {
