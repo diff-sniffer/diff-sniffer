@@ -16,7 +16,6 @@ use function assert;
 use function basename;
 use function current;
 use function define;
-use function getcwd;
 use function is_string;
 use function printf;
 
@@ -38,7 +37,7 @@ final class Application
      *
      * @throws Exception
      */
-    public function run(Command $command, array $args): int
+    public function run(Command $command, string $cwd, array $args): int
     {
         $programName = array_shift($args);
         assert(is_string($programName));
@@ -59,15 +58,12 @@ final class Application
         }
 
         try {
-            $changeSet = $command->createChangeSet($args);
+            $changeSet = $command->createChangeSet($cwd, $args);
         } catch (BadUsage $e) {
             $this->printUsage($programName);
 
             return 1;
         }
-
-        $cwd = getcwd();
-        assert(is_string($cwd));
 
         $loader = new ProjectLoader($cwd);
         $loader->registerClassLoader();
@@ -85,7 +81,7 @@ final class Application
             $config = new Config(array_merge($args, ['--no-cache']));
             $runner = new Runner($config);
 
-            return $runner->run($changeSet);
+            return $runner->run($changeSet, $cwd);
         } catch (DeepExitException $e) {
             echo $e->getMessage();
 

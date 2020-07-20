@@ -8,8 +8,10 @@ use DiffSniffer\Application;
 use DiffSniffer\Command;
 use Dummy;
 use PHP_CodeSniffer\Autoload;
+use PHP_CodeSniffer\Config;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use ReflectionProperty;
 
 use function array_shift;
 use function chdir;
@@ -29,10 +31,16 @@ class ApplicationTest extends TestCase
      */
     public function testUseCase(string $useCase, int $expectedExitCode): void
     {
+        // reset overridden configuration defaults between tests
+        $re = new ReflectionProperty(Config::class, 'overriddenDefaults');
+        $re->setAccessible(true);
+        $re->setValue(null, []);
+
         $app = new Application();
 
-        $this->expectOutputString($this->getExpectedOutput($useCase));
-        $exitCode = $app->run($this->createCommand($useCase), [__FILE__]);
+        $dir = $this->getDirectory($useCase);
+        $this->expectOutputString($this->getExpectedOutput($dir));
+        $exitCode = $app->run($this->createCommand($useCase), $dir . DIRECTORY_SEPARATOR . 'tree', [__FILE__]);
 
         $this->assertSame($expectedExitCode, $exitCode);
     }
@@ -41,7 +49,7 @@ class ApplicationTest extends TestCase
     {
         $app = new Application();
 
-        $app->run($this->createCommand('class-loader'), [__FILE__]);
+        $app->run($this->createCommand('class-loader'), __DIR__, [__FILE__]);
 
         self::assertTrue(class_exists(Dummy::class));
 
@@ -66,10 +74,8 @@ class ApplicationTest extends TestCase
         return $command;
     }
 
-    private function getExpectedOutput(string $useCase): string
+    private function getExpectedOutput(string $dir): string
     {
-        $dir = $this->getDirectory($useCase);
-
         $output = file_get_contents($dir . DIRECTORY_SEPARATOR . 'output.txt');
         $this->assertIsString($output);
         $output = str_replace("\n", PHP_EOL, $output);
@@ -99,6 +105,10 @@ class ApplicationTest extends TestCase
             'exclude-pattern' => [
                 'exclude-pattern',
                 1,
+            ],
+            'rule-exclude-pattern' => [
+                'rule-exclude-pattern',
+                0,
             ],
             'class-loader' => [
                 'class-loader',
