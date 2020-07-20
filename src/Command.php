@@ -14,5 +14,5 @@ interface Command
      *
      * @param array<int,string> $args Command arguments
      */
-    public function createChangeSet(array &$args): Changeset;
+    public function createChangeSet(string $cwd, array &$args): Changeset;
 }
