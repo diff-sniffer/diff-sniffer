@@ -31,7 +31,7 @@ class Runner
      * @throws DeepExitException
      * @throws Exception
      */
-    public function run(Changeset $changeset): int
+    public function run(Changeset $changeset, string $cwd): int
     {
         $diff = new Diff($changeset->getDiff());
 
@@ -39,14 +39,14 @@ class Runner
             return 0;
         }
 
-        $reporter = new Reporter($diff, $this->config);
+        $reporter = new Reporter($diff, $this->config, $cwd);
 
         $runner           = new BaseRunner();
         $runner->config   = $this->config;
         $runner->reporter = $reporter;
         $runner->init();
 
-        $it = new Iterator($diff, $changeset, $runner->ruleset, $this->config);
+        $it = new Iterator($diff, $changeset, $runner->ruleset, $this->config, $cwd);
 
         foreach ($it as $file) {
             $runner->processFile($file);

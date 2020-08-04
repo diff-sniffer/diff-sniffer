@@ -38,15 +38,19 @@ final class Iterator implements IteratorAggregate
     /** @var Ruleset */
     private $ruleSet;
 
+    /** @var string */
+    private $cwd;
+
     /**
      * @param Traversable<int,string> $files
      */
-    public function __construct(Traversable $files, Changeset $changeSet, Ruleset $ruleSet, Config $config)
+    public function __construct(Traversable $files, Changeset $changeSet, Ruleset $ruleSet, Config $config, string $cwd)
     {
         $this->files     = $files;
         $this->changeSet = $changeSet;
         $this->ruleSet   = $ruleSet;
         $this->config    = $config;
+        $this->cwd       = $cwd;
     }
 
     /**
@@ -88,7 +92,7 @@ final class Iterator implements IteratorAggregate
     private function createFile(string $path, string $contents): File
     {
         $file       = new DummyFile($contents, $this->ruleSet, $this->config);
-        $file->path = $path;
+        $file->path = $this->cwd . DIRECTORY_SEPARATOR . $path;
 
         return $file;
     }

@@ -17,7 +17,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 try {
     exit(
-        (new Application())->run(new Command(getcwd()), $_SERVER['argv'])
+        (new Application())->run(new Command(), getcwd(), $_SERVER['argv'])
     );
 } catch (Exception $e) {
     fwrite(STDERR, $e->getMessage() . PHP_EOL);

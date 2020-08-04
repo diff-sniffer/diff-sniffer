@@ -24,6 +24,6 @@ class RunnerTest extends TestCase
             ->method('getDiff')
             ->willReturn('');
 
-        $this->assertSame(0, $runner->run($changeSet));
+        $this->assertSame(0, $runner->run($changeSet, __DIR__));
     }
 }

@@ -19,18 +19,10 @@ use function substr;
  */
 final class Command implements CommandInterface
 {
-    /** @var string */
-    private $directory;
-
-    public function __construct(string $directory)
-    {
-        $this->directory = $directory;
-    }
-
     /**
      * {@inheritDoc}
      */
-    public function createChangeSet(array &$args): ChangesetInterface
+    public function createChangeSet(string $cwd, array &$args): ChangesetInterface
     {
         $diffArgs = [];
 
@@ -49,6 +41,6 @@ final class Command implements CommandInterface
             $diffArgs[] = $arg;
         }
 
-        return new Changeset(new Cli(), $diffArgs, $this->directory);
+        return new Changeset(new Cli(), $diffArgs, $cwd);
     }
 }
