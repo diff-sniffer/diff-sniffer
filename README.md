@@ -14,7 +14,7 @@ Installation
 
 Download a PHAR package of the latest release and put it somewhere within your `$PATH`:
 ```
-$ wget https://github.com/diff-sniffer/diff-sniffer/releases/download/0.4.0/diff-sniffer.phar
+$ wget https://github.com/diff-sniffer/diff-sniffer/releases/download/0.5.0/diff-sniffer.phar
 $ chmod +x diff-sniffer.phar
 $ sudo cp diff-sniffer.phar /usr/local/bin/diff-sniffer
 ```
@@ -52,6 +52,6 @@ Continuous integration mode
 
 Diff Sniffer can also run on a CI server and validate pull requests. For example, on Travis CI:
 ```
-$ wget https://github.com/diff-sniffer/diff-sniffer/releases/download/0.4.0/diff-sniffer.phar
+$ wget https://github.com/diff-sniffer/diff-sniffer/releases/download/0.5.0/diff-sniffer.phar
 $ php diff-sniffer.phar origin/$TRAVIS_BRANCH...$TRAVIS_PULL_REQUEST_SHA
 ```
