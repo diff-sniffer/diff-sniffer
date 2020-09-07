@@ -11,6 +11,7 @@ use PHP_CodeSniffer\Files\DummyFile;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Filters\Filter;
 use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Util\Common;
 use RecursiveArrayIterator;
 use Traversable;
 
@@ -30,7 +31,7 @@ final class Iterator implements IteratorAggregate
     private $changeSet;
 
     /** @var Traversable<int,string> */
-    private $files;
+    private $absolutePaths;
 
     /** @var Config */
     private $config;
@@ -42,15 +43,20 @@ final class Iterator implements IteratorAggregate
     private $cwd;
 
     /**
-     * @param Traversable<int,string> $files
+     * @param Traversable<int,string> $relativePaths
      */
-    public function __construct(Traversable $files, Changeset $changeSet, Ruleset $ruleSet, Config $config, string $cwd)
-    {
-        $this->files     = $files;
-        $this->changeSet = $changeSet;
-        $this->ruleSet   = $ruleSet;
-        $this->config    = $config;
-        $this->cwd       = $cwd;
+    public function __construct(
+        Traversable $relativePaths,
+        Changeset $changeSet,
+        Ruleset $ruleSet,
+        Config $config,
+        string $cwd
+    ) {
+        $this->absolutePaths = $this->absolutize($relativePaths, $cwd);
+        $this->changeSet     = $changeSet;
+        $this->ruleSet       = $ruleSet;
+        $this->config        = $config;
+        $this->cwd           = $cwd;
     }
 
     /**
@@ -62,12 +68,12 @@ final class Iterator implements IteratorAggregate
         // against the exclude pattern but Git and GitHub REST API will return forward slashes regardless of the OS
         if (DIRECTORY_SEPARATOR === '\\') {
             $it = (function (): Traversable {
-                foreach ($this->files as $file) {
+                foreach ($this->absolutePaths as $file) {
                     yield str_replace('/', DIRECTORY_SEPARATOR, $file);
                 }
             })();
         } else {
-            $it = new IteratorIterator($this->files);
+            $it = new IteratorIterator($this->absolutePaths);
         }
 
         $it = new RecursiveArrayIterator(
@@ -81,18 +87,32 @@ final class Iterator implements IteratorAggregate
             $this->ruleSet
         );
 
-        foreach ($it as $path) {
+        foreach ($it as $absolutePath) {
             yield $this->createFile(
-                $path,
-                $this->changeSet->getContents($path)
+                $absolutePath,
+                $this->changeSet->getContents(
+                    Common::stripBasepath($absolutePath, $this->cwd)
+                )
             );
         }
     }
 
-    private function createFile(string $path, string $contents): File
+    /**
+     * @param Traversable<int,string> $paths
+     *
+     * @return Traversable<int,string>
+     */
+    private function absolutize(Traversable $paths, string $cwd): Traversable
+    {
+        foreach ($paths as $path) {
+            yield $cwd . DIRECTORY_SEPARATOR . $path;
+        }
+    }
+
+    private function createFile(string $absolutePath, string $contents): File
     {
         $file       = new DummyFile($contents, $this->ruleSet, $this->config);
-        $file->path = $this->cwd . DIRECTORY_SEPARATOR . $path;
+        $file->path = $absolutePath;
 
         return $file;
     }

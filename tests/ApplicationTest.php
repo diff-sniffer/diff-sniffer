@@ -110,6 +110,10 @@ class ApplicationTest extends TestCase
                 'rule-exclude-pattern',
                 0,
             ],
+            'ruleset-exclude-pattern' => [
+                'ruleset-exclude-pattern',
+                0,
+            ],
             'class-loader' => [
                 'class-loader',
                 0,
