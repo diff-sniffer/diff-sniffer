@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "baee642bc16ba387bec5da4f65d8f9fa",
+    "content-hash": "e22286f2f000532e6509e8a70ce4aa92",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -618,16 +618,16 @@
         },
         {
             "name": "php-vfs/php-vfs",
-            "version": "v1.4.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/michael-donat/php-vfs.git",
-                "reference": "a04a5105a37ec5979504b9c5521affc2a4339280"
+                "reference": "e56b0bd9a118941ea5681e1673ed602d47887be8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michael-donat/php-vfs/zipball/a04a5105a37ec5979504b9c5521affc2a4339280",
-                "reference": "a04a5105a37ec5979504b9c5521affc2a4339280",
+                "url": "https://api.github.com/repos/michael-donat/php-vfs/zipball/e56b0bd9a118941ea5681e1673ed602d47887be8",
+                "reference": "e56b0bd9a118941ea5681e1673ed602d47887be8",
                 "shasum": ""
             },
             "require": {
@@ -635,6 +635,7 @@
             },
             "require-dev": {
                 "doctrine/instantiator": "~1.0.2",
+                "php": ">=7.0",
                 "phpunit/phpunit": "^6.5",
                 "sami/sami": "*"
             },
@@ -646,7 +647,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-3.0+"
+                "MIT"
             ],
             "authors": [
                 {
@@ -664,7 +665,7 @@
                 "unit",
                 "virtual"
             ],
-            "time": "2020-05-25T17:36:27+00:00"
+            "time": "2020-10-14T06:51:31+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
