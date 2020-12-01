@@ -17,7 +17,7 @@
   },
   "require-dev": {
     "doctrine/coding-standard": "^8.2",
-    "phpunit/phpunit": "^9.4.2",
+    "phpunit/phpunit": "^9.4.4",
     "php-vfs/php-vfs": "^1.4.1",
     "phpstan/phpstan": "^0.12",
     "phpstan/phpstan-phpunit": "^0.12"
