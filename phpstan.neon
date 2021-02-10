@@ -7,7 +7,7 @@ parameters:
         - %currentWorkingDirectory%/tests/fixtures
     ignoreErrors:
         -
-            message: "~^Parameter #1 \\$autoload_function of function spl_autoload_register expects callable\\(string\\): void, array\\('PHP_CodeSniffer\\\\\\\\Autoload', 'load'\\) given\\.$~"
+            message: "~^Parameter #1 \\$(autoload_function|callback) of function spl_autoload_register expects \\(?callable\\(string\\): void(\\)\\|null)?, array\\('PHP_CodeSniffer\\\\\\\\Autoload', 'load'\\) given\\.$~"
             paths:
                 - %currentWorkingDirectory%/src/ProjectLoader.php
 includes:
