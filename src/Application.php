@@ -6,7 +6,6 @@ namespace DiffSniffer;
 
 use DiffSniffer\Command\Exception\BadUsage;
 use Jean85\PrettyVersions;
-use PackageVersions\Versions;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 
@@ -119,7 +118,7 @@ USG;
      */
     private function printVersion(): void
     {
-        $version = PrettyVersions::getVersion(Versions::ROOT_PACKAGE_NAME);
+        $version = PrettyVersions::getRootPackageVersion();
 
         printf(
             'Diff Sniffer version %s' . PHP_EOL,
